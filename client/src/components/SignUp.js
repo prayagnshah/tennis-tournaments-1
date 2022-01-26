@@ -1,14 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Card } from 'react-bootstrap';
 
 function SignUp (props) {
   return (
     <>
-      <Link to='/'>Home</Link>
-      <h1>Sign up</h1>
-      <p>
-        Already have an account? <Link to='/log-in'>Log in!</Link>
-      </p>
+      <Card>
+        <Card.Header>Sign up</Card.Header>
+        <Card.Body>
+          <Card.Text className='text-center'>
+            Already have an account? <Link to='/log-in'>Log in!</Link>
+          </Card.Text>
+        </Card.Body>
+      </Card>
     </>
   );
 }
