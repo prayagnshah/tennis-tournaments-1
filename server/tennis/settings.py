@@ -43,12 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'corsheaders',
     'rest_framework',
     'tournaments',
 
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -89,7 +91,7 @@ DATABASES = {
         'USER': os.getenv('PGUSER'),
         'PASSWORD': os.getenv('PGPASSWORD'),
         'HOST': os.getenv('PGHOST', 'localhost'),
-        'PORT': os.getenv('PGPORT', '50603'), # This ports needs to be changed to the actual port 50603 of postgres container. After implementing the app torugh docker-compose use port 5432
+        'PORT': os.getenv('PGPORT', '55408'), # This ports needs to be changed to the actual port 50603 of postgres container. After implementing the app torugh docker-compose use port 5432
     }
 }
 
@@ -149,3 +151,7 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
     'USER_ID_CLAIM': 'id',  # token will include the users identifier
 }
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+]
