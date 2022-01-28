@@ -18,8 +18,8 @@ function LogIn({ isLoggedIn, logIn }) {
         console.log(data);
 
         for (const value in data) {
-          console.log("value: " + value);
-          console.log("Data: " + data);
+          // console.log("value: " + value);
+          // console.log("Data: " + data);
           actions.setFieldError(value, data[value]);
           //actions.setFieldError(value, data[value].join(" "));
         }

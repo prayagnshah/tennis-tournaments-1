@@ -3,10 +3,29 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import { Link, Navigate } from "react-router-dom";
 import { Card, Button, Form } from "react-bootstrap";
+import axios from "axios";
 
 function SignUp(props) {
   const [isSubmitted, setSubmitted] = useState(false);
-  const onSubmit = (values, actions) => setSubmitted(true);
+  const onSubmit = async (values, actions) => {
+    const url = "/api/sign_up/";
+    const formData = new FormData();
+    formData.append("username", values.username);
+    formData.append("first_name", values.firstName);
+    formData.append("last_name", values.lastName);
+    formData.append("password1", values.password);
+    formData.append("password2", values.password);
+    try {
+      await axios.post(url, formData);
+      console.log("submitted");
+      setSubmitted(true);
+    } catch (response) {
+      const data = response.response.data;
+      for (const value in data) {
+        actions.setFieldError(value, data[value]);
+      }
+    }
+  };
 
   if (isSubmitted) {
     return <Navigate to="/log-in" />;
@@ -30,43 +49,75 @@ function SignUp(props) {
             }}
             onSubmit={onSubmit}
           >
-            {({ handleChange, handleSubmit, values }) => (
+            {({ handleChange, handleSubmit, values, errors, isSubmitting }) => (
               <Form noValidate onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="username">
                   <Form.Label>Username:</Form.Label>
                   <Form.Control
+                    className={"username" in errors ? "is-invalid" : ""}
                     name="username"
                     onChange={handleChange}
+                    required
                     values={values.username}
                   />
+                  {"username" in errors && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.username}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="firstName">
                   <Form.Label>First name:</Form.Label>
                   <Form.Control
+                    className={"firstName" in errors ? "is-invalid" : ""}
                     name="firstName"
                     onChange={handleChange}
+                    required
                     values={values.firstName}
                   />
+                  {"firstName" in errors && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.firstName}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="lastName">
                   <Form.Label>Last name:</Form.Label>
                   <Form.Control
+                    className={"lastName" in errors ? "is-invalid" : ""}
                     name="lastName"
                     onChange={handleChange}
+                    required
                     values={values.lastName}
                   />
+                  {"lastName" in errors && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.lastName}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="password">
                   <Form.Label>Password:</Form.Label>
                   <Form.Control
+                    className={"password1" in errors ? "is-invalid" : ""}
                     name="password"
                     onChange={handleChange}
+                    required
                     type="password"
                     value={values.password}
                   />
+                  {"password1" in errors && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.password1}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <div className="d-grid mb-3">
-                  <Button type="submit" variant="primary">
+                  <Button
+                    disabled={isSubmitting}
+                    type="submit"
+                    variant="primary"
+                  >
                     Sign up
                   </Button>
                 </div>

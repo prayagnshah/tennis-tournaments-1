@@ -27,12 +27,24 @@ describe("Authentication", function () {
   });
 
   it("Can sign up.", function () {
+    cy.intercept("POST", "sign_up", {
+      statusCode: 201,
+      body: {
+        id: 1,
+        username: "maty@example.com",
+        first_name: "Maty",
+        last_name: "Mty",
+      },
+    }).as("signUp");
+
     cy.visit("/#/sign-up");
-    cy.get("input#username").type("gary.cole@example.com");
-    cy.get("input#firstName").type("Gary");
-    cy.get("input#lastName").type("Cole");
+    cy.get("input#username").type("maty@example.com");
+    cy.get("input#firstName").type("Maty");
+    cy.get("input#lastName").type("Mty");
     cy.get("input#password").type("pAssw0rd", { log: false });
+
     cy.get("button").contains("Sign up").click();
+    cy.wait("@signUp");
     cy.hash().should("eq", "#/log-in");
   });
 
@@ -70,5 +82,37 @@ describe("Authentication", function () {
         "Note that both fields may be case-sensitive."
     );
     cy.hash().should("eq", "#/log-in");
+  });
+
+  it("Can log out.", function () {
+    logIn();
+    cy.get("button")
+      .contains("Log out")
+      .click()
+      .should(() => {
+        expect(window.localStorage.getItem("tennis.auth")).to.be.null;
+      });
+    cy.get("button").contains("Log out").should("not.exist");
+  });
+
+  it("Show invalid fields on sign up error.", function () {
+    cy.intercept("POST", "sign_up", {
+      statusCode: 400,
+      body: {
+        username: ["A user with that username already exists."],
+      },
+    }).as("signUp");
+    cy.visit("/#/sign-up");
+    cy.get("input#username").type("maty@example.com");
+    cy.get("input#firstName").type("Maty");
+    cy.get("input#lastName").type("Mty");
+    cy.get("input#password").type("pAssw0rd", { log: false });
+
+    cy.get("button").contains("Sign up").click();
+    cy.wait("@signUp");
+    cy.get("div.invalid-feedback").contains(
+      "A user with that username already exists"
+    );
+    cy.hash().should("eq", "#/sign-up");
   });
 });

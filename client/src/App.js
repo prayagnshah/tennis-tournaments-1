@@ -27,9 +27,17 @@ function App() {
     }
   };
 
+  const logOut = () => {
+    window.localStorage.removeItem("tennis.auth");
+    setLoggedIn(false);
+  };
+
   return (
     <Routes>
-      <Route path="/" element={<Layout isLoggedIn={isLoggedIn} />}>
+      <Route
+        path="/"
+        element={<Layout isLoggedIn={isLoggedIn} logOut={logOut} />}
+      >
         <Route index element={<Landing />} />
         <Route path="sign-up" element={<SignUp isLoggedIn={isLoggedIn} />} />
         <Route
@@ -50,7 +58,7 @@ function App() {
 }
 
 // eslint-disable-next-line react/prop-types
-function Layout({ isLoggedIn }) {
+function Layout({ isLoggedIn, logOut }) {
   // Using react Hooks and react-router's useLocation() to set the active key on two separte Nav components
   const location = useLocation().pathname;
   const [active, setActive] = useState(location);
@@ -81,7 +89,9 @@ function Layout({ isLoggedIn }) {
             <Nav activeKey={active}>
               {isLoggedIn ? (
                 <Form>
-                  <Button type="button">Log out</Button>
+                  <Button type="button" onClick={() => logOut()}>
+                    Log out
+                  </Button>
                 </Form>
               ) : (
                 <>
