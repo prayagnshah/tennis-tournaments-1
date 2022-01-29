@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+
+  tennis-server:
+    build:
+      context: ./server
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: tennis-server
+    depends_on:
+      - tennis-database
+    environment:
+      - PGDATABASE=tennis
+      - PGUSER=tennis
+      - PGPASSWORD=tennis
+      - PGHOST=tennis-database
+    ports:
+      - 8003:8000
+    volumes:
+      - ./server:/usr/src/app
+
+  tennis-database:
+    container_name: tennis-database
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER=tennis
+      - POSTGRES_PASSWORD=tennis
+    expose:
+      - 5432
+    volumes:
+      - tennis-database:/var/lib/postgresql/data
+
+  taxi-client:
+    build:
+      context: ./client
+    command: yarn start
+    container_name: tennis-client
+    depends_on:
+      - tennis-server
+    environment:
+      - CHOKIDAR_USEPOLLING=TRUE
+      - REACT_APP_BASE_URL=http://localhost:8003
+      - WDS_SOCKET_PORT=0
+    ports:
+      - 3001:3000
+    stdin_open: true
+    volumes:
+      - ./client:/usr/src/app
+
+# Volumes let you store data outside of the container lifecycle. By adding the tennis-database volume, 
+# all of the data we write to PostgreSQL will persist as the Docker container is started and stopped.
+volumes:
+  tennis-database:

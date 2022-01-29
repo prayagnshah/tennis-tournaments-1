@@ -91,7 +91,7 @@ DATABASES = {
         'USER': os.getenv('PGUSER'),
         'PASSWORD': os.getenv('PGPASSWORD'),
         'HOST': os.getenv('PGHOST', 'localhost'),
-        'PORT': os.getenv('PGPORT', '55408'), # This ports needs to be changed to the actual port 50603 of postgres container. After implementing the app torugh docker-compose use port 5432
+        'PORT': os.getenv('PGPORT', '5432'), # This ports needs to be changed to the actual port 50603 of postgres container. After implementing the app torugh docker-compose use port 5432
     }
 }
 
@@ -153,5 +153,6 @@ SIMPLE_JWT = {
 }
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://127.0.0.1:3001",
 ]
