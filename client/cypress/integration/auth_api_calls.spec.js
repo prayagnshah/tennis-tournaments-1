@@ -17,7 +17,7 @@ const logIn = () => {
   cy.wait("@logIn");
 };
 
-describe("Authentication with API calls", function () {
+describe("Authentication with random user - API calls", function () {
   it("Can sign up.", function () {
     cy.intercept("POST", "sign_up").as("signUp");
 

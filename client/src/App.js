@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from "react";
-import { Container, Navbar, Nav, Button, Form } from "react-bootstrap";
+import { Container, Navbar, Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import "./App.css";
 import { Outlet, useLocation, Route, Routes } from "react-router-dom";
@@ -9,6 +9,8 @@ import axios from "axios";
 import Landing from "./components/Landing";
 import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
+import Profile from "./components/Profile";
+import { getUser } from "./services/AuthService";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(() => {
@@ -21,6 +23,7 @@ function App() {
       const response = await axios.post(url, { username, password });
       window.localStorage.setItem("tennis.auth", JSON.stringify(response.data));
       setLoggedIn(true);
+      console.log(getUser());
       return { response, isError: false };
     } catch (error) {
       return { response: error, isError: true };
@@ -44,6 +47,7 @@ function App() {
           path="log-in"
           element={<LogIn logIn={logIn} isLoggedIn={isLoggedIn} />}
         />
+        <Route path="profile" element={<Profile isLoggedIn={isLoggedIn} />} />
         <Route
           path="*"
           element={
@@ -62,6 +66,8 @@ function Layout({ isLoggedIn, logOut }) {
   // Using react Hooks and react-router's useLocation() to set the active key on two separte Nav components
   const location = useLocation().pathname;
   const [active, setActive] = useState(location);
+
+  const userData = getUser();
 
   useEffect(() => {
     setActive(location);
@@ -88,11 +94,14 @@ function Layout({ isLoggedIn, logOut }) {
             </Nav>
             <Nav activeKey={active}>
               {isLoggedIn ? (
-                <Form>
-                  <Button type="button" onClick={() => logOut()}>
-                    Log out
-                  </Button>
-                </Form>
+                <>
+                  <LinkContainer to="/profile">
+                    <Nav.Link>
+                      <strong>{userData.first_name}</strong>
+                    </Nav.Link>
+                  </LinkContainer>
+                  <Nav.Link onClick={() => logOut()}>Log Out</Nav.Link>
+                </>
               ) : (
                 <>
                   <LinkContainer to="/sign-up">
