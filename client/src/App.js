@@ -100,7 +100,7 @@ function Layout({ isLoggedIn, logOut }) {
                       <strong>{userData.first_name}</strong>
                     </Nav.Link>
                   </LinkContainer>
-                  <Nav.Link onClick={() => logOut()}>Log Out</Nav.Link>
+                  <Nav.Link onClick={() => logOut()}>Log out</Nav.Link>
                 </>
               ) : (
                 <>

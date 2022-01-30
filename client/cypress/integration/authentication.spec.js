@@ -2,13 +2,7 @@ const logIn = () => {
   const { username, password } = Cypress.env("credentials");
 
   // Capture HTTP requests.
-  cy.intercept("POST", "log_in", {
-    statusCode: 200,
-    body: {
-      access: "ACCESS_TOKEN",
-      refresh: "REFRESH_TOKEN",
-    },
-  }).as("logIn");
+  cy.intercept("POST", "log_in").as("logIn");
 
   // Log into the app.
   cy.visit("/#/log-in");
@@ -23,7 +17,7 @@ describe("Authentication", function () {
     logIn();
 
     cy.hash().should("eq", "#/");
-    cy.get("button").contains("Log out");
+    cy.get("a").contains("Log out");
   });
 
   it("Can sign up.", function () {
@@ -86,7 +80,7 @@ describe("Authentication", function () {
 
   it("Can log out.", function () {
     logIn();
-    cy.get("button")
+    cy.get("a")
       .contains("Log out")
       .click()
       .should(() => {

@@ -24,7 +24,7 @@ function Profile({ isLoggedIn }) {
       <Card.Body>
         <Row>
           <Col>
-            <p>Username:</p>
+            <p>Email address:</p>
             <p>User ID:</p>
           </Col>
           <Col>

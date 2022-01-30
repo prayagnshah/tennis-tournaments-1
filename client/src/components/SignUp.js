@@ -11,7 +11,10 @@ function SignUp(props) {
     const url = `${process.env.REACT_APP_BASE_URL}/api/sign_up/`;
     console.log(url);
     const formData = new FormData();
-    formData.append("username", values.username);
+    // Duplicating email info as backend main identifier is username for now. We set username and email a same value
+    // Future improvement possibility - change backend to use just email field
+    formData.append("username", values.email);
+    formData.append("email", values.email);
     formData.append("first_name", values.firstName);
     formData.append("last_name", values.lastName);
     formData.append("password1", values.password);
@@ -43,7 +46,7 @@ function SignUp(props) {
         <Card.Body>
           <Formik
             initialValues={{
-              username: "",
+              email: "",
               firstName: "",
               lastName: "",
               password: "",
@@ -53,13 +56,14 @@ function SignUp(props) {
             {({ handleChange, handleSubmit, values, errors, isSubmitting }) => (
               <Form noValidate onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="username">
-                  <Form.Label>Username:</Form.Label>
+                  <Form.Label>Email address:</Form.Label>
                   <Form.Control
-                    className={"username" in errors ? "is-invalid" : ""}
-                    name="username"
+                    className={"email" in errors ? "is-invalid" : ""}
+                    name="email"
                     onChange={handleChange}
                     required
-                    values={values.username}
+                    values={values.email}
+                    type="email"
                   />
                   {"username" in errors && (
                     <Form.Control.Feedback type="invalid">

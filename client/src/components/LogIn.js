@@ -9,10 +9,8 @@ function LogIn({ isLoggedIn, logIn }) {
   // eslint-disable-next-line no-unused-vars
   const onSubmit = async (values, actions) => {
     try {
-      const { response, isError } = await logIn(
-        values.username,
-        values.password
-      );
+      const { response, isError } = await logIn(values.email, values.password);
+      console.log("username" + values.email);
       if (isError) {
         const data = response.response.data;
         console.log(data);
@@ -42,7 +40,7 @@ function LogIn({ isLoggedIn, logIn }) {
         <Card.Body>
           <Formik
             initialValues={{
-              username: "",
+              email: "",
               password: "",
             }}
             onSubmit={onSubmit}
@@ -57,11 +55,13 @@ function LogIn({ isLoggedIn, logIn }) {
                 )}
                 <Form noValidate onSubmit={handleSubmit}>
                   <Form.Group className="mb-3" controlId="username">
-                    <Form.Label>Username:</Form.Label>
+                    <Form.Label>Email address:</Form.Label>
                     <Form.Control
-                      name="username"
+                      name="email"
+                      required
+                      type="email"
                       onChange={handleChange}
-                      value={values.username}
+                      value={values.email}
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="password">

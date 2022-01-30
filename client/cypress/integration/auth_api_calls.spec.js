@@ -36,7 +36,7 @@ describe("Authentication with random user - API calls", function () {
     logIn();
 
     cy.hash().should("eq", "#/");
-    cy.get("button").contains("Log out");
+    cy.get("a").contains("Log out");
   });
 
   it("Cannot visit the login page when logged in.", function () {
@@ -54,12 +54,12 @@ describe("Authentication with random user - API calls", function () {
 
   it("Can log out.", function () {
     logIn();
-    cy.get("button")
+    cy.get("a")
       .contains("Log out")
       .click()
       .should(() => {
         expect(window.localStorage.getItem("tennis.auth")).to.be.null;
       });
-    cy.get("button").contains("Log out").should("not.exist");
+    cy.get("a").contains("Log out").should("not.exist");
   });
 });

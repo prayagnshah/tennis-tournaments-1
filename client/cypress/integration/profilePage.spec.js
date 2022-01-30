@@ -16,10 +16,10 @@ describe("Profile Page", function () {
   it("Can visit profile page, then log out and redirect to Dashboard", function () {
     logIn();
 
-    cy.get("a").contains("FirstName").click();
+    cy.get("a").contains("Mty").click();
     cy.hash().should("eq", "#/profile");
-    cy.get("div").contains("User Name");
-    cy.get("a").contains("Log Out").click();
+    cy.get("div").contains("mmty@example.com");
+    cy.get("a").contains("Log out").click();
     cy.hash().should("eq", "#/");
 
     // cy.get("button").contains("Log out");
