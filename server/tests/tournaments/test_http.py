@@ -20,6 +20,7 @@ class AuthenticationTest(APITestCase):
     def test_user_can_sign_up(self):
         response = self.client.post(reverse('sign_up'), data={
             'username': 'user@example.com',
+            'email': 'user@example.com',
             'first_name': 'Test',
             'last_name': 'User',
             'password1': PASSWORD,

@@ -1,6 +1,8 @@
+from attr import fields
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from .models import Tournamnets
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -39,3 +41,10 @@ class LogInSerializer(TokenObtainPairSerializer):
             if key != 'id':
                 token[key] = value
         return token
+
+
+class TournamnetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tournamnets
+        fields = '__all__'
+        read_only_fields = ('id', 'created', 'updated',)
