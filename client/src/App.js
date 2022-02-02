@@ -83,10 +83,7 @@ function Layout({ isLoggedIn, logOut }) {
             <Navbar.Brand>Tennis tournaments</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse
-            className="d-flex justify-content-between"
-            id="responsive-navbar-nav"
-          >
+          <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto" activeKey={active}>
               <LinkContainer to="/">
                 <Nav.Link>Dashboard</Nav.Link>
@@ -116,7 +113,7 @@ function Layout({ isLoggedIn, logOut }) {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <br />
+      {/* <br /> */}
 
       <Container className="pt-3">
         <Outlet />
