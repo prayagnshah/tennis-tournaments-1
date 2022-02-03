@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function TournamnetsByCategoryCard({ tournaments, category }) {
   let headerColor = "";
@@ -40,9 +41,12 @@ function TournamnetsByCategoryCard({ tournaments, category }) {
                   {date.toLocaleDateString("cs-CZ", options)}
                 </td>
                 <td style={{ width: "30%" }}>
-                  <a href="#" className="text-decoration-none">
+                  <Link
+                    to={`/tournament/${tournament.id}`}
+                    className="text-decoration-none"
+                  >
                     {tournament.name}
-                  </a>
+                  </Link>
                 </td>
                 <td style={{ width: "10%" }}>{`0/${tournament.capacity}`}</td>
                 <td className="d-none d-sm-table-cell" style={{ width: "10%" }}>

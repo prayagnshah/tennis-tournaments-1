@@ -11,6 +11,7 @@ import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
 import Profile from "./components/Profile";
 import { getUser } from "./services/AuthService";
+import TournamentDetail from "./components/TournamentDetail";
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(() => {
@@ -48,6 +49,10 @@ function App() {
           element={<LogIn logIn={logIn} isLoggedIn={isLoggedIn} />}
         />
         <Route path="profile" element={<Profile isLoggedIn={isLoggedIn} />} />
+        <Route
+          path="tournament/:id"
+          element={<TournamentDetail isLoggedIn={isLoggedIn} />}
+        />
         <Route
           path="*"
           element={
