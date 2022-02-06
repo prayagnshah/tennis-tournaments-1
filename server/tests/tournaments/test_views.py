@@ -1,6 +1,6 @@
 import pytest
 
-from tournaments.models import Tournamnets
+# from tournaments.models import Tournaments
 
 
 @pytest.mark.django_db

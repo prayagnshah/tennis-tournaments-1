@@ -1,6 +1,6 @@
 import pytest
 
-from tournaments.models import Tournamnets
+from tournaments.models import Tournaments
 
 
 @pytest.fixture(scope="function")
@@ -14,7 +14,7 @@ def add_tournament():
         capacity=16,
         price=1000,
     ):
-        tournament = Tournamnets.objects.create(
+        tournament = Tournaments.objects.create(
             category=category,
             event_date=event_date,
             place=place,
