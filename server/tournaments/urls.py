@@ -24,5 +24,5 @@ urlpatterns = [
         RegistrationDetailView.as_view(),
         name="registration_detail",
     ),
-    path("registrations/", RegistrationListView.as_view(), name="registrations_List"),
+    path("registrations/", RegistrationListView.as_view(), name="registrations_list"),
 ]

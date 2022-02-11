@@ -42,9 +42,13 @@ class RegistrationAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "user",
-        "tournament",
+        "get_tournament",
         "registered_on",
         "cancelled_on",
         "status",
     )
     readonly_fields = ("id",)
+
+    @admin.display(description="Tournament_id")
+    def get_tournament(self, obj):
+        return obj.tournament.id

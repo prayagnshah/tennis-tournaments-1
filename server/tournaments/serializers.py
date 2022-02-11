@@ -1,3 +1,4 @@
+from telnetlib import STATUS
 from attr import fields
 from django.contrib.auth import get_user_model
 from django.forms import ValidationError
@@ -5,6 +6,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import Tournaments, Registration
 from rest_framework.validators import UniqueTogetherValidator
+from .utils import fill_torunament
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -84,22 +86,53 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        """Add logged in user to the user field"""
+        # Add logged in user to the user field
         if "user" not in validated_data:
             validated_data["user"] = self.context["request"].user
+
+        # Check if cancelled registration already exists for the user and tournament, then overwrite it
+        # From UniqueTogethetValidator the CANCELLED statuses needs to be excluded
+        cancelled_reg = Registration.objects.filter(
+            tournament=validated_data["tournament"].id, status="CANCELLED"
+        )
+        print(cancelled_reg)
+        if cancelled_reg.exists():
+            registration = cancelled_reg[0]
+            registration.status = "INTERESTED"
+            registration.save()
+            print(registration)
+            fill_torunament(Tournaments.objects.get(pk=registration.tournament.id))
+            return Registration.objects.get(pk=registration.id)
+
+        # if tournament capacity is filled, set status to 'INTERESTED'. Evaluate just with status 'REGISTERED'
+        registrations = Registration.objects.filter(
+            tournament=validated_data["tournament"].id
+        ).filter(status="REGISTERED")
+
+        if registrations.count() >= validated_data["tournament"].capacity:
+            validated_data["status"] = "INTERESTED"
+
         return super(RegistrationSerializer, self).create(validated_data)
+
+    def update(self, instance, validated_data):
+        # PUT request is used to set status as CANCELLED
+        if instance.status == "CANCELLED":
+            return instance  # here maybe I could raise an error
+        instance.status = "CANCELLED"
+        instance.save()
+
+        # Fill the free capacity on the tournament
+        fill_torunament(instance.tournament)
+
+        return instance
 
     class Meta:
         model = Registration
         fields = "__all__"
-        read_only_fields = (
-            "id",
-            "registered_on",
-            "cancelled_on",
-        )
+        read_only_fields = ("id", "registered_on", "cancelled_on", "status")
         validators = [
             UniqueTogetherValidator(
-                queryset=Registration.objects.all(),
+                queryset=Registration.objects.exclude(status="CANCELLED"),
                 fields=[
                     "user",
                     "tournament",

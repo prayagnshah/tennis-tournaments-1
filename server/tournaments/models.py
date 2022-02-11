@@ -1,5 +1,3 @@
-from asyncio.base_futures import _CANCELLED
-from time import time
 from wsgiref.validate import validator
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -7,6 +5,7 @@ from django.core.validators import validate_email
 from django.shortcuts import reverse
 from django.conf import settings
 from django.utils import timezone
+from tournaments.utils import fill_torunament
 
 # Create your models here.
 class User(AbstractUser):
@@ -14,7 +13,7 @@ class User(AbstractUser):
         unique=True,
         blank=False,
         max_length=254,
-        verbose_name="email address",
+        verbose_name="email_address",
         validators=[validate_email],
     )
 
@@ -71,6 +70,19 @@ class Tournaments(models.Model):
     )
     price = models.IntegerField(blank=False)
 
+    __original_capacity = None
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__original_capacity = self.capacity
+
+    # If the torunament capacity changes, change the registration statuses accordingly
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.capacity != self.__original_capacity:
+            fill_torunament(self)
+        self.__original_capacity = self.capacity
+
     def __str__(self):
         return f"Tournament(id: {self.id}) of category {self.category} on {self.event_date} at {self.place}"
 
@@ -100,12 +112,16 @@ class Registration(models.Model):
         "Tournaments",
         blank=False,
         on_delete=models.CASCADE,
-        related_name="registered_competitiors",
+        related_name="competitors",
     )
     registered_on = models.DateTimeField(auto_now_add=True)
     cancelled_on = models.DateTimeField(blank=True, null=True)
     status = models.CharField(
-        max_length=20, choices=REGISTRATION_STATUSES, blank=False, null=False
+        max_length=20,
+        choices=REGISTRATION_STATUSES,
+        blank=False,
+        null=False,
+        default=REGISTERED,
     )
 
     class Meta:
@@ -116,3 +132,6 @@ class Registration(models.Model):
         if self.status == self.CANCELLED:
             self.cancelled_on = timezone.now()
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"ID: {self.id} - user: {self.user.username} - torunament: {self.tournament.id} - {self.status}"
