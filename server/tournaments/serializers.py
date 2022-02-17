@@ -55,17 +55,6 @@ class LogInSerializer(TokenObtainPairSerializer):
         return token
 
 
-class Tournamentserializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tournaments
-        fields = "__all__"
-        read_only_fields = (
-            "id",
-            "created",
-            "updated",
-        )
-
-
 class RegistrationSerializer(serializers.ModelSerializer):
     # For CurrentUserDefault() to work, I need to send the request context from the view
     # CurrentUserDefault() workss just for validation - most specifically for unique together
@@ -90,19 +79,16 @@ class RegistrationSerializer(serializers.ModelSerializer):
         if "user" not in validated_data:
             validated_data["user"] = self.context["request"].user
 
-        # Check if cancelled registration already exists for the user and tournament, then overwrite it
+        # Check if cancelled registration already exists for the user and tournament,
+        # yes -> then delete the existing one and create a new one
         # From UniqueTogethetValidator the CANCELLED statuses needs to be excluded
         cancelled_reg = Registration.objects.filter(
             tournament=validated_data["tournament"].id, status="CANCELLED"
         )
-        print(cancelled_reg)
+        # print(cancelled_reg)
         if cancelled_reg.exists():
             registration = cancelled_reg[0]
-            registration.status = "INTERESTED"
-            registration.save()
-            print(registration)
-            fill_torunament(Tournaments.objects.get(pk=registration.tournament.id))
-            return Registration.objects.get(pk=registration.id)
+            registration.delete()
 
         # if tournament capacity is filled, set status to 'INTERESTED'. Evaluate just with status 'REGISTERED'
         registrations = Registration.objects.filter(
@@ -139,3 +125,21 @@ class RegistrationSerializer(serializers.ModelSerializer):
                 ],
             )
         ]
+
+
+class Tournamentserializer(serializers.ModelSerializer):
+
+    competitors = RegistrationSerializer(
+        read_only=True,
+        many=True,
+    )
+
+    class Meta:
+        model = Tournaments
+        fields = "__all__"
+        read_only_fields = (
+            "id",
+            "created",
+            "updated",
+            "competitors",
+        )

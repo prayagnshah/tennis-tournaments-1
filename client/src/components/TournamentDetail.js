@@ -2,34 +2,49 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getTournamentDetail } from "../services/TournamentService";
-import { Card, Button, Tabs, Tab, Table } from "react-bootstrap";
+import { Card, Button, Tabs, Tab, Alert } from "react-bootstrap";
+import PlayersTable from "./PlayersTable";
+import { getUser, getAccessToken } from "../services/AuthService";
+import { tournamentColor } from "../services/colors";
+import axios from "axios";
 
 function TournamentDetail({ isLoggedIn }) {
-  const [tournament, setTournament] = useState({ test: "test" });
+  const [tournament, setTournament] = useState();
+  const [alertDetail, setAlertDetail] = useState({
+    show: false,
+    variant: undefined,
+  });
   const params = useParams();
 
+  const loadTournamentDetail = async () => {
+    const { response, isError } = await getTournamentDetail(params.id);
+    if (isError) {
+      setTournament({});
+    } else {
+      setTournament(response.data);
+    }
+  };
+
   useEffect(() => {
-    const loadTournamentDetail = async () => {
-      const { response, isError } = await getTournamentDetail(params.id);
-      if (isError) {
-        setTournament({});
-      } else {
-        setTournament(response.data);
-      }
-    };
     loadTournamentDetail();
   }, []);
 
   let headerColor = "";
-  if (tournament.category === "START") {
-    headerColor = "yellow";
-  } else if (tournament.category === "SPORT") {
-    headerColor = "bg-warning";
-  } else if (tournament.category === "CHALLENGER") {
-    headerColor = "bg-danger";
+  let date = "";
+  if (tournament) {
+    if (tournament.category === "START") {
+      headerColor = tournamentColor.start;
+      // headerColor = "yellow";
+    } else if (tournament.category === "SPORT") {
+      // headerColor = "bg-warning";
+      headerColor = tournamentColor.sport;
+    } else if (tournament.category === "CHALLENGER") {
+      // headerColor = "bg-danger";
+      headerColor = tournamentColor.challenger;
+    }
+    date = new Date(tournament.event_date);
   }
 
-  const date = new Date(tournament.event_date);
   const options = {
     weekday: "long",
     year: "numeric",
@@ -49,37 +64,109 @@ function TournamentDetail({ isLoggedIn }) {
     );
   };
 
-  const PlayersTable = () => {
-    return (
-      <Table striped hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Registered on</th>
-            <th>Leaderboard pos.</th>
-            <th>Reg. number</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Nadal</td>
-            <td>30.1.22</td>
-            <td>6</td>
-            <td>23456</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Federer</td>
-            <td>25.1.22</td>
-            <td>20</td>
-            <td>10056</td>
-          </tr>
-        </tbody>
-      </Table>
-    );
+  const registerForTournament = async (tournamentID) => {
+    const url = `${process.env.REACT_APP_BASE_URL}/tennis/registrations/`;
+    const token = await getAccessToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    try {
+      const response = await axios.post(
+        url,
+        {
+          tournament: tournamentID,
+        },
+        { headers }
+      );
+      loadTournamentDetail();
+      if (response.data.status === "REGISTERED") {
+        setAlertDetail({ show: true, variant: "success" });
+      } else if (response.data.status === "INTERESTED") {
+        setAlertDetail({ show: true, variant: "warning" });
+      }
+
+      return { response, isError: false };
+    } catch (error) {
+      console.log(error);
+      return { response: error, isError: true };
+    }
   };
+
+  const cancelRegistration = async (tournamentID) => {
+    const token = await getAccessToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    const userData = getUser();
+    let registrationID = undefined;
+    tournament.competitors.map((registration) => {
+      if (
+        (registration.user.username === userData.username) &
+        (registration.status !== "CANCELLED")
+      ) {
+        registrationID = registration.id;
+      }
+    });
+    const url = `${process.env.REACT_APP_BASE_URL}/tennis/registrations/${registrationID}/`;
+    try {
+      const response = await axios.put(
+        url,
+        { tournament: tournamentID },
+        { headers }
+      );
+      loadTournamentDetail();
+      setAlertDetail({ show: true, variant: "danger" });
+      return { response, isError: false };
+    } catch (error) {
+      return { response: error, isError: true };
+    }
+  };
+
+  const isLoggedInUserRegistered = () => {
+    let isRegistered = false;
+    const userData = getUser();
+    tournament.competitors.map((registration) => {
+      if (
+        (registration.user.username === userData.username) &
+        (registration.status !== "CANCELLED")
+      ) {
+        isRegistered = true;
+      }
+    });
+    return isRegistered;
+  };
+
+  const activePlayersCount = () => {
+    // returns the number REGISTERED adn INTERESTED players
+    let count = 0;
+    tournament.competitors.map((registration) => {
+      if (registration.status !== "CANCELLED") {
+        count += 1;
+      }
+    });
+    return count;
+  };
+
+  function RegisterAlert() {
+    let text = "";
+    if (alertDetail.variant === "success") {
+      text = "You have succesfully registered for the tournament";
+    } else if (alertDetail.variant === "warning") {
+      text =
+        "Tournament capacity is alredy full, you have been added to the replacements list. If someone cancelles his registration or the tournament capacity gets increased you might be added into the registered category";
+    } else if (alertDetail.variant === "danger") {
+      text = "Your registration was cancelled";
+    }
+    if (alertDetail.show) {
+      return (
+        <Alert
+          variant={alertDetail.variant}
+          onClose={() => setAlertDetail({ show: false })}
+          dismissible
+        >
+          {text}
+        </Alert>
+      );
+    } else {
+      return null;
+    }
+  }
 
   return (
     <>
@@ -87,32 +174,49 @@ function TournamentDetail({ isLoggedIn }) {
         <h1>Loading...</h1>
       ) : (
         <>
-          <Card>
-            {tournament.category === "START" ? (
-              <Card.Header style={{ backgroundColor: headerColor }}>
-                <CardHeaderRender />
-              </Card.Header>
-            ) : (
-              <Card.Header className={headerColor}>
-                <CardHeaderRender />
-              </Card.Header>
-            )}
+          <Card className="shadow">
+            <Card.Header style={headerColor}>
+              <CardHeaderRender />
+            </Card.Header>
             <Card.Body>
+              <RegisterAlert />
               {/* <Card.Body style={{ backgroundColor: "rgb(236, 240, 241)" }}> */}
               <p>Date: {date.toLocaleDateString("cs-CZ", options)}</p>
               <p>Location: {tournament.place}</p>
               <p>Prestige: {tournament.prestige}</p>
               <p>Surface: {tournament.surface}</p>
-              <p>Capacity: {`0/${tournament.capacity}`}</p>
+              <p>
+                Capacity: {`${activePlayersCount()}/${tournament.capacity}`}
+              </p>
               <p>Status: {tournament.status}</p>
               <p>Price: {`${tournament.price} Czk`}</p>
 
-              {isLoggedIn && (
-                <>
-                  <Button variant="primary">Register for the tournament</Button>{" "}
-                  <Button variant="danger">Cancel registration</Button>
-                </>
-              )}
+              <div className="d-flex justify-content-center">
+                {isLoggedIn ? (
+                  <>
+                    {isLoggedInUserRegistered() ? (
+                      <Button
+                        variant="danger"
+                        onClick={() => cancelRegistration(tournament.id)}
+                      >
+                        Cancel registration
+                      </Button>
+                    ) : (
+                      <Button
+                        className="shadow-sm"
+                        variant="success"
+                        onClick={() => registerForTournament(tournament.id)}
+                      >
+                        Register for the tournament
+                      </Button>
+                    )}
+                  </>
+                ) : (
+                  <p className="text-warning text-center">
+                    Please log in or sign up to register to this tournament
+                  </p>
+                )}
+              </div>
               <hr />
               <Tabs
                 defaultActiveKey="registered"
@@ -120,13 +224,22 @@ function TournamentDetail({ isLoggedIn }) {
                 className="mb-3"
               >
                 <Tab eventKey="registered" title="Registered">
-                  <PlayersTable />
+                  <PlayersTable
+                    registeredPlayers={tournament.competitors}
+                    status="REGISTERED"
+                  />
                 </Tab>
                 <Tab eventKey="interested" title="Interested">
-                  <PlayersTable />
+                  <PlayersTable
+                    registeredPlayers={tournament.competitors}
+                    status="INTERESTED"
+                  />
                 </Tab>
                 <Tab eventKey="withdrawn" title="Withdrawn">
-                  <PlayersTable />
+                  <PlayersTable
+                    registeredPlayers={tournament.competitors}
+                    status="CANCELLED"
+                  />
                 </Tab>
               </Tabs>
             </Card.Body>

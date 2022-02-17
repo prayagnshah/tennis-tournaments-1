@@ -1,27 +1,22 @@
 import React from "react";
 import { Card, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { tournamentColor } from "../services/colors";
 
 function TournamnetsByCategoryCard({ tournaments, category }) {
   let headerColor = "";
   if (category === "START") {
-    headerColor = "yellow";
+    headerColor = tournamentColor.start;
   } else if (category === "SPORT") {
-    headerColor = "bg-warning";
+    headerColor = tournamentColor.sport;
   } else if (category === "CHALLENGER") {
-    headerColor = "bg-danger";
+    headerColor = tournamentColor.challenger;
   }
   return (
-    <Card className="tournament-tables">
-      {category === "START" ? (
-        <Card.Header style={{ backgroundColor: headerColor }}>
-          <strong>{category}</strong>
-        </Card.Header>
-      ) : (
-        <Card.Header className={headerColor}>
-          <strong>{category}</strong>
-        </Card.Header>
-      )}
+    <Card className="tournament-tables shadow">
+      <Card.Header style={headerColor}>
+        <strong>{category}</strong>
+      </Card.Header>
       <Table hover className="mb-0 p-0" size="sm">
         <tbody>
           {tournaments.map((tournament, i) => {

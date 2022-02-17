@@ -169,7 +169,7 @@ def test_renew_cancelled_reg(client, create_user, add_tournament, create_registr
     assert response.status_code == status.HTTP_201_CREATED
     assert response.data["user"]["id"] == user.id
     assert response.data["status"] == "REGISTERED"
-    assert response.data["id"] == registration.id
+    assert response.data["id"] != registration.id
 
 
 #################

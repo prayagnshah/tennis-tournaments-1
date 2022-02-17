@@ -126,6 +126,7 @@ class Registration(models.Model):
 
     class Meta:
         unique_together = ["user", "tournament"]
+        ordering = ["registered_on"]
 
     def save(self, *args, **kwargs):
         # setting the datime if status CANCELLED is chosen

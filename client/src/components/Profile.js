@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 
 function Profile({ isLoggedIn }) {
   const userInfo = () => {
-    return JSON.stringify(getUser());
+    return <pre>{JSON.stringify(getUser())}</pre>;
   };
 
   if (!isLoggedIn) {
