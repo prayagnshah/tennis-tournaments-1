@@ -7,6 +7,7 @@ from .views import (
     RegistrationDetailView,
     RegistrationListView,
     UserDetailView,
+    RegistrationsForUserView,
 )
 
 
@@ -25,4 +26,9 @@ urlpatterns = [
         name="registration_detail",
     ),
     path("registrations/", RegistrationListView.as_view(), name="registrations_list"),
+    path(
+        "registrations/user/<int:pk>/",
+        RegistrationsForUserView.as_view(),
+        name="registrations_list_for_user",
+    ),
 ]

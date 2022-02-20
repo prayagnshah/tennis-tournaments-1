@@ -3,7 +3,7 @@
     "env": {
         "credentials": {
           "username": "mmty@example.com",
-          "password": "pAssw0rd"
+          "password": "pAssw0rdpAssw0rd"
         }
       }
 }

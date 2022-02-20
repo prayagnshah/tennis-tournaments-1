@@ -15,6 +15,7 @@ def api_client():
 @pytest.fixture(scope="function")
 def add_tournament():
     def _add_tournament(
+        name="Test",
         category="START",
         event_date="2022-02-04T09:00:00Z",
         place="Test place",
@@ -25,6 +26,7 @@ def add_tournament():
         price=1000,
     ):
         tournament = Tournaments.objects.create(
+            name=name,
             category=category,
             event_date=event_date,
             place=place,

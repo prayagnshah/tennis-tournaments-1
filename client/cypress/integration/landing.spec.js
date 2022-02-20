@@ -7,14 +7,26 @@ describe("Landing page", function () {
     cy.get("div.card-header")
       .contains("START")
       .parent()
-      .should("have.css", "background-color", "rgb(255, 255, 0)");
+      .should(
+        "have.css",
+        "background",
+        "rgba(0, 0, 0, 0) linear-gradient(rgb(255, 255, 114), rgb(255, 235, 59)) repeat scroll 0% 0% / auto padding-box border-box"
+      );
     cy.get("div.card-header")
       .contains("SPORT")
       .parent()
-      .should("have.css", "background-color", "rgb(243, 156, 18)");
+      .should(
+        "have.css",
+        "background",
+        "rgba(0, 0, 0, 0) linear-gradient(rgb(255, 201, 71), rgb(255, 152, 0)) repeat scroll 0% 0% / auto padding-box border-box"
+      );
     cy.get("div.card-header")
       .contains("CHALLENGER")
       .parent()
-      .should("have.css", "background-color", "rgb(231, 76, 60)");
+      .should(
+        "have.css",
+        "background",
+        "rgba(0, 0, 0, 0) linear-gradient(rgb(255, 121, 97), rgb(244, 67, 54)) repeat scroll 0% 0% / auto padding-box border-box"
+      );
   });
 });

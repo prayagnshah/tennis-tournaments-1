@@ -12,6 +12,7 @@ from .serializers import (
     LogInSerializer,
     Tournamentserializer,
     RegistrationSerializer,
+    RegistrationSerializerForUser,
 )
 from rest_framework.views import APIView
 from .models import Registration, Tournaments, User
@@ -48,8 +49,8 @@ class UserDetailView(APIView):
 
     def get(self, request, pk, format=None):
         user = self.get_object(pk)
-        serilizer = UserSerializer(user)
-        return Response(serilizer.data)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
 
 class TournamnetDetailView(APIView):
@@ -129,3 +130,16 @@ class RegistrationDetailView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RegistrationsForUserView(APIView):
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+    ]
+    serializer_class = RegistrationSerializerForUser
+
+    def get(self, request, pk, format=None):
+        registrations = Registration.objects.filter(user=pk)
+        print(registrations)
+        serializer = RegistrationSerializerForUser(registrations, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)

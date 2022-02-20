@@ -1,5 +1,6 @@
 import email
 from venv import create
+from django.http import response
 from rest_framework.reverse import reverse
 from rest_framework import status
 from rest_framework_simplejwt.tokens import AccessToken
@@ -246,6 +247,34 @@ def test_get_invalid_reg_id(client):
     assert response.status_code == status.HTTP_404_NOT_FOUND
     assert len(str(response.data)) > 5
     assert "Not found" in str(response.data)
+
+
+@pytest.mark.django_db
+def test_can_get_all_registrations_for_user(
+    client, create_user, create_registration, add_tournament
+):
+    # Given
+    tournament1 = add_tournament(name="Test1")
+    tournament2 = add_tournament(name="Test2")
+    tournament3 = add_tournament(name="Test3")
+    user = create_user(email="u1@test.com")
+    reg1 = create_registration(user=user, tournament=tournament1, status="REGISTERED")
+    reg2 = create_registration(user=user, tournament=tournament2, status="INTERESTED")
+    reg3 = create_registration(user=user, tournament=tournament3, status="CANCELLED")
+    path = reverse("tennis:registrations_list_for_user", kwargs={"pk": user.id})
+    # When
+    response = client.get(path)
+    # Then
+    assert response.status_code == status.HTTP_200_OK
+    assert response.data[0]["id"] == reg1.id
+    assert response.data[0]["tournament"]["id"] == tournament1.id
+    assert response.data[0]["status"] == "REGISTERED"
+    assert response.data[1]["id"] == reg2.id
+    assert response.data[1]["tournament"]["id"] == tournament2.id
+    assert response.data[1]["status"] == "INTERESTED"
+    assert response.data[2]["id"] == reg3.id
+    assert response.data[2]["tournament"]["id"] == tournament3.id
+    assert response.data[2]["status"] == "CANCELLED"
 
 
 #################

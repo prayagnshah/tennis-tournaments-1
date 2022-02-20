@@ -143,3 +143,13 @@ class Tournamentserializer(serializers.ModelSerializer):
             "updated",
             "competitors",
         )
+
+
+class RegistrationSerializerForUser(serializers.ModelSerializer):
+    """Get all the registrations for the logged in user"""
+
+    class Meta:
+        model = Registration
+        fields = ("id", "tournament", "status")
+        read_only_fields = ("id", "tournament", "status")
+        depth = 1
