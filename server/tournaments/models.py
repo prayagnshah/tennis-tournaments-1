@@ -136,3 +136,35 @@ class Registration(models.Model):
 
     def __str__(self):
         return f"ID: {self.id} - user: {self.user.username} - torunament: {self.tournament.id} - {self.status}"
+
+
+class TournamentGroup(models.Model):
+    name = models.CharField(max_length=50)
+    players = models.ManyToManyField("User")
+    tournament = models.ForeignKey(
+        "Tournaments", on_delete=models.DO_NOTHING, related_name="tournament_goroup"
+    )
+
+    def __str__(self):
+        return f"{self.name} for {self.tournament.id}"
+
+
+class SetStat(models.Model):
+    """Tennis set"""
+
+    player_1 = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+        related_name="set_stat_p1",
+    )
+    player_2 = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+        related_name="set_stat_p2",
+    )
+    score_p1 = models.IntegerField(choices=[(i, i) for i in range(0, 7)])
+    score_p2 = models.IntegerField(choices=[(i, i) for i in range(0, 7)])
+    tournament = models.ForeignKey("Tournaments", on_delete=models.DO_NOTHING)
+    group = models.ForeignKey(
+        "TournamentGroup", on_delete=models.DO_NOTHING, related_name="set_stats"
+    )

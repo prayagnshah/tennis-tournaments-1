@@ -1,4 +1,5 @@
 from genericpath import exists
+from webbrowser import get
 from django.forms import ValidationError
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
@@ -13,9 +14,11 @@ from .serializers import (
     Tournamentserializer,
     RegistrationSerializer,
     RegistrationSerializerForUser,
+    SetStatSerializer,
+    TournamentGroupSerializer,
 )
 from rest_framework.views import APIView
-from .models import Registration, Tournaments, User
+from .models import Registration, TournamentGroup, Tournaments, User, SetStat
 
 
 # Create your views here.
@@ -140,6 +143,22 @@ class RegistrationsForUserView(APIView):
 
     def get(self, request, pk, format=None):
         registrations = Registration.objects.filter(user=pk)
-        print(registrations)
+        # print(registrations)
         serializer = RegistrationSerializerForUser(registrations, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class SetStatDetailView(APIView):
+    def get(self, request, pk, format=None):
+        set_stat = get_object_or_404(SetStat, pk=pk)
+        serializer = SetStatSerializer(set_stat)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class TournamentGroupView(APIView):
+    """Returns all  the groups for the given tournament - pk is for tournament ID"""
+
+    def get(self, request, pk, format=None):
+        groups = TournamentGroup.objects.filter(tournament=pk)
+        serializer = TournamentGroupSerializer(groups, many=True)
         return Response(serializer.data, status.HTTP_200_OK)

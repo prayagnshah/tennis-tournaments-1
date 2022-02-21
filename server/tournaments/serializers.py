@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.forms import ValidationError
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import Tournaments, Registration
+from .models import Tournaments, Registration, TournamentGroup, SetStat
 from rest_framework.validators import UniqueTogetherValidator
 from .utils import fill_torunament
 
@@ -153,3 +153,24 @@ class RegistrationSerializerForUser(serializers.ModelSerializer):
         fields = ("id", "tournament", "status")
         read_only_fields = ("id", "tournament", "status")
         depth = 1
+
+
+class SetStatSerializer(serializers.ModelSerializer):
+    """Get the details for the given set"""
+
+    class Meta:
+        model = SetStat
+        fields = "__all__"
+
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
+    #     representation["Player 1 name"] = instance.player_1.first_name
+    #     return representation
+
+
+class TournamentGroupSerializer(serializers.ModelSerializer):
+    set_stats = SetStatSerializer(many=True)
+
+    class Meta:
+        model = TournamentGroup
+        fields = ("name", "players", "tournament", "set_stats")

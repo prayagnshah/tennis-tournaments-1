@@ -8,6 +8,8 @@ from .views import (
     RegistrationListView,
     UserDetailView,
     RegistrationsForUserView,
+    SetStatDetailView,
+    TournamentGroupView,
 )
 
 
@@ -30,5 +32,11 @@ urlpatterns = [
         "registrations/user/<int:pk>/",
         RegistrationsForUserView.as_view(),
         name="registrations_list_for_user",
+    ),
+    path("sets/<int:pk>", SetStatDetailView.as_view(), name="set_detail"),
+    path(
+        "groups-for-tournament/<int:pk>",
+        TournamentGroupView.as_view(),
+        name="grups_for_torunament",
     ),
 ]
