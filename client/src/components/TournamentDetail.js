@@ -6,6 +6,7 @@ import { Card, Button, Tabs, Tab, Alert } from "react-bootstrap";
 import PlayersTable from "./PlayersTable";
 import { getUser, getAccessToken } from "../services/AuthService";
 import { tournamentColor } from "../services/colors";
+import GroupResults from "./GroupResults";
 import axios from "axios";
 
 function TournamentDetail({ isLoggedIn }) {
@@ -14,6 +15,7 @@ function TournamentDetail({ isLoggedIn }) {
     show: false,
     variant: undefined,
   });
+  const [results, setResults] = useState([]);
   const params = useParams();
 
   const loadTournamentDetail = async () => {
@@ -25,8 +27,20 @@ function TournamentDetail({ isLoggedIn }) {
     }
   };
 
+  const loadResults = async () => {
+    const url = `${process.env.REACT_APP_BASE_URL}/tennis/groups-for-tournament/${params.id}/`;
+    try {
+      const response = await axios.get(url);
+      setResults(response.data);
+    } catch (e) {
+      setResults();
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     loadTournamentDetail();
+    loadResults();
   }, []);
 
   let headerColor = "";
@@ -95,7 +109,7 @@ function TournamentDetail({ isLoggedIn }) {
     const headers = { Authorization: `Bearer ${token}` };
     const userData = getUser();
     let registrationID = undefined;
-    tournament.competitors.map((registration) => {
+    tournament.registrations.map((registration) => {
       if (
         (registration.user.username === userData.username) &
         (registration.status !== "CANCELLED")
@@ -121,7 +135,7 @@ function TournamentDetail({ isLoggedIn }) {
   const isLoggedInUserRegistered = () => {
     let isRegistered = false;
     const userData = getUser();
-    tournament.competitors.map((registration) => {
+    tournament.registrations.map((registration) => {
       if (
         (registration.user.username === userData.username) &
         (registration.status !== "CANCELLED")
@@ -135,7 +149,7 @@ function TournamentDetail({ isLoggedIn }) {
   const activePlayersCount = () => {
     // returns the number REGISTERED adn INTERESTED players
     let count = 0;
-    tournament.competitors.map((registration) => {
+    tournament.registrations.map((registration) => {
       if (registration.status !== "CANCELLED") {
         count += 1;
       }
@@ -225,28 +239,38 @@ function TournamentDetail({ isLoggedIn }) {
               >
                 <Tab eventKey="registered" title="Registered">
                   <PlayersTable
-                    registeredPlayers={tournament.competitors}
+                    registeredPlayers={tournament.registrations}
                     status="REGISTERED"
                   />
                 </Tab>
                 <Tab eventKey="interested" title="Interested">
                   <PlayersTable
-                    registeredPlayers={tournament.competitors}
+                    registeredPlayers={tournament.registrations}
                     status="INTERESTED"
                   />
                 </Tab>
                 <Tab eventKey="withdrawn" title="Withdrawn">
                   <PlayersTable
-                    registeredPlayers={tournament.competitors}
+                    registeredPlayers={tournament.registrations}
                     status="CANCELLED"
                   />
                 </Tab>
               </Tabs>
+
+              {results.length > 0 && (
+                <>
+                  <br />
+                  <hr />
+                  <h3 className="text-center bg-light mb-3 p-2">Results</h3>
+                  <GroupResults results={results} tournament={tournament} />
+                  <pre>{JSON.stringify(results, null, 4)}</pre>
+                </>
+              )}
             </Card.Body>
           </Card>
-          <div>
+          {/* <div>
             <pre>{JSON.stringify(tournament, null, 4)}</pre>
-          </div>
+          </div> */}
         </>
       )}
     </>

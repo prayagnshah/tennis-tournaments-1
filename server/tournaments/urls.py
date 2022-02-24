@@ -35,7 +35,7 @@ urlpatterns = [
     ),
     path("sets/<int:pk>", SetStatDetailView.as_view(), name="set_detail"),
     path(
-        "groups-for-tournament/<int:pk>",
+        "groups-for-tournament/<int:pk>/",
         TournamentGroupView.as_view(),
         name="grups_for_torunament",
     ),

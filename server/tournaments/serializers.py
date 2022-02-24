@@ -1,5 +1,3 @@
-from telnetlib import STATUS
-from attr import fields
 from django.contrib.auth import get_user_model
 from django.forms import ValidationError
 from rest_framework import serializers
@@ -129,7 +127,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 class Tournamentserializer(serializers.ModelSerializer):
 
-    competitors = RegistrationSerializer(
+    registrations = RegistrationSerializer(
         read_only=True,
         many=True,
     )
@@ -141,7 +139,7 @@ class Tournamentserializer(serializers.ModelSerializer):
             "id",
             "created",
             "updated",
-            "competitors",
+            "registrations",
         )
 
 
@@ -170,6 +168,7 @@ class SetStatSerializer(serializers.ModelSerializer):
 
 class TournamentGroupSerializer(serializers.ModelSerializer):
     set_stats = SetStatSerializer(many=True)
+    players = UserSerializer(many=True, read_only=True)
 
     class Meta:
         model = TournamentGroup

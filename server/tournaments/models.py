@@ -112,7 +112,7 @@ class Registration(models.Model):
         "Tournaments",
         blank=False,
         on_delete=models.CASCADE,
-        related_name="competitors",
+        related_name="registrations",
     )
     registered_on = models.DateTimeField(auto_now_add=True)
     cancelled_on = models.DateTimeField(blank=True, null=True)
@@ -162,8 +162,8 @@ class SetStat(models.Model):
         on_delete=models.DO_NOTHING,
         related_name="set_stat_p2",
     )
-    score_p1 = models.IntegerField(choices=[(i, i) for i in range(0, 7)])
-    score_p2 = models.IntegerField(choices=[(i, i) for i in range(0, 7)])
+    score_p1 = models.IntegerField(choices=[(i, i) for i in range(0, 8)])
+    score_p2 = models.IntegerField(choices=[(i, i) for i in range(0, 8)])
     tournament = models.ForeignKey("Tournaments", on_delete=models.DO_NOTHING)
     group = models.ForeignKey(
         "TournamentGroup", on_delete=models.DO_NOTHING, related_name="set_stats"

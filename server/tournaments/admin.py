@@ -7,6 +7,8 @@ from .models import User, Tournaments, Registration, TournamentGroup, SetStat
 # Register your models here.
 @admin.register(User)
 class UserAdmin(DefaultUserAdmin):
+    # fields = ("id", "first_name", "last_name")
+    list_display = ("id", "email", "first_name", "last_name", "is_staff")
     pass
 
 

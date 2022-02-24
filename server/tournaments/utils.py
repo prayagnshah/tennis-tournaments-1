@@ -3,11 +3,11 @@ def fill_torunament(tournament):
     Fills the free capacity of the given tournament with
     the available registrations with INTERESTED status.
     """
-    registered = tournament.competitors.filter(status="REGISTERED")
+    registered = tournament.registrations.filter(status="REGISTERED")
     free_capacity = tournament.capacity - registered.count()
 
     if free_capacity > 0:
-        interested = tournament.competitors.filter(status="INTERESTED").order_by(
+        interested = tournament.registrations.filter(status="INTERESTED").order_by(
             "registered_on"
         )[:free_capacity]
 
