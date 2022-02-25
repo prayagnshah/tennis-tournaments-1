@@ -2,7 +2,15 @@ from attr import field, fields
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 
-from .models import User, Tournaments, Registration, TournamentGroup, SetStat
+from .models import (
+    User,
+    Tournaments,
+    Registration,
+    TournamentGroup,
+    SetStat,
+    EliminationDraw,
+    EliminationDrawMatch,
+)
 
 # Register your models here.
 @admin.register(User)
@@ -78,6 +86,7 @@ class SetStatAdmin(admin.ModelAdmin):
         "get_score",
         "get_tournament",
         "group",
+        "draw_match",
     )
 
     @admin.display(description="Tournament_id")
@@ -87,3 +96,17 @@ class SetStatAdmin(admin.ModelAdmin):
     @admin.display(description="Score")
     def get_score(self, obj):
         return f"{obj.score_p1} : {obj.score_p2}"
+
+
+@admin.register(EliminationDraw)
+class EliminationDrawAdmin(admin.ModelAdmin):
+    list_display = ("id", "size", "type_of", "tournament")
+
+
+@admin.register(EliminationDrawMatch)
+class EliminationDrawMatchAdmin(admin.ModelAdmin):
+    list_display = ("match", "round_of", "get_players", "draw")
+
+    @admin.display(description="Players")
+    def get_players(self, obj):
+        return " vs ".join([str(p) for p in obj.players.all()])

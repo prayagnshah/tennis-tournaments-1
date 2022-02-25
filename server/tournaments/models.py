@@ -164,7 +164,67 @@ class SetStat(models.Model):
     )
     score_p1 = models.IntegerField(choices=[(i, i) for i in range(0, 8)])
     score_p2 = models.IntegerField(choices=[(i, i) for i in range(0, 8)])
-    tournament = models.ForeignKey("Tournaments", on_delete=models.DO_NOTHING)
+    tournament = models.ForeignKey("Tournaments", on_delete=models.CASCADE)
     group = models.ForeignKey(
-        "TournamentGroup", on_delete=models.DO_NOTHING, related_name="set_stats"
+        "TournamentGroup", on_delete=models.CASCADE, related_name="set_stats", null=True
+    )
+    draw_match = models.ForeignKey(
+        "EliminationDrawMatch",
+        on_delete=models.CASCADE,
+        related_name="set_stats",
+        null=True,
+    )
+
+
+class EliminationDraw(models.Model):
+    MAIN = "MAIN"
+    SECONDARY = "SECONDARY"
+    DRAW_TYPES = (
+        (MAIN, MAIN),
+        (SECONDARY, SECONDARY),
+    )
+
+    players = models.ManyToManyField("User")
+    size = models.IntegerField(
+        choices=[(4, 4), (8, 8), (16, 16), (32, 32)], blank=False, null=False
+    )
+    tournament = models.ForeignKey(
+        "Tournaments", on_delete=models.CASCADE, blank=False, null=False
+    )
+    type_of = models.CharField(
+        max_length=20, choices=DRAW_TYPES, blank=False, null=False
+    )
+
+    def __str__(self):
+        return f"{self.type_of} Draw for torunament {self.tournament.id}"
+
+    # On create generate the sufficient number of EliminationDrawMatches
+    def save(self, *args, **kwargs):
+        is_new = self._state.adding
+        super().save(*args, **kwargs)
+        if is_new:
+            size = self.size
+            round_of = 0
+            match_id = 0
+            while size > 0:
+                round_of += 1
+                for _ in range(size):
+                    match_id += 1
+                    match = EliminationDrawMatch(
+                        round_of=round_of, match=match_id, draw=self
+                    )
+                    match.save()
+                    print(match_id)
+                if size == 1:
+                    size = 0
+                else:
+                    size = int(size / 2)
+
+
+class EliminationDrawMatch(models.Model):
+    players = models.ManyToManyField("User")
+    round_of = models.IntegerField(blank=False, null=False)
+    match = models.IntegerField(blank=False, null=False)
+    draw = models.ForeignKey(
+        "EliminationDraw", blank=False, null=False, on_delete=models.CASCADE
     )
