@@ -105,7 +105,8 @@ class EliminationDrawAdmin(admin.ModelAdmin):
 
 @admin.register(EliminationDrawMatch)
 class EliminationDrawMatchAdmin(admin.ModelAdmin):
-    list_display = ("match", "round_of", "get_players", "draw")
+    list_display = ("id", "match", "round_of", "get_players", "draw", "set_stat")
+    # fields = ("id", "match", "round_of", "players", "draw", "set_stat")
 
     @admin.display(description="Players")
     def get_players(self, obj):

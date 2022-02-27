@@ -1,5 +1,3 @@
-from genericpath import exists
-from webbrowser import get
 from django.forms import ValidationError
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
@@ -7,6 +5,7 @@ from rest_framework import generics, status, permissions
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from django.http import Http404
+from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 
 from .serializers import (
     UserSerializer,
@@ -16,9 +15,19 @@ from .serializers import (
     RegistrationSerializerForUser,
     SetStatSerializer,
     TournamentGroupSerializer,
+    EliminationDrawMatchSerializer,
+    EliminationDrawSerializer,
 )
 from rest_framework.views import APIView
-from .models import Registration, TournamentGroup, Tournaments, User, SetStat
+from .models import (
+    Registration,
+    TournamentGroup,
+    Tournaments,
+    User,
+    SetStat,
+    EliminationDrawMatch,
+    EliminationDraw,
+)
 
 
 # Create your views here.
@@ -148,11 +157,24 @@ class RegistrationsForUserView(APIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
 
-class SetStatDetailView(APIView):
-    def get(self, request, pk, format=None):
-        set_stat = get_object_or_404(SetStat, pk=pk)
-        serializer = SetStatSerializer(set_stat)
-        return Response(serializer.data, status.HTTP_200_OK)
+# permissions for Set Stat - Admin can create and destroy instance, anyone can read
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return request.method in SAFE_METHODS
+
+
+class SetStatListView(generics.CreateAPIView):
+    permission_classes = [permissions.IsAdminUser]
+    queryset = SetStat.objects.all()
+    serializer_class = SetStatSerializer
+
+
+class SetStatDetailView(generics.RetrieveDestroyAPIView):
+    """Retrive, delete the given set"""
+
+    permission_classes = [permissions.IsAdminUser | ReadOnly]
+    queryset = SetStat.objects.all()
+    serializer_class = SetStatSerializer
 
 
 class TournamentGroupView(APIView):
@@ -161,4 +183,33 @@ class TournamentGroupView(APIView):
     def get(self, request, pk, format=None):
         groups = TournamentGroup.objects.filter(tournament=pk)
         serializer = TournamentGroupSerializer(groups, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class EliminationDrawMatchDetailView(APIView):
+    """Returns the given match detail"""
+
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    serializer_class = EliminationDrawMatchSerializer
+
+    def get(self, request, pk, fomat=None):
+        match = get_object_or_404(EliminationDrawMatch, pk=pk)
+        serializer = EliminationDrawMatchSerializer(match)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+    # Probably not required, the update can be done torugh SetStat update
+    # maybe for updating players without match results
+    def put(self, request, pk, format=None):
+        match = get_object_or_404(EliminationDrawMatch, pk=pk)
+        serializer = EliminationDrawMatchSerializer(match, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class EliminationDrawDetailView(APIView):
+    def get(self, request, pk, format=None):
+        draw = get_object_or_404(EliminationDraw, pk=pk)
+        serializer = EliminationDrawSerializer(draw)
         return Response(serializer.data, status.HTTP_200_OK)

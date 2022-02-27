@@ -1,4 +1,3 @@
-from wsgiref.validate import validator
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import validate_email
@@ -166,14 +165,27 @@ class SetStat(models.Model):
     score_p2 = models.IntegerField(choices=[(i, i) for i in range(0, 8)])
     tournament = models.ForeignKey("Tournaments", on_delete=models.CASCADE)
     group = models.ForeignKey(
-        "TournamentGroup", on_delete=models.CASCADE, related_name="set_stats", null=True
-    )
-    draw_match = models.ForeignKey(
-        "EliminationDrawMatch",
+        "TournamentGroup",
         on_delete=models.CASCADE,
         related_name="set_stats",
         null=True,
+        blank=True,
     )
+    draw_match = models.OneToOneField(
+        "EliminationDrawMatch",
+        on_delete=models.CASCADE,
+        related_name="set_stat",
+        null=True,
+        blank=True,
+    )
+
+    def __str__(self):
+        if self.draw_match:
+            return f"Set for torunament {self.tournament.id} - draw match - {self.player_1.username} : {self.player_2.username}"
+        elif self.group:
+            return f"Set for torunament {self.tournament.id} - {self.group.name} - {self.player_1.username} : {self.player_2.username}"
+        else:
+            return f"Set for torunament {self.tournament.id} - no group or draw match"
 
 
 class EliminationDraw(models.Model):
@@ -203,7 +215,7 @@ class EliminationDraw(models.Model):
         is_new = self._state.adding
         super().save(*args, **kwargs)
         if is_new:
-            size = self.size
+            size = int(self.size / 2)
             round_of = 0
             match_id = 0
             while size > 0:
@@ -224,7 +236,14 @@ class EliminationDraw(models.Model):
 class EliminationDrawMatch(models.Model):
     players = models.ManyToManyField("User")
     round_of = models.IntegerField(blank=False, null=False)
-    match = models.IntegerField(blank=False, null=False)
+    match = models.IntegerField(blank=True, null=False)
     draw = models.ForeignKey(
-        "EliminationDraw", blank=False, null=False, on_delete=models.CASCADE
+        "EliminationDraw",
+        blank=True,
+        null=False,
+        on_delete=models.CASCADE,
+        related_name="matches",
     )
+
+    def __str__(self):
+        return f"{self.draw.type_of} Draw match({self.match}) for torunament {self.draw.tournament.id}"

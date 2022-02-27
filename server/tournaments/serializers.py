@@ -1,8 +1,18 @@
+from math import sqrt
 from django.contrib.auth import get_user_model
 from django.forms import ValidationError
+from django.shortcuts import get_object_or_404
+from pyparsing import matchPreviousLiteral
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import Tournaments, Registration, TournamentGroup, SetStat
+from .models import (
+    Tournaments,
+    Registration,
+    TournamentGroup,
+    SetStat,
+    EliminationDrawMatch,
+    EliminationDraw,
+)
 from rest_framework.validators import UniqueTogetherValidator
 from .utils import fill_torunament
 
@@ -154,11 +164,130 @@ class RegistrationSerializerForUser(serializers.ModelSerializer):
 
 
 class SetStatSerializer(serializers.ModelSerializer):
-    """Get the details for the given set"""
-
     class Meta:
         model = SetStat
         fields = "__all__"
+
+    def validate(self, data):
+        # Validate tennis scores
+        score1 = data["score_p1"]
+        score2 = data["score_p2"]
+        if score1 < score2:
+            if 0 <= score1 <= 4 and score2 != 6:
+                raise serializers.ValidationError("Invalid score - validation 1")
+            if 5 <= score1 <= 6 and score2 != 7:
+                raise serializers.ValidationError("Invalid score - validation 2")
+
+        if score1 > score2:
+            if 0 <= score2 <= 4 and score1 != 6:
+                raise serializers.ValidationError("Invalid score - validation 3")
+            if 5 <= score2 <= 6 and score1 != 7:
+                raise serializers.ValidationError("Invalid score - validation 4")
+        if score1 == score2:
+            raise serializers.ValidationError("Invalid score - validation 5")
+
+        # Validate p1 and p2 are different
+        if data["player_1"] == data["player_2"]:
+            raise serializers.ValidationError("Player 1 cant be same as player 2")
+
+        # Group or draw field has to be set from the same torunament
+        if (not data["group"]) and (not data["draw_match"]):
+            raise serializers.ValidationError(
+                "One of 'group' or 'draw_match' fileds needs to be set"
+            )
+
+        # Group or draw needs to be from the defined tournament
+        if data["group"]:
+            if data["group"].tournament.id != data["tournament"].id:
+                raise serializers.ValidationError(
+                    "Selected group needs to be from the same tournament as the Set"
+                )
+        if data["draw_match"]:
+            if data["draw_match"].draw.tournament.id != data["tournament"].id:
+                raise serializers.ValidationError(
+                    "Selected draw match needs to be from the same tournament as the Set"
+                )
+
+        # Players needs to be from the given tournament
+        registration_p1 = Registration.objects.filter(
+            tournament=data["tournament"], user=data["player_1"], status="REGISTERED"
+        )
+        registration_p2 = Registration.objects.filter(
+            tournament=data["tournament"], user=data["player_2"], status="REGISTERED"
+        )
+        if not registration_p1:
+            raise serializers.ValidationError(
+                f"Player_1 -{data['player_1'].username}- needs to be registered for the given tournament"
+            )
+        if not registration_p2:
+            raise serializers.ValidationError(
+                f"Player_2 -{data['player_2'].username}- needs to be registered for the given tournament"
+            )
+
+        # Just players from the defined group can be added
+        if data["group"]:
+            if data["player_1"] not in data["group"].players.all():
+                raise serializers.ValidationError(
+                    f"Player_1 -{data['player_1'].username}- needs to be in the given group"
+                )
+            if data["player_2"] not in data["group"].players.all():
+                raise serializers.ValidationError(
+                    f"Player_2 -{data['player_2'].username}- needs to be in the given group"
+                )
+
+        #  In groups each set should be unique - players combination just once
+        if data["group"]:
+            for set_stat in data["group"].set_stats.all():
+                if (
+                    data["player_1"] == set_stat.player_1
+                    and data["player_2"] == set_stat.player_2
+                ) or (
+                    data["player_1"] == set_stat.player_2
+                    and data["player_2"] == set_stat.player_1
+                ):
+                    raise serializers.ValidationError(
+                        "This set already exists in this group"
+                    )
+
+        #  In draw matches each round should contain an unique combination of matches
+        if data["draw_match"]:
+            players_in_round = []
+            for match in data["draw_match"].draw.matches.filter(
+                round_of=data["draw_match"].round_of
+            ):
+
+                if hasattr(match, "set_stat"):
+                    players_in_round.append(match.set_stat.player_1)
+                    players_in_round.append(match.set_stat.player_2)
+
+            if data["player_1"] in players_in_round:
+                raise serializers.ValidationError(
+                    f"Player_1 -{data['player_1'].username}- is already seeded in this round of the draw"
+                )
+            if data["player_2"] in players_in_round:
+                raise serializers.ValidationError(
+                    f"Player_2 -{data['player_2'].username}- is already seeded in this round of the draw"
+                )
+
+            # Competitors in the set should match the draw match players
+            if data["draw_match"].players.all():
+                print(data["draw_match"].players.all())
+                if (
+                    data["player_1"] not in data["draw_match"].players.all()
+                    or data["player_2"] not in data["draw_match"].players.all()
+                ):
+                    raise serializers.ValidationError(
+                        f"Draw match already contains different players"
+                    )
+
+        return data
+
+    def create(self, validated_data):
+        match = validated_data["draw_match"]
+        if not match.players.all():
+            match.players.add(validated_data["player_1"])
+            match.players.add(validated_data["player_2"])
+        return super(SetStatSerializer, self).create(validated_data)
 
     # def to_representation(self, instance):
     #     representation = super().to_representation(instance)
@@ -173,3 +302,31 @@ class TournamentGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = TournamentGroup
         fields = ("name", "players", "tournament", "set_stats")
+
+
+# class SetStatForEliminationDrawMatchField(serializers.PrimaryKeyRelatedField):
+#     def get_queryset(self):
+#         # user = self.context["request"].user
+#         print(self.context["request"].data)
+#         queryset = SetStat.objects.filter(
+#             tournament=1
+#         )  # couldnt resolve to get the tournament ID - but its not important for the final product
+#            # it would be used in the Browsable API
+#         return queryset
+
+
+class EliminationDrawMatchSerializer(serializers.ModelSerializer):
+    set_stat = SetStatSerializer(read_only=True)
+
+    class Meta:
+        model = EliminationDrawMatch
+        fields = ("id", "players", "round_of", "match", "draw", "set_stat")
+        read_only_fields = ("id", "round_of", "match", "draw")
+
+
+class EliminationDrawSerializer(serializers.ModelSerializer):
+    matches = EliminationDrawMatchSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = EliminationDraw
+        fields = ("id", "size", "type_of", "tournament", "players", "matches")

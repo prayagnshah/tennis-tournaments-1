@@ -1,4 +1,3 @@
-from unicodedata import name
 from django.urls import path
 
 from .views import (
@@ -9,7 +8,10 @@ from .views import (
     UserDetailView,
     RegistrationsForUserView,
     SetStatDetailView,
+    SetStatListView,
     TournamentGroupView,
+    EliminationDrawMatchDetailView,
+    EliminationDrawDetailView,
 )
 
 
@@ -33,10 +35,21 @@ urlpatterns = [
         RegistrationsForUserView.as_view(),
         name="registrations_list_for_user",
     ),
-    path("sets/<int:pk>", SetStatDetailView.as_view(), name="set_detail"),
+    path("sets/", SetStatListView.as_view(), name="set_list"),
+    path("sets/<int:pk>/", SetStatDetailView.as_view(), name="set_detail"),
     path(
         "groups-for-tournament/<int:pk>/",
         TournamentGroupView.as_view(),
         name="grups_for_torunament",
+    ),
+    path(
+        "elimination-draw-match/<int:pk>/",
+        EliminationDrawMatchDetailView.as_view(),
+        name="match_detail",
+    ),
+    path(
+        "elimination-draw/<int:pk>/",
+        EliminationDrawDetailView.as_view(),
+        name="elimination_draw",
     ),
 ]
