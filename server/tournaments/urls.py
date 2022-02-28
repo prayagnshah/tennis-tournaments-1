@@ -48,8 +48,13 @@ urlpatterns = [
         name="match_detail",
     ),
     path(
+        "elimination-draw/",
+        EliminationDrawDetailView.as_view(),
+        name="elimination_draw_tournament_id",
+    ),
+    path(
         "elimination-draw/<int:pk>/",
         EliminationDrawDetailView.as_view(),
-        name="elimination_draw",
+        name="elimination_draw_pk",
     ),
 ]

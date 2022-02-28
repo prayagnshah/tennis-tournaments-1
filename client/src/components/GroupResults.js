@@ -50,11 +50,15 @@ function GroupResults({ results }) {
                     >{`${player.last_name}`}</th>
                   );
                 })}
+                <th scope="col">Sets</th>
+                <th scope="col">Games</th>
+                <th scope="col">Position</th>
               </tr>
               {group.players.map((player, i) => {
                 return (
                   <tr key={i}>
                     <th scope="row">{`${player.first_name} ${player.last_name}`}</th>
+                    {/* Score calculation for each cell */}
                     {group.players.map((playerInner, j) => {
                       let toRender = "";
                       let set = undefined;
@@ -63,8 +67,8 @@ function GroupResults({ results }) {
                       } else {
                         set = group.set_stats.find(({ player_1, player_2 }) => {
                           return (
-                            player_1 === player.id &&
-                            player_2 === playerInner.id
+                            player_1.id === player.id &&
+                            player_2.id === playerInner.id
                           );
                         });
                         if (set) {
@@ -78,8 +82,8 @@ function GroupResults({ results }) {
                           set = group.set_stats.find(
                             ({ player_1, player_2 }) => {
                               return (
-                                player_1 === playerInner.id &&
-                                player_2 === player.id
+                                player_1.id === playerInner.id &&
+                                player_2.id === player.id
                               );
                             }
                           );
@@ -101,6 +105,9 @@ function GroupResults({ results }) {
                         </td>
                       );
                     })}
+                    <td>3</td>
+                    <td>10</td>
+                    <td>1</td>
                   </tr>
                 );
               })}

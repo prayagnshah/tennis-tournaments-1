@@ -7,8 +7,8 @@ import PlayersTable from "./PlayersTable";
 import { getUser, getAccessToken } from "../services/AuthService";
 import { tournamentColor } from "../services/colors";
 import GroupResults from "./GroupResults";
+import DrawResults from "./DrawResults";
 import axios from "axios";
-import Reacket from "reacket";
 // const Reacket = require("reacket");
 
 function TournamentDetail({ isLoggedIn }) {
@@ -19,7 +19,6 @@ function TournamentDetail({ isLoggedIn }) {
   });
   const [results, setResults] = useState([]);
   const params = useParams();
-  const matches = require("./testData.json"); // manual data for tournamnet draw
 
   const loadTournamentDetail = async () => {
     const { response, isError } = await getTournamentDetail(params.id);
@@ -269,9 +268,7 @@ function TournamentDetail({ isLoggedIn }) {
                   {/* <pre>{JSON.stringify(results, null, 4)}</pre> */}
                   <br />
                   <br />
-                  <div className="scrolling-wrapper">
-                    <Reacket matches={matches} />
-                  </div>
+                  <DrawResults forTournament={params.id} />
                 </>
               )}
             </Card.Body>

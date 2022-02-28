@@ -209,7 +209,19 @@ class EliminationDrawMatchDetailView(APIView):
 
 
 class EliminationDrawDetailView(APIView):
-    def get(self, request, pk, format=None):
-        draw = get_object_or_404(EliminationDraw, pk=pk)
+    """Can get Draw by specifing tournament_id in query parameters or by pk"""
+
+    def get(self, request, pk=None, format=None):
+        if request.query_params.get("tournament_id") and not pk:
+            try:
+                draw = EliminationDraw.objects.get(
+                    tournament=request.query_params.get("tournament_id")
+                )
+            except EliminationDraw.DoesNotExist:
+                error = {"error": "Given 'tournament_id' does not exists"}
+                return Response(error, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            draw = get_object_or_404(EliminationDraw, pk=pk)
+
         serializer = EliminationDrawSerializer(draw)
         return Response(serializer.data, status.HTTP_200_OK)

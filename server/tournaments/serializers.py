@@ -164,6 +164,9 @@ class RegistrationSerializerForUser(serializers.ModelSerializer):
 
 
 class SetStatSerializer(serializers.ModelSerializer):
+    player_1 = UserSerializer(read_only=True)
+    player_2 = UserSerializer(read_only=True)
+
     class Meta:
         model = SetStat
         fields = "__all__"
@@ -317,6 +320,7 @@ class TournamentGroupSerializer(serializers.ModelSerializer):
 
 class EliminationDrawMatchSerializer(serializers.ModelSerializer):
     set_stat = SetStatSerializer(read_only=True)
+    players = UserSerializer(many=True, read_only=True)
 
     class Meta:
         model = EliminationDrawMatch
