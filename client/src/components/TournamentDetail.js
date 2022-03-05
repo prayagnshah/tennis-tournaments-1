@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getTournamentDetail } from "../services/TournamentService";
-import { Card, Button, Tabs, Tab, Alert } from "react-bootstrap";
+import { Card, Button, Tabs, Tab, Alert, Badge } from "react-bootstrap";
 import PlayersTable from "./PlayersTable";
 import { getUser, getAccessToken } from "../services/AuthService";
 import { tournamentColor } from "../services/colors";
@@ -70,13 +70,20 @@ function TournamentDetail({ isLoggedIn }) {
 
   const CardHeaderRender = () => {
     return (
-      <h3 className="mb-0 d-flex justify-content-between">
-        <strong>{tournament.name}</strong>
+      <div className="d-flex justify-content-between align-items-center">
+        <h3 className="mb-0">
+          <strong>{tournament.name}</strong>
+        </h3>
         <span>
-          <span className="text-success">OPEN&nbsp;</span>
-          <span>|| START Tour 2022</span>
+          <h4 className="mb-0 align-items-center">
+            <Badge bg="info" className="">
+              {tournament.status}
+            </Badge>
+            &nbsp;
+            <span>|| START Tour 2022</span>
+          </h4>
         </span>
-      </h3>
+      </div>
     );
   };
 

@@ -247,3 +247,20 @@ class EliminationDrawMatch(models.Model):
 
     def __str__(self):
         return f"{self.draw.type_of} Draw match({self.match}) for torunament {self.draw.tournament.id}"
+
+
+class GroupScores(models.Model):
+    """Manages the scores for a player on a group of tournament"""
+
+    player = models.ForeignKey(
+        "User", on_delete=models.CASCADE, related_name="group_scores"
+    )
+    group = models.ForeignKey(
+        "TournamentGroup", on_delete=models.CASCADE, related_name="scores"
+    )
+    tournament = models.ForeignKey(
+        "Tournaments", on_delete=models.CASCADE, related_name="group_scores"
+    )
+    sets_won = models.PositiveIntegerField(default=0)
+    games = models.IntegerField(default=0)
+    position = models.PositiveIntegerField(default=0)

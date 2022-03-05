@@ -10,6 +10,7 @@ from .models import (
     SetStat,
     EliminationDraw,
     EliminationDrawMatch,
+    GroupScores,
 )
 
 # Register your models here.
@@ -111,3 +112,8 @@ class EliminationDrawMatchAdmin(admin.ModelAdmin):
     @admin.display(description="Players")
     def get_players(self, obj):
         return " vs ".join([str(p) for p in obj.players.all()])
+
+
+@admin.register(GroupScores)
+class GroupScoresAdmin(admin.ModelAdmin):
+    list_display = ("id", "player", "group", "sets_won", "games", "position")

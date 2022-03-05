@@ -1,3 +1,4 @@
+from audioop import reverse
 from django.forms import ValidationError
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
@@ -6,6 +7,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from django.http import Http404
 from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
+from .utils import manage_group_scores
 
 from .serializers import (
     UserSerializer,
@@ -13,8 +15,10 @@ from .serializers import (
     Tournamentserializer,
     RegistrationSerializer,
     RegistrationSerializerForUser,
-    SetStatSerializer,
-    TournamentGroupSerializer,
+    ReadSetStatSerializer,
+    WriteSetStatSerializer,
+    TournamentGroupListSerializer,
+    TournamentGroupCreateSerializer,
     EliminationDrawMatchSerializer,
     EliminationDrawSerializer,
 )
@@ -27,6 +31,7 @@ from .models import (
     SetStat,
     EliminationDrawMatch,
     EliminationDraw,
+    GroupScores,
 )
 
 
@@ -166,7 +171,12 @@ class ReadOnly(BasePermission):
 class SetStatListView(generics.CreateAPIView):
     permission_classes = [permissions.IsAdminUser]
     queryset = SetStat.objects.all()
-    serializer_class = SetStatSerializer
+    serializer_class = WriteSetStatSerializer
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        if instance.group:
+            manage_group_scores(instance, GroupScores)
 
 
 class SetStatDetailView(generics.RetrieveDestroyAPIView):
@@ -174,16 +184,28 @@ class SetStatDetailView(generics.RetrieveDestroyAPIView):
 
     permission_classes = [permissions.IsAdminUser | ReadOnly]
     queryset = SetStat.objects.all()
-    serializer_class = SetStatSerializer
+    serializer_class = ReadSetStatSerializer
 
 
 class TournamentGroupView(APIView):
     """Returns all  the groups for the given tournament - pk is for tournament ID"""
 
+    serializer_class = TournamentGroupCreateSerializer
+    permission_classes = [permissions.IsAdminUser | ReadOnly]
+
     def get(self, request, pk, format=None):
+        get_object_or_404(Tournaments, pk=pk)
         groups = TournamentGroup.objects.filter(tournament=pk)
-        serializer = TournamentGroupSerializer(groups, many=True)
+        serializer = TournamentGroupListSerializer(groups, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
+
+    def post(self, request, pk, format=None):
+        get_object_or_404(Tournaments, pk=pk)
+        serializer = TournamentGroupCreateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class EliminationDrawMatchDetailView(APIView):
@@ -209,7 +231,11 @@ class EliminationDrawMatchDetailView(APIView):
 
 
 class EliminationDrawDetailView(APIView):
-    """Can get Draw by specifing tournament_id in query parameters or by pk"""
+    """Can get Draw by specifing tournament_id in query parameters or by pk
+    Can create new Draw"""
+
+    serializer_class = EliminationDrawSerializer
+    permission_classes = [permissions.IsAdminUser | ReadOnly]
 
     def get(self, request, pk=None, format=None):
         if request.query_params.get("tournament_id") and not pk:
@@ -220,8 +246,22 @@ class EliminationDrawDetailView(APIView):
             except EliminationDraw.DoesNotExist:
                 error = {"error": "Given 'tournament_id' does not exists"}
                 return Response(error, status=status.HTTP_400_BAD_REQUEST)
-        else:
+        elif pk:
             draw = get_object_or_404(EliminationDraw, pk=pk)
+        else:
+            error = {"error": "Missing 'tournament_id' parameter"}
+            return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = EliminationDrawSerializer(draw)
         return Response(serializer.data, status.HTTP_200_OK)
+
+    def post(self, request, pk=None, format=None):
+        if request.query_params.get("tournament_id") or pk:
+            error = {"error": f"Post request should not be sent to this path."}
+            return Response(error, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = EliminationDrawSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -50,24 +50,32 @@ function GroupResults({ results }) {
                     >{`${player.last_name}`}</th>
                   );
                 })}
-                <th scope="col">Sets</th>
+                <th
+                  scope="col"
+                  style={{ borderLeft: "2px double rgb(52, 152, 219)" }}
+                >
+                  Sets
+                </th>
                 <th scope="col">Games</th>
                 <th scope="col">Position</th>
               </tr>
-              {group.players.map((player, i) => {
+              {group.players.map((rowPlayer, i) => {
+                const playerScore = group.scores.find(
+                  (score) => score.player.id === rowPlayer.id
+                );
                 return (
                   <tr key={i}>
-                    <th scope="row">{`${player.first_name} ${player.last_name}`}</th>
+                    <th scope="row">{`${rowPlayer.first_name} ${rowPlayer.last_name}`}</th>
                     {/* Score calculation for each cell */}
                     {group.players.map((playerInner, j) => {
                       let toRender = "";
                       let set = undefined;
-                      if (playerInner.id === player.id) {
+                      if (playerInner.id === rowPlayer.id) {
                         toRender = "--";
                       } else {
                         set = group.set_stats.find(({ player_1, player_2 }) => {
                           return (
-                            player_1.id === player.id &&
+                            player_1.id === rowPlayer.id &&
                             player_2.id === playerInner.id
                           );
                         });
@@ -83,7 +91,7 @@ function GroupResults({ results }) {
                             ({ player_1, player_2 }) => {
                               return (
                                 player_1.id === playerInner.id &&
-                                player_2.id === player.id
+                                player_2.id === rowPlayer.id
                               );
                             }
                           );
@@ -100,14 +108,27 @@ function GroupResults({ results }) {
                         <td
                           key={j}
                           className={lightBgClassForScoresInTd(toRender)}
+                          style={{ borderRight: "none" }}
                         >
                           {toRender}
                         </td>
                       );
                     })}
-                    <td>3</td>
-                    <td>10</td>
-                    <td>1</td>
+
+                    <td
+                      className="text-center"
+                      style={{
+                        borderLeft: "2px double rgb(52, 152, 219)",
+                      }}
+                    >
+                      {playerScore && playerScore.sets_won}
+                    </td>
+                    <td className="text-center">
+                      {playerScore && playerScore.games}
+                    </td>
+                    <td className="text-center">
+                      {playerScore && playerScore.position}
+                    </td>
                   </tr>
                 );
               })}

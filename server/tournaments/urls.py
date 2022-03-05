@@ -40,7 +40,7 @@ urlpatterns = [
     path(
         "groups-for-tournament/<int:pk>/",
         TournamentGroupView.as_view(),
-        name="grups_for_torunament",
+        name="groups_for_torunament",
     ),
     path(
         "elimination-draw-match/<int:pk>/",

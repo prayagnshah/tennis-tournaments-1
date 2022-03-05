@@ -1,8 +1,6 @@
-from math import sqrt
 from django.contrib.auth import get_user_model
 from django.forms import ValidationError
 from django.shortcuts import get_object_or_404
-from pyparsing import matchPreviousLiteral
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import (
@@ -12,6 +10,7 @@ from .models import (
     SetStat,
     EliminationDrawMatch,
     EliminationDraw,
+    GroupScores,
 )
 from rest_framework.validators import UniqueTogetherValidator
 from .utils import fill_torunament
@@ -163,10 +162,7 @@ class RegistrationSerializerForUser(serializers.ModelSerializer):
         depth = 1
 
 
-class SetStatSerializer(serializers.ModelSerializer):
-    player_1 = UserSerializer(read_only=True)
-    player_2 = UserSerializer(read_only=True)
-
+class WriteSetStatSerializer(serializers.ModelSerializer):
     class Meta:
         model = SetStat
         fields = "__all__"
@@ -193,7 +189,7 @@ class SetStatSerializer(serializers.ModelSerializer):
         if data["player_1"] == data["player_2"]:
             raise serializers.ValidationError("Player 1 cant be same as player 2")
 
-        # Group or draw field has to be set from the same torunament
+        # Group or draw field has to be set
         if (not data["group"]) and (not data["draw_match"]):
             raise serializers.ValidationError(
                 "One of 'group' or 'draw_match' fileds needs to be set"
@@ -274,7 +270,6 @@ class SetStatSerializer(serializers.ModelSerializer):
 
             # Competitors in the set should match the draw match players
             if data["draw_match"].players.all():
-                print(data["draw_match"].players.all())
                 if (
                     data["player_1"] not in data["draw_match"].players.all()
                     or data["player_2"] not in data["draw_match"].players.all()
@@ -287,10 +282,14 @@ class SetStatSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         match = validated_data["draw_match"]
-        if not match.players.all():
+        if match and not match.players.all():
             match.players.add(validated_data["player_1"])
             match.players.add(validated_data["player_2"])
-        return super(SetStatSerializer, self).create(validated_data)
+
+        # if validated_data["group"]:
+        #     manage_group_scores(validated_data, GroupScores)
+
+        return super(WriteSetStatSerializer, self).create(validated_data)
 
     # def to_representation(self, instance):
     #     representation = super().to_representation(instance)
@@ -298,13 +297,61 @@ class SetStatSerializer(serializers.ModelSerializer):
     #     return representation
 
 
-class TournamentGroupSerializer(serializers.ModelSerializer):
-    set_stats = SetStatSerializer(many=True)
+class ReadSetStatSerializer(serializers.ModelSerializer):
+    player_1 = UserSerializer(read_only=True)
+    player_2 = UserSerializer(read_only=True)
+
+    class Meta:
+        model = SetStat
+        fields = "__all__"
+
+
+class GroupScoresSerializer(serializers.ModelSerializer):
+    player = UserSerializer(read_only=True)
+
+    class Meta:
+        model = GroupScores
+        fields = ("player", "sets_won", "games", "position")
+
+
+class TournamentGroupListSerializer(serializers.ModelSerializer):
+    set_stats = ReadSetStatSerializer(many=True)
     players = UserSerializer(many=True, read_only=True)
+    scores = GroupScoresSerializer(many=True, read_only=True)
 
     class Meta:
         model = TournamentGroup
-        fields = ("name", "players", "tournament", "set_stats")
+        fields = ("name", "players", "tournament", "set_stats", "scores")
+
+
+class TournamentGroupCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TournamentGroup
+        fields = ("name", "players", "tournament")
+
+    def validate(self, data):
+        # Tournament needs to be consolidated to add groups
+        if not data["tournament"].status == "CONSOLIDATED":
+            raise serializers.ValidationError(
+                "Tournament needs to be consolidated to add groups"
+            )
+
+        # Players number in group can be 3, 4 or 5
+        if not (3 <= len(data["players"]) <= 5):
+            raise serializers.ValidationError(
+                "There should be 3,4 or 5 players in the group"
+            )
+
+        # Players in group should be from the registered tournament players
+        for player in data["players"]:
+            if not Registration.objects.filter(
+                tournament=data["tournament"], user=player, status="REGISTERED"
+            ):
+                raise serializers.ValidationError(
+                    f"{player.username} is not registered for this tournament"
+                )
+            print(player.id)
+        return data
 
 
 # class SetStatForEliminationDrawMatchField(serializers.PrimaryKeyRelatedField):
@@ -319,7 +366,7 @@ class TournamentGroupSerializer(serializers.ModelSerializer):
 
 
 class EliminationDrawMatchSerializer(serializers.ModelSerializer):
-    set_stat = SetStatSerializer(read_only=True)
+    set_stat = ReadSetStatSerializer(read_only=True)
     players = UserSerializer(many=True, read_only=True)
 
     class Meta:
@@ -334,3 +381,29 @@ class EliminationDrawSerializer(serializers.ModelSerializer):
     class Meta:
         model = EliminationDraw
         fields = ("id", "size", "type_of", "tournament", "players", "matches")
+        read_only_fields = ("id", "matches")
+
+    def validate(self, data):
+        # Draw can be created just for CONSOLIDATED tournament
+        if data["tournament"].status != "CONSOLIDATED":
+            raise serializers.ValidationError(
+                "Tournament status needs to be CONSOLIDATED"
+            )
+
+        # Number of players cant be more then the size of draw
+        if len(data["players"]) > data["size"]:
+            raise serializers.ValidationError(
+                "Number of players cant be more then the draw size"
+            )
+
+        # Added players needs to be registered for the tournament
+        for player in data["players"]:
+            registration = Registration.objects.filter(
+                tournament=data["tournament"], status="REGISTERED", user=player
+            )
+            if not registration:
+                raise serializers.ValidationError(
+                    "User needs to be registered for the torunament"
+                )
+
+        return data

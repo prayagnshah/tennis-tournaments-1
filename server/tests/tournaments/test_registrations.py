@@ -1,5 +1,3 @@
-import email
-from venv import create
 from django.http import response
 from rest_framework.reverse import reverse
 from rest_framework import status

@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import Reacket from "reacket";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -10,7 +11,6 @@ function DrawResults({ forTournament }) {
 
   const getResults = async () => {
     const url = `${process.env.REACT_APP_BASE_URL}/tennis/elimination-draw/?tournament_id=${forTournament}`;
-    console.log(url);
     try {
       const response = await axios.get(url);
       setDraw(response.data);
@@ -57,7 +57,7 @@ function ConvertDrawResultsForReacket(dataToConvert) {
     convertedPlayer.id = playerToConvert.id;
     convertedPlayer.name =
       playerToConvert.first_name + " " + playerToConvert.last_name;
-    convertedPlayer.seed = undefined; // forcefully set to undefined - this fgeature is not yet implemented to backend and probably it does not have any affect on the rendering
+    convertedPlayer.seed = 0; // forcefully set to 0 (undefined gives prop type error) - this fgeature is not yet implemented to backend and probably it does not have any affect on the rendering
     return convertedPlayer;
   };
 
@@ -82,8 +82,6 @@ function ConvertDrawResultsForReacket(dataToConvert) {
     convertedMacth.score = convertedScore;
     dataToReturn.push(convertedMacth);
   });
-  console.log("Concerted data:");
-  console.log(dataToReturn);
 
   return dataToReturn;
 }
