@@ -19,6 +19,11 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
+    @property
+    def group(self):
+        groups = self.groups.all()
+        return groups[0].name if groups else None
+
 
 class Tournaments(models.Model):
     # Categories
@@ -145,7 +150,7 @@ class TournamentGroup(models.Model):
     )
 
     def __str__(self):
-        return f"{self.name} for {self.tournament.id}"
+        return f"{self.name}({self.id}) for {self.tournament.id}"
 
 
 class SetStat(models.Model):

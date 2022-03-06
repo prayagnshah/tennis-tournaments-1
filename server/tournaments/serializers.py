@@ -44,8 +44,9 @@ class UserSerializer(serializers.ModelSerializer):
             "password2",
             "first_name",
             "last_name",
+            "group",
         )
-        read_only_fields = ("id",)
+        read_only_fields = ("id", "group")
 
 
 # Created a LogInSerializer that serializes the User object and adds the data to the token payload as private claims.

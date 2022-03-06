@@ -2,6 +2,8 @@ import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 import itertools
+from django.contrib.auth.models import Group
+from django.shortcuts import get_object_or_404
 
 from tournaments.models import (
     Tournaments,
@@ -108,6 +110,9 @@ def tournament_with_8_players():
             user=user, tournament=tournament, status="REGISTERED"
         )
 
+    # group = get_object_or_404(Group, name="Manager")
+    group, _ = Group.objects.get_or_create(name="Manager")
+    to_return["user0"].groups.add(group)
     to_return["user0"].is_staff = True
     to_return["user0"].save()
 

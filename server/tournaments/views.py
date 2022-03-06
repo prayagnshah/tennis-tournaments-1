@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from django.http import Http404
 from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 from .utils import manage_group_scores
+from django.contrib.auth.models import Group
 
 from .serializers import (
     UserSerializer,
@@ -34,8 +35,25 @@ from .models import (
     GroupScores,
 )
 
+### PERMISSIONS ###
+# permissions for Set Stat - Admin can create and destroy instance, anyone can read
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return request.method in SAFE_METHODS
 
-# Create your views here.
+
+class IsManagerOrReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        if request.user:
+            group = get_object_or_404(Group, name="Manager")
+            return request.user.group == group.name
+
+        return False
+
+
+### VIEWS ###
 class SignUpView(generics.CreateAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
@@ -162,14 +180,8 @@ class RegistrationsForUserView(APIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
 
-# permissions for Set Stat - Admin can create and destroy instance, anyone can read
-class ReadOnly(BasePermission):
-    def has_permission(self, request, view):
-        return request.method in SAFE_METHODS
-
-
 class SetStatListView(generics.CreateAPIView):
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsManagerOrReadOnly]
     queryset = SetStat.objects.all()
     serializer_class = WriteSetStatSerializer
 
@@ -182,7 +194,7 @@ class SetStatListView(generics.CreateAPIView):
 class SetStatDetailView(generics.RetrieveDestroyAPIView):
     """Retrive, delete the given set"""
 
-    permission_classes = [permissions.IsAdminUser | ReadOnly]
+    permission_classes = [IsManagerOrReadOnly]
     queryset = SetStat.objects.all()
     serializer_class = ReadSetStatSerializer
 
@@ -191,7 +203,7 @@ class TournamentGroupView(APIView):
     """Returns all  the groups for the given tournament - pk is for tournament ID"""
 
     serializer_class = TournamentGroupCreateSerializer
-    permission_classes = [permissions.IsAdminUser | ReadOnly]
+    permission_classes = [IsManagerOrReadOnly]
 
     def get(self, request, pk, format=None):
         get_object_or_404(Tournaments, pk=pk)
@@ -235,7 +247,7 @@ class EliminationDrawDetailView(APIView):
     Can create new Draw"""
 
     serializer_class = EliminationDrawSerializer
-    permission_classes = [permissions.IsAdminUser | ReadOnly]
+    permission_classes = [IsManagerOrReadOnly]
 
     def get(self, request, pk=None, format=None):
         if request.query_params.get("tournament_id") and not pk:
