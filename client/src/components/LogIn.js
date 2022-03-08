@@ -2,7 +2,15 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
 import { Link, Navigate } from "react-router-dom";
-import { Card, Button, Form, Alert } from "react-bootstrap";
+import {
+  Card,
+  Button,
+  Form,
+  Alert,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 
 function LogIn({ isLoggedIn, logIn }) {
   const [isSubmitted, setSubmitted] = useState(false);
@@ -35,62 +43,77 @@ function LogIn({ isLoggedIn, logIn }) {
 
   return (
     <>
-      <Card>
-        <Card.Header>Log in</Card.Header>
-        <Card.Body>
-          <Formik
-            initialValues={{
-              email: "",
-              password: "",
-            }}
-            onSubmit={onSubmit}
-          >
-            {({ handleChange, handleSubmit, values, errors, isSubmitting }) => (
-              <>
-                {"__all__" in errors && (
-                  <Alert variant="danger">{errors.__all__}</Alert>
-                )}
-                {"detail" in errors && (
-                  <Alert variant="danger">{errors.detail}</Alert>
-                )}
-                <Form noValidate onSubmit={handleSubmit}>
-                  <Form.Group className="mb-3" controlId="username">
-                    <Form.Label>Email address:</Form.Label>
-                    <Form.Control
-                      name="email"
-                      required
-                      type="email"
-                      onChange={handleChange}
-                      value={values.email}
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="password">
-                    <Form.Label>Password:</Form.Label>
-                    <Form.Control
-                      name="password"
-                      type="password"
-                      onChange={handleChange}
-                      vale={values.password}
-                    />
-                  </Form.Group>
-                  <div className="d-grid mb-3">
-                    <Button
-                      type="submit"
-                      variant="primary"
-                      disabled={isSubmitting}
-                    >
-                      Log in
-                    </Button>
-                  </div>
-                </Form>
-              </>
-            )}
-          </Formik>
-          <Card.Text className="text-center">
-            Don't have an account? <Link to="/sign-up">Sign up!</Link>
-          </Card.Text>
-        </Card.Body>
-      </Card>
+      <Container>
+        <Row>
+          <Col></Col>
+          {/* From xs to sm has 12. from sm to lg has 8. From lg has 6  */}
+          <Col sm="8" lg="6">
+            <Card>
+              <Card.Header>Log in</Card.Header>
+              <Card.Body>
+                <Formik
+                  initialValues={{
+                    email: "",
+                    password: "",
+                  }}
+                  onSubmit={onSubmit}
+                >
+                  {({
+                    handleChange,
+                    handleSubmit,
+                    values,
+                    errors,
+                    isSubmitting,
+                  }) => (
+                    <>
+                      {"__all__" in errors && (
+                        <Alert variant="danger">{errors.__all__}</Alert>
+                      )}
+                      {"detail" in errors && (
+                        <Alert variant="danger">{errors.detail}</Alert>
+                      )}
+                      <Form noValidate onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3" controlId="username">
+                          <Form.Label>Email address:</Form.Label>
+                          <Form.Control
+                            name="email"
+                            required
+                            type="email"
+                            onChange={handleChange}
+                            value={values.email}
+                          />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="password">
+                          <Form.Label>Password:</Form.Label>
+                          <Form.Control
+                            name="password"
+                            type="password"
+                            onChange={handleChange}
+                            vale={values.password}
+                          />
+                        </Form.Group>
+                        <div className="d-grid mb-3">
+                          <Button
+                            type="submit"
+                            variant="primary"
+                            disabled={isSubmitting}
+                          >
+                            Log in
+                          </Button>
+                        </div>
+                      </Form>
+                    </>
+                  )}
+                </Formik>
+                <Card.Text className="text-center">
+                  Don't have an account? <Link to="/sign-up">Sign up!</Link>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col></Col>
+        </Row>
+      </Container>
     </>
   );
 }

@@ -39,3 +39,14 @@ body {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.tournamnet-info-badge {
+  font-size: 1em;
+  line-height: normal;
+}

@@ -2,7 +2,17 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getTournamentDetail } from "../services/TournamentService";
-import { Card, Button, Tabs, Tab, Alert, Badge } from "react-bootstrap";
+import {
+  Card,
+  Button,
+  Tabs,
+  Tab,
+  Alert,
+  Badge,
+  Row,
+  Col,
+  Container,
+} from "react-bootstrap";
 import PlayersTable from "./PlayersTable";
 import { getUser, getAccessToken } from "../services/AuthService";
 import { tournamentColor } from "../services/colors";
@@ -70,21 +80,53 @@ function TournamentDetail({ isLoggedIn }) {
 
   const CardHeaderRender = () => {
     return (
-      <div className="d-flex justify-content-between align-items-center">
-        <h3 className="mb-0">
-          <strong>{tournament.name}</strong>
-        </h3>
-        <span>
-          <h4 className="mb-0 align-items-center">
-            <Badge bg="info" className="">
-              {tournament.status}
-            </Badge>
-            &nbsp;
-            <span>|| START Tour 2022</span>
-          </h4>
-        </span>
-      </div>
+      <Container className="px-0">
+        <Row className="align-items-center d-flex">
+          <Col className="align-items-center d-flex">
+            <h3 className="mb-0">
+              <strong>{tournament.name}</strong>
+            </h3>
+          </Col>
+
+          <Col>
+            <Row>
+              <Col className="d-flex justify-content-end justify-content-sm-start mb-1 mb-sm-0">
+                <h4 className="mb-0 align-items-center d-flex">
+                  <Badge bg="info" className="">
+                    {tournament.status}
+                  </Badge>
+                </h4>
+              </Col>
+              <Col className=" d-flex justify-content-end">
+                <h5 className="mb-0 align-items-center d-flex">
+                  <Badge bg="primary" className="">
+                    {`${tournament.category} TOUR 2022`}
+                  </Badge>
+                </h5>
+
+                {/* <span className="">|| </span> */}
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
     );
+    // return (
+    //   <div className="d-flex justify-content-between align-items-center">
+    //     <h3 className="mb-0">
+    //
+    //     </h3>
+    //     <span>
+    //       <h4 className="mb-0 align-items-center d-flex">
+    //         <Badge bg="info" className="d-flex">
+    //           {tournament.status}
+    //         </Badge>
+    //         &nbsp;
+    //         <span>|| START Tour 2022</span>
+    //       </h4>
+    //     </span>
+    //   </div>
+    // );
   };
 
   const registerForTournament = async (tournamentID) => {
@@ -197,89 +239,113 @@ function TournamentDetail({ isLoggedIn }) {
         <h1>Loading...</h1>
       ) : (
         <>
-          <Card className="shadow">
-            <Card.Header style={headerColor}>
-              <CardHeaderRender />
-            </Card.Header>
-            <Card.Body>
-              <RegisterAlert />
-              {/* <Card.Body style={{ backgroundColor: "rgb(236, 240, 241)" }}> */}
-              <p>Date: {date.toLocaleDateString("cs-CZ", options)}</p>
-              <p>Location: {tournament.place}</p>
-              <p>Prestige: {tournament.prestige}</p>
-              <p>Surface: {tournament.surface}</p>
-              <p>
-                Capacity: {`${activePlayersCount()}/${tournament.capacity}`}
-              </p>
-              <p>Status: {tournament.status}</p>
-              <p>Price: {`${tournament.price} Czk`}</p>
+          <Container className="px-0">
+            <Row className="mx-0">
+              <Col></Col>
+              <Col lg="10" className="px-0">
+                <Card className="shadow tournament-tables">
+                  <Card.Header style={headerColor}>
+                    <CardHeaderRender />
+                  </Card.Header>
+                  <Card.Body>
+                    <RegisterAlert />
+                    {/* <Card.Body style={{ backgroundColor: "rgb(236, 240, 241)" }}> */}
+                    <Badge bg="primary tournamnet-info-badge">
+                      {date.toLocaleDateString("US-EN", options)}
+                    </Badge>
+                    {/* <p>Date: {date.toLocaleDateString("US-EN", options)}</p> */}
+                    <p>Location: {tournament.place}</p>
+                    {/* <p>Prestige: {tournament.prestige}</p> */}
+                    <p>Surface: {tournament.surface}</p>
+                    <p>
+                      Capacity:{" "}
+                      {`${activePlayersCount()}/${tournament.capacity}`}
+                    </p>
+                    {/* <p>Status: {tournament.status}</p> */}
+                    {/* <p>Price: {`${tournament.price} Czk`}</p> */}
 
-              <div className="d-flex justify-content-center">
-                {isLoggedIn ? (
-                  <>
-                    {isLoggedInUserRegistered() ? (
-                      <Button
-                        variant="danger"
-                        onClick={() => cancelRegistration(tournament.id)}
-                      >
-                        Cancel registration
-                      </Button>
-                    ) : (
-                      <Button
-                        className="shadow-sm"
-                        variant="success"
-                        onClick={() => registerForTournament(tournament.id)}
-                      >
-                        Register for the tournament
-                      </Button>
+                    <div className="d-flex justify-content-center">
+                      {isLoggedIn ? (
+                        <>
+                          {isLoggedInUserRegistered() ? (
+                            <Button
+                              variant="danger"
+                              onClick={() => cancelRegistration(tournament.id)}
+                            >
+                              Cancel registration
+                            </Button>
+                          ) : (
+                            <Button
+                              className="shadow-sm"
+                              variant="success"
+                              onClick={() =>
+                                registerForTournament(tournament.id)
+                              }
+                            >
+                              Register for the tournament
+                            </Button>
+                          )}
+                        </>
+                      ) : (
+                        <p className="text-warning text-center">
+                          Please log in or sign up to register to this
+                          tournament
+                        </p>
+                      )}
+                    </div>
+                    <hr />
+                    <Tabs
+                      defaultActiveKey="registered"
+                      id="uncontrolled-tab"
+                      className="mb-3"
+                    >
+                      <Tab eventKey="registered" title="Registered">
+                        <PlayersTable
+                          registeredPlayers={tournament.registrations}
+                          status="REGISTERED"
+                        />
+                      </Tab>
+                      <Tab eventKey="interested" title="Interested">
+                        <PlayersTable
+                          registeredPlayers={tournament.registrations}
+                          status="INTERESTED"
+                        />
+                      </Tab>
+                      <Tab eventKey="withdrawn" title="Withdrawn">
+                        <PlayersTable
+                          registeredPlayers={tournament.registrations}
+                          status="CANCELLED"
+                        />
+                      </Tab>
+                    </Tabs>
+
+                    {results.length > 0 && (
+                      <>
+                        <br />
+                        <hr />
+                        <h3 className="text-center bg-light mb-3 p-2">
+                          Results
+                        </h3>
+                        <div className="scrolling-wrapper">
+                          <GroupResults
+                            results={results}
+                            tournament={tournament}
+                          />
+                        </div>
+
+                        {/* <pre>{JSON.stringify(results, null, 4)}</pre> */}
+                        <br />
+                        <br />
+                        <DrawResults forTournament={params.id} />
+                      </>
                     )}
-                  </>
-                ) : (
-                  <p className="text-warning text-center">
-                    Please log in or sign up to register to this tournament
-                  </p>
-                )}
-              </div>
-              <hr />
-              <Tabs
-                defaultActiveKey="registered"
-                id="uncontrolled-tab"
-                className="mb-3"
-              >
-                <Tab eventKey="registered" title="Registered">
-                  <PlayersTable
-                    registeredPlayers={tournament.registrations}
-                    status="REGISTERED"
-                  />
-                </Tab>
-                <Tab eventKey="interested" title="Interested">
-                  <PlayersTable
-                    registeredPlayers={tournament.registrations}
-                    status="INTERESTED"
-                  />
-                </Tab>
-                <Tab eventKey="withdrawn" title="Withdrawn">
-                  <PlayersTable
-                    registeredPlayers={tournament.registrations}
-                    status="CANCELLED"
-                  />
-                </Tab>
-              </Tabs>
+                  </Card.Body>
+                </Card>
+              </Col>
+              <Col></Col>
+            </Row>
+          </Container>
 
-              {results.length > 0 && (
-                <>
-                  <br />
-                  <hr />
-                  <h3 className="text-center bg-light mb-3 p-2">Results</h3>
-                  <GroupResults results={results} tournament={tournament} />
-                  {/* <pre>{JSON.stringify(results, null, 4)}</pre> */}
-                  <br />
-                  <br />
-                  <DrawResults forTournament={params.id} />
-                </>
-              )}
-            </Card.Body>
-          </Card>
           {/* <div>
             <pre>{JSON.stringify(tournament, null, 4)}</pre>
           </div> */}
