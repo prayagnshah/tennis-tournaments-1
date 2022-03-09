@@ -127,7 +127,9 @@ function GroupResults({ results }) {
                       {playerScore && playerScore.games}
                     </td>
                     <td className="text-center">
-                      {playerScore && playerScore.position}
+                      {playerScore &&
+                        playerScore.position !== 0 &&
+                        playerScore.position}
                     </td>
                   </tr>
                 );

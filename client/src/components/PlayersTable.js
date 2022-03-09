@@ -20,12 +20,13 @@ function PlayersTable({ registeredPlayers, status }) {
                 ) : (
                   <th>Cancelled on</th>
                 )}
-                <th>Leaderboard pos.</th>
-                <th>Reg. number</th>
+                {/* <th>Leaderboard pos.</th> */}
+                <th>Reg. #</th>
               </tr>
             </thead>
 
             <tbody>
+              {/* {(registeredPlayers) ? () : ()} */}
               {registeredPlayers.map((regsitration, i) => {
                 if (regsitration.status === status) {
                   counter += 1;
@@ -61,12 +62,19 @@ function PlayersTable({ registeredPlayers, status }) {
                           {cancelDate.toLocaleTimeString("cs-CZ", timeOptions)}
                         </td>
                       )}
-                      <td>Na</td>
+                      {/* <td>Na</td> */}
                       <td>{regsitration.id}</td>
                     </tr>
                   );
                 }
               })}
+              {counter === 0 && (
+                <tr key={counter}>
+                  <td colSpan={5} className="text-center">
+                    No players in this category
+                  </td>
+                </tr>
+              )}
             </tbody>
           </Table>
         </>

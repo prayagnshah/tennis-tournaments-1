@@ -19,6 +19,13 @@ import { tournamentColor } from "../services/colors";
 import GroupResults from "./GroupResults";
 import DrawResults from "./DrawResults";
 import axios from "axios";
+
+import {
+  BsFillCalendarMinusFill,
+  BsFillPinMapFill,
+  BsPeopleFill,
+} from "react-icons/bs";
+import { GiTennisCourt } from "react-icons/gi";
 // const Reacket = require("reacket");
 
 function TournamentDetail({ isLoggedIn }) {
@@ -90,14 +97,15 @@ function TournamentDetail({ isLoggedIn }) {
 
           <Col>
             <Row>
-              <Col className="d-flex justify-content-end justify-content-sm-start mb-1 mb-sm-0">
-                <h4 className="mb-0 align-items-center d-flex">
+              {/* justify-content-sm-start */}
+              <Col className="d-flex justify-content-end  mb-1 mb-sm-0">
+                <h5 className="mb-0 align-items-center d-flex">
                   <Badge bg="info" className="">
                     {tournament.status}
                   </Badge>
-                </h4>
+                </h5>
               </Col>
-              <Col className=" d-flex justify-content-end">
+              <Col sm="auto" className="d-flex justify-content-end">
                 <h5 className="mb-0 align-items-center d-flex">
                   <Badge bg="primary" className="">
                     {`${tournament.category} TOUR 2022`}
@@ -243,28 +251,46 @@ function TournamentDetail({ isLoggedIn }) {
             <Row className="mx-0">
               <Col></Col>
               <Col lg="10" className="px-0">
-                <Card className="shadow tournament-tables">
+                <Card className="shadow-sm tournament-tables">
                   <Card.Header style={headerColor}>
                     <CardHeaderRender />
                   </Card.Header>
                   <Card.Body>
                     <RegisterAlert />
-                    {/* <Card.Body style={{ backgroundColor: "rgb(236, 240, 241)" }}> */}
-                    <Badge bg="primary tournamnet-info-badge">
-                      {date.toLocaleDateString("US-EN", options)}
-                    </Badge>
-                    {/* <p>Date: {date.toLocaleDateString("US-EN", options)}</p> */}
-                    <p>Location: {tournament.place}</p>
-                    {/* <p>Prestige: {tournament.prestige}</p> */}
-                    <p>Surface: {tournament.surface}</p>
-                    <p>
-                      Capacity:{" "}
-                      {`${activePlayersCount()}/${tournament.capacity}`}
-                    </p>
-                    {/* <p>Status: {tournament.status}</p> */}
-                    {/* <p>Price: {`${tournament.price} Czk`}</p> */}
+                    <Row>
+                      <Col>
+                        <Badge pill bg="primary tournamnet-info-badge">
+                          <BsFillCalendarMinusFill className="" />
+                          &nbsp;&nbsp;
+                          {date.toLocaleDateString("US-EN", options)}
+                        </Badge>
+                      </Col>
+                      <Col className="d-flex justify-content-end">
+                        <Badge pill bg="primary tournamnet-info-badge">
+                          <GiTennisCourt className="" />
+                          &nbsp;&nbsp;
+                          {tournament.surface}
+                        </Badge>
+                      </Col>
+                    </Row>
+                    <Row className="mt-2">
+                      <Col>
+                        <Badge pill bg="primary tournamnet-info-badge">
+                          <BsFillPinMapFill className="" /> &nbsp;&nbsp;
+                          {tournament.place}
+                        </Badge>
+                      </Col>
+                      <Col className="d-flex justify-content-end">
+                        <Badge pill bg="primary tournamnet-info-badge">
+                          <BsPeopleFill className="" />
+                          &nbsp;&nbsp;
+                          {`${activePlayersCount()}/${tournament.capacity}`}
+                        </Badge>
+                      </Col>
+                    </Row>
+                    <hr />
 
-                    <div className="d-flex justify-content-center">
+                    <div className="d-flex justify-content-center mt-3">
                       {isLoggedIn ? (
                         <>
                           {isLoggedInUserRegistered() ? (
@@ -293,7 +319,11 @@ function TournamentDetail({ isLoggedIn }) {
                         </p>
                       )}
                     </div>
-                    <hr />
+                  </Card.Body>
+                </Card>
+
+                <Card className="shadow-sm tournament-tables mt-3">
+                  <Card.Body>
                     <Tabs
                       defaultActiveKey="registered"
                       id="uncontrolled-tab"
@@ -318,29 +348,37 @@ function TournamentDetail({ isLoggedIn }) {
                         />
                       </Tab>
                     </Tabs>
+                  </Card.Body>
+                </Card>
 
-                    {results.length > 0 && (
-                      <>
-                        <br />
-                        <hr />
-                        <h3 className="text-center bg-light mb-3 p-2">
+                {results.length > 0 && (
+                  <>
+                    <Card className="shadow-sm tournament-tables mt-3">
+                      <Card.Header>
+                        <h4 className="mb-0">Group results</h4>
+                      </Card.Header>
+                      <Card.Body>
+                        {/* <h3 className="text-center bg-light mb-3 p-2">
                           Results
-                        </h3>
+                        </h3> */}
                         <div className="scrolling-wrapper">
                           <GroupResults
                             results={results}
                             tournament={tournament}
                           />
                         </div>
-
-                        {/* <pre>{JSON.stringify(results, null, 4)}</pre> */}
-                        <br />
-                        <br />
+                      </Card.Body>
+                    </Card>
+                    <Card className="shadow-sm tournament-tables my-3">
+                      <Card.Header>
+                        <h4 className="mb-0">Main draw</h4>
+                      </Card.Header>
+                      <Card.Body>
                         <DrawResults forTournament={params.id} />
-                      </>
-                    )}
-                  </Card.Body>
-                </Card>
+                      </Card.Body>
+                    </Card>
+                  </>
+                )}
               </Col>
               <Col></Col>
             </Row>
