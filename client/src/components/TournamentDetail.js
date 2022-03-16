@@ -8,7 +8,6 @@ import {
   Tabs,
   Tab,
   Alert,
-  Badge,
   Row,
   Col,
   Container,
@@ -98,19 +97,30 @@ function TournamentDetail({ isLoggedIn }) {
           <Col>
             <Row>
               {/* justify-content-sm-start */}
-              <Col className="d-flex justify-content-end  mb-1 mb-sm-0">
-                <h5 className="mb-0 align-items-center d-flex">
-                  <Badge bg="info" className="">
+              <Col
+                className="d-flex justify-content-end mb-1 mb-sm-0 header-border"
+                // style={{
+                //   borderRight: "solid",
+                //   borderWidth: "2px",
+                // }}
+              >
+                {/* style={{ borderStyle: "solid" }} */}
+                <div>
+                  <h6 className="mb-0 align-items-center d-flex">
+                    <strong>{tournament.status}</strong>
+                    {/* <Badge bg="primary" className="">
                     {tournament.status}
-                  </Badge>
-                </h5>
+                  </Badge> */}
+                  </h6>
+                </div>
               </Col>
-              <Col sm="auto" className="d-flex justify-content-end">
-                <h5 className="mb-0 align-items-center d-flex">
-                  <Badge bg="primary" className="">
+              <Col md="auto" className="d-flex justify-content-end">
+                <h6 className="mb-0 align-items-center d-flex">
+                  <strong>{`${tournament.category} TOUR 2022`}</strong>
+                  {/* <Badge bg="primary" className="">
                     {`${tournament.category} TOUR 2022`}
-                  </Badge>
-                </h5>
+                  </Badge> */}
+                </h6>
 
                 {/* <span className="">|| </span> */}
               </Col>
@@ -257,9 +267,37 @@ function TournamentDetail({ isLoggedIn }) {
                   </Card.Header>
                   <Card.Body>
                     <RegisterAlert />
-                    <Row>
+
+                    <p className="d-flex flex-wrap justify-content-sm-between">
+                      <strong style={{ marginRight: "1em" }}>
+                        <BsFillCalendarMinusFill className="" />
+                        &nbsp;&nbsp;
+                        {date.toLocaleDateString("US-EN", options)}
+                      </strong>
+                      <strong style={{ marginRight: "1em" }}>
+                        <BsFillPinMapFill className="" />
+                        &nbsp;
+                        {tournament.place}
+                      </strong>
+                      <strong style={{ marginRight: "1em" }}>
+                        <GiTennisCourt className="" />
+                        &nbsp;&nbsp;
+                        {tournament.surface}
+                      </strong>
+                      <strong style={{ marginRight: "1em" }}>
+                        <BsPeopleFill className="" />
+                        &nbsp;&nbsp;
+                        {`${activePlayersCount()}/${tournament.capacity}`}
+                      </strong>
+                    </p>
+
+                    {/* <Row>
                       <Col>
-                        <Badge pill bg="primary tournamnet-info-badge">
+                        <Badge
+                          pill
+                          bg="secondary tournamnet-info-badge"
+                          text="dark"
+                        >
                           <BsFillCalendarMinusFill className="" />
                           &nbsp;&nbsp;
                           {date.toLocaleDateString("US-EN", options)}
@@ -287,7 +325,7 @@ function TournamentDetail({ isLoggedIn }) {
                           {`${activePlayersCount()}/${tournament.capacity}`}
                         </Badge>
                       </Col>
-                    </Row>
+                    </Row> */}
                     <hr />
 
                     <div className="d-flex justify-content-center mt-3">

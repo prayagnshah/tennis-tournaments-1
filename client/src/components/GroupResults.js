@@ -1,5 +1,6 @@
 import React from "react";
 import { Table } from "react-bootstrap";
+import useWindowDimensions from "../services/WindowDimensions";
 
 function GroupResults({ results }) {
   // retruns matrix table with players in rows and columns and with the corresponding results with each other
@@ -30,6 +31,21 @@ function GroupResults({ results }) {
     return toReturn;
   };
 
+  // console.log(useWindowDimensions().width);
+  // 576
+
+  const windowWidth = useWindowDimensions().width;
+
+  const colWidth = () => {
+    if (useWindowDimensions().width > 576) {
+      return "150px";
+    } else {
+      return "80px";
+    }
+  };
+
+  // console.log(colWidth());
+
   return (
     <div>
       {results.map((group, k) => {
@@ -37,7 +53,7 @@ function GroupResults({ results }) {
           <Table bordered key={k} className="d-inline-flex">
             <tbody>
               <tr>
-                <th className="text-info" style={{ width: "150px" }}>
+                <th className="text-info" style={{ width: colWidth() }}>
                   {group.name}
                 </th>
                 {group.players.map((player, i) => {
@@ -45,19 +61,25 @@ function GroupResults({ results }) {
                     <th
                       scope="col"
                       key={i}
-                      style={{ width: "90px" }}
+                      style={{ width: "45px" }}
                       className="text-center"
-                    >{`${player.last_name}`}</th>
+                    >
+                      {windowWidth > 576
+                        ? player.last_name
+                        : player.last_name.substring(0, 3)}
+                    </th>
                   );
                 })}
                 <th
                   scope="col"
                   style={{ borderLeft: "2px double rgb(52, 152, 219)" }}
                 >
-                  Sets
+                  {windowWidth > 576 ? "Sets" : "Set"}
                 </th>
-                <th scope="col">Games</th>
-                <th scope="col">Position</th>
+                <th scope="col" className="text-center">
+                  {windowWidth > 576 ? "Games" : "Gam"}
+                </th>
+                <th scope="col">{windowWidth > 576 ? "Position" : "Pos"}</th>
               </tr>
               {group.players.map((rowPlayer, i) => {
                 const playerScore = group.scores.find(
@@ -65,7 +87,11 @@ function GroupResults({ results }) {
                 );
                 return (
                   <tr key={i}>
-                    <th scope="row">{`${rowPlayer.first_name} ${rowPlayer.last_name}`}</th>
+                    <th scope="row">
+                      {windowWidth > 576
+                        ? `${rowPlayer.first_name} ${rowPlayer.last_name}`
+                        : rowPlayer.last_name}
+                    </th>
                     {/* Score calculation for each cell */}
                     {group.players.map((playerInner, j) => {
                       let toRender = "";

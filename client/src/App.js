@@ -45,6 +45,14 @@ function App() {
     navigate("/");
   };
 
+  const isManager = () => {
+    if (isLoggedIn && getUser().group === "Manager") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <Routes>
       <Route
@@ -58,7 +66,10 @@ function App() {
           element={<LogIn logIn={logIn} isLoggedIn={isLoggedIn} />}
         />
         <Route path="profile" element={<Profile isLoggedIn={isLoggedIn} />} />
-        <Route path="dashboard" element={<Dasboard />} />
+        <Route
+          path="dashboard"
+          element={<Dasboard isManager={isManager()} />}
+        />
         <Route
           path="tournament/:id"
           element={<TournamentDetail isLoggedIn={isLoggedIn} />}
@@ -120,7 +131,11 @@ function Layout({ isLoggedIn, logOut }) {
                 {isLoggedIn ? (
                   <>
                     <LinkContainer to="/profile">
-                      <Nav.Link>
+                      <Nav.Link
+                        className={
+                          userData.group === "Manager" && "text-warning"
+                        }
+                      >
                         <strong>{userData.first_name}</strong>
                       </Nav.Link>
                     </LinkContainer>
