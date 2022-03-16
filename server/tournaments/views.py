@@ -63,13 +63,19 @@ class LogInView(TokenObtainPairView):
     serializer_class = LogInSerializer
 
 
-class TournamentsListView(APIView):
-    """List of all tournaments"""
+# class TournamentsListView(APIView):
+#     """List of all tournaments"""
 
-    def get(self, request, format=None):
-        tournaments = Tournaments.objects.all()
-        serializer = Tournamentserializer(tournaments, many=True)
-        return Response(serializer.data)
+#     def get(self, request, format=None):
+#         tournaments = Tournaments.objects.all()
+#         serializer = Tournamentserializer(tournaments, many=True)
+#         return Response(serializer.data)
+
+
+class TournamentsListView(generics.ListCreateAPIView):
+    queryset = Tournaments.objects.all()
+    serializer_class = Tournamentserializer
+    permissionsc = [IsManagerOrReadOnly]
 
 
 class UserDetailView(APIView):
