@@ -72,6 +72,14 @@ def create_user():
 
 
 @pytest.fixture(scope="function")
+def create_manager_user(create_user):
+    user = create_user()
+    group, _ = Group.objects.get_or_create(name="Manager")
+    user.groups.add(group)
+    return user
+
+
+@pytest.fixture(scope="function")
 def create_registration():
     def _create_registration(user, tournament, status="REGISTERED"):
         registration = Registration.objects.create(

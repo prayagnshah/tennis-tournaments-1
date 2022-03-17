@@ -1,4 +1,5 @@
 from audioop import reverse
+from functools import partial
 from django.forms import ValidationError
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
@@ -63,21 +64,6 @@ class LogInView(TokenObtainPairView):
     serializer_class = LogInSerializer
 
 
-# class TournamentsListView(APIView):
-#     """List of all tournaments"""
-
-#     def get(self, request, format=None):
-#         tournaments = Tournaments.objects.all()
-#         serializer = Tournamentserializer(tournaments, many=True)
-#         return Response(serializer.data)
-
-
-class TournamentsListView(generics.ListCreateAPIView):
-    queryset = Tournaments.objects.all()
-    serializer_class = Tournamentserializer
-    permissionsc = [IsManagerOrReadOnly]
-
-
 class UserDetailView(APIView):
     """SHOD BE DELETED to PRODUCTION - used for qucik testing.
     Returns user details"""
@@ -94,10 +80,19 @@ class UserDetailView(APIView):
         return Response(serializer.data)
 
 
+class TournamentsListView(generics.ListCreateAPIView):
+    queryset = Tournaments.objects.all()
+    serializer_class = Tournamentserializer
+    permission_classes = [IsManagerOrReadOnly]
+
+
 class TournamnetDetailView(APIView):
     """
     Retrieve, update or delete a torunamnet instance.
     """
+
+    serializer_class = Tournamentserializer
+    permission_classes = [IsManagerOrReadOnly]
 
     def get_object(self, pk):
         try:
@@ -109,6 +104,14 @@ class TournamnetDetailView(APIView):
         tournament = get_object_or_404(Tournaments, pk=pk)
         serializer = Tournamentserializer(tournament)
         return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        tournament = get_object_or_404(Tournaments, pk=pk)
+        serializer = Tournamentserializer(tournament, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RegistrationListView(APIView):

@@ -72,7 +72,9 @@ function App() {
         />
         <Route
           path="tournament/:id"
-          element={<TournamentDetail isLoggedIn={isLoggedIn} />}
+          element={
+            <TournamentDetail isLoggedIn={isLoggedIn} isManager={isManager()} />
+          }
         />
         <Route
           path="*"

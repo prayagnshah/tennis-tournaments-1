@@ -122,7 +122,6 @@ def test_group_create_player_not_registered(
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
 
-@pytest.mark.actualtest
 @pytest.mark.django_db
 def test_get_group(client, tournament_with_8_players_2_groups_1_draw_sets_filled):
     #  Given

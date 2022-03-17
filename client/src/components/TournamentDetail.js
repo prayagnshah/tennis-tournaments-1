@@ -27,11 +27,12 @@ import {
 import { GiTennisCourt } from "react-icons/gi";
 // const Reacket = require("reacket");
 
-function TournamentDetail({ isLoggedIn }) {
+function TournamentDetail({ isLoggedIn, isManager }) {
   const [tournament, setTournament] = useState();
   const [alertDetail, setAlertDetail] = useState({
     show: false,
     variant: undefined,
+    text: undefined,
   });
   const [results, setResults] = useState([]);
   const params = useParams();
@@ -96,55 +97,23 @@ function TournamentDetail({ isLoggedIn }) {
 
           <Col>
             <Row>
-              {/* justify-content-sm-start */}
-              <Col
-                className="d-flex justify-content-end mb-1 mb-sm-0 header-border"
-                // style={{
-                //   borderRight: "solid",
-                //   borderWidth: "2px",
-                // }}
-              >
-                {/* style={{ borderStyle: "solid" }} */}
+              <Col className="d-flex justify-content-end mb-1 mb-sm-0 header-border">
                 <div>
                   <h6 className="mb-0 align-items-center d-flex">
                     <strong>{tournament.status}</strong>
-                    {/* <Badge bg="primary" className="">
-                    {tournament.status}
-                  </Badge> */}
                   </h6>
                 </div>
               </Col>
               <Col md="auto" className="d-flex justify-content-end">
                 <h6 className="mb-0 align-items-center d-flex">
                   <strong>{`${tournament.category} TOUR 2022`}</strong>
-                  {/* <Badge bg="primary" className="">
-                    {`${tournament.category} TOUR 2022`}
-                  </Badge> */}
                 </h6>
-
-                {/* <span className="">|| </span> */}
               </Col>
             </Row>
           </Col>
         </Row>
       </Container>
     );
-    // return (
-    //   <div className="d-flex justify-content-between align-items-center">
-    //     <h3 className="mb-0">
-    //
-    //     </h3>
-    //     <span>
-    //       <h4 className="mb-0 align-items-center d-flex">
-    //         <Badge bg="info" className="d-flex">
-    //           {tournament.status}
-    //         </Badge>
-    //         &nbsp;
-    //         <span>|| START Tour 2022</span>
-    //       </h4>
-    //     </span>
-    //   </div>
-    // );
   };
 
   const registerForTournament = async (tournamentID) => {
@@ -161,9 +130,17 @@ function TournamentDetail({ isLoggedIn }) {
       );
       loadTournamentDetail();
       if (response.data.status === "REGISTERED") {
-        setAlertDetail({ show: true, variant: "success" });
+        setAlertDetail({
+          show: true,
+          variant: "success",
+          text: "You have succesfully registered for the tournament",
+        });
       } else if (response.data.status === "INTERESTED") {
-        setAlertDetail({ show: true, variant: "warning" });
+        setAlertDetail({
+          show: true,
+          variant: "warning",
+          text: "Tournament capacity is alredy full, you have been added to the replacements list. If someone cancelles his registration or the tournament capacity gets increased you might be added into the registered category",
+        });
       }
 
       return { response, isError: false };
@@ -194,7 +171,11 @@ function TournamentDetail({ isLoggedIn }) {
         { headers }
       );
       loadTournamentDetail();
-      setAlertDetail({ show: true, variant: "danger" });
+      setAlertDetail({
+        show: true,
+        variant: "danger",
+        text: "Your registration was cancelled",
+      });
       return { response, isError: false };
     } catch (error) {
       return { response: error, isError: true };
@@ -226,16 +207,7 @@ function TournamentDetail({ isLoggedIn }) {
     return count;
   };
 
-  function RegisterAlert() {
-    let text = "";
-    if (alertDetail.variant === "success") {
-      text = "You have succesfully registered for the tournament";
-    } else if (alertDetail.variant === "warning") {
-      text =
-        "Tournament capacity is alredy full, you have been added to the replacements list. If someone cancelles his registration or the tournament capacity gets increased you might be added into the registered category";
-    } else if (alertDetail.variant === "danger") {
-      text = "Your registration was cancelled";
-    }
+  function ShowAlert() {
     if (alertDetail.show) {
       return (
         <Alert
@@ -243,13 +215,55 @@ function TournamentDetail({ isLoggedIn }) {
           onClose={() => setAlertDetail({ show: false })}
           dismissible
         >
-          {text}
+          {alertDetail.text}
         </Alert>
       );
     } else {
       return null;
     }
   }
+
+  const updateTournamentStatus = async (toStatus) => {
+    const url = `${process.env.REACT_APP_BASE_URL}/tennis/tournament/${params.id}/`;
+    const token = await getAccessToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    try {
+      await axios.put(url, { status: toStatus }, { headers });
+      loadTournamentDetail();
+      setAlertDetail({
+        show: true,
+        variant: "success",
+        text: `Tournament has been ${toStatus}`,
+      });
+    } catch (e) {
+      console.error(e.response);
+    }
+  };
+
+  const UpdateStatusButton = () => {
+    let toStatus;
+    let buttonTittle;
+    if (tournament.status === "OPEN") {
+      toStatus = "CONSOLIDATED";
+      buttonTittle = "Consolidate Tournament";
+    } else if (tournament.status === "CONSOLIDATED") {
+      toStatus = "COMPLETED";
+      buttonTittle = "Complete Tournament";
+    }
+    if (buttonTittle) {
+      return (
+        <Button
+          onClick={() => {
+            updateTournamentStatus(toStatus);
+          }}
+        >
+          {buttonTittle}
+        </Button>
+      );
+    } else {
+      return null;
+    }
+  };
 
   return (
     <>
@@ -266,7 +280,7 @@ function TournamentDetail({ isLoggedIn }) {
                     <CardHeaderRender />
                   </Card.Header>
                   <Card.Body>
-                    <RegisterAlert />
+                    <ShowAlert />
 
                     <p className="d-flex flex-wrap justify-content-sm-between">
                       <strong style={{ marginRight: "1em" }}>
@@ -291,63 +305,36 @@ function TournamentDetail({ isLoggedIn }) {
                       </strong>
                     </p>
 
-                    {/* <Row>
-                      <Col>
-                        <Badge
-                          pill
-                          bg="secondary tournamnet-info-badge"
-                          text="dark"
-                        >
-                          <BsFillCalendarMinusFill className="" />
-                          &nbsp;&nbsp;
-                          {date.toLocaleDateString("US-EN", options)}
-                        </Badge>
-                      </Col>
-                      <Col className="d-flex justify-content-end">
-                        <Badge pill bg="primary tournamnet-info-badge">
-                          <GiTennisCourt className="" />
-                          &nbsp;&nbsp;
-                          {tournament.surface}
-                        </Badge>
-                      </Col>
-                    </Row>
-                    <Row className="mt-2">
-                      <Col>
-                        <Badge pill bg="primary tournamnet-info-badge">
-                          <BsFillPinMapFill className="" /> &nbsp;&nbsp;
-                          {tournament.place}
-                        </Badge>
-                      </Col>
-                      <Col className="d-flex justify-content-end">
-                        <Badge pill bg="primary tournamnet-info-badge">
-                          <BsPeopleFill className="" />
-                          &nbsp;&nbsp;
-                          {`${activePlayersCount()}/${tournament.capacity}`}
-                        </Badge>
-                      </Col>
-                    </Row> */}
                     <hr />
 
                     <div className="d-flex justify-content-center mt-3">
                       {isLoggedIn ? (
                         <>
-                          {isLoggedInUserRegistered() ? (
-                            <Button
-                              variant="danger"
-                              onClick={() => cancelRegistration(tournament.id)}
-                            >
-                              Cancel registration
-                            </Button>
+                          {isManager ? (
+                            <UpdateStatusButton />
                           ) : (
-                            <Button
-                              className="shadow-sm"
-                              variant="success"
-                              onClick={() =>
-                                registerForTournament(tournament.id)
-                              }
-                            >
-                              Register for the tournament
-                            </Button>
+                            <>
+                              {isLoggedInUserRegistered() ? (
+                                <Button
+                                  variant="danger"
+                                  onClick={() =>
+                                    cancelRegistration(tournament.id)
+                                  }
+                                >
+                                  Cancel registration
+                                </Button>
+                              ) : (
+                                <Button
+                                  className="shadow-sm"
+                                  variant="success"
+                                  onClick={() =>
+                                    registerForTournament(tournament.id)
+                                  }
+                                >
+                                  Register for the tournament
+                                </Button>
+                              )}
+                            </>
                           )}
                         </>
                       ) : (
@@ -396,9 +383,6 @@ function TournamentDetail({ isLoggedIn }) {
                         <h4 className="mb-0">Group results</h4>
                       </Card.Header>
                       <Card.Body>
-                        {/* <h3 className="text-center bg-light mb-3 p-2">
-                          Results
-                        </h3> */}
                         <div className="scrolling-wrapper">
                           <GroupResults
                             results={results}
