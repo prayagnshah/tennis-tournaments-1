@@ -47,7 +47,7 @@ class IsManagerOrReadOnly(BasePermission):
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
-        if request.user:
+        if request.user.is_authenticated:
             group = get_object_or_404(Group, name="Manager")
             return request.user.group == group.name
 

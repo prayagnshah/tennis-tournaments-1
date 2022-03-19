@@ -17,7 +17,7 @@ import { getUser, getAccessToken } from "../services/AuthService";
 import { tournamentColor } from "../services/colors";
 import GroupResults from "./GroupResults";
 import DrawResults from "./DrawResults";
-import CreateGroupForm from "./CreateGroupForm";
+import CreateGroupFormCard from "./CreateGroupFormCard";
 import axios from "axios";
 
 import {
@@ -36,7 +36,7 @@ function TournamentDetail({ isLoggedIn, isManager }) {
     text: undefined,
   });
   const [results, setResults] = useState([]);
-  const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
+
   const params = useParams();
 
   const loadTournamentDetail = async () => {
@@ -382,29 +382,12 @@ function TournamentDetail({ isLoggedIn, isManager }) {
                   </Card.Body>
                 </Card>
 
-                {isManager && tournament.status === "CONSOLIDATED" && (
-                  <Card className="mb-3">
-                    <Card.Body>
-                      {!showCreateGroupForm ? (
-                        <div className="d-grid">
-                          <Button
-                            variant="primary"
-                            onClick={() => setShowCreateGroupForm(true)}
-                          >
-                            + Create group
-                          </Button>
-                        </div>
-                      ) : (
-                        <CreateGroupForm
-                          tournament={tournament}
-                          groups={results}
-                          updateResults={updateResults}
-                          setShowCreateGroupForm={setShowCreateGroupForm}
-                        />
-                      )}
-                    </Card.Body>
-                  </Card>
-                )}
+                <CreateGroupFormCard
+                  tournament={tournament}
+                  groups={results}
+                  updateResults={updateResults}
+                  isManager={isManager}
+                />
 
                 {results.length > 0 && (
                   <>

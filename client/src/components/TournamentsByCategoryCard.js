@@ -13,7 +13,7 @@ function TournamnetsByCategoryCard({ tournaments, category }) {
     headerColor = tournamentColor.challenger;
   }
   return (
-    <Card className="tournament-tables shadow">
+    <Card className="tournament-tables shadow mb-4">
       <Card.Header style={headerColor}>
         <strong>{category}</strong>
       </Card.Header>
