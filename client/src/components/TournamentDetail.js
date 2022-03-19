@@ -17,6 +17,7 @@ import { getUser, getAccessToken } from "../services/AuthService";
 import { tournamentColor } from "../services/colors";
 import GroupResults from "./GroupResults";
 import DrawResults from "./DrawResults";
+import CreateGroupForm from "./CreateGroupForm";
 import axios from "axios";
 
 import {
@@ -35,6 +36,7 @@ function TournamentDetail({ isLoggedIn, isManager }) {
     text: undefined,
   });
   const [results, setResults] = useState([]);
+  const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
   const params = useParams();
 
   const loadTournamentDetail = async () => {
@@ -61,6 +63,10 @@ function TournamentDetail({ isLoggedIn, isManager }) {
     loadTournamentDetail();
     loadResults();
   }, []);
+
+  const updateResults = () => {
+    loadResults();
+  };
 
   let headerColor = "";
   let date = "";
@@ -275,7 +281,7 @@ function TournamentDetail({ isLoggedIn, isManager }) {
             <Row className="mx-0">
               <Col></Col>
               <Col lg="10" className="px-0">
-                <Card className="shadow-sm tournament-tables">
+                <Card className="shadow-sm tournament-tables mb-3">
                   <Card.Header style={headerColor}>
                     <CardHeaderRender />
                   </Card.Header>
@@ -347,7 +353,7 @@ function TournamentDetail({ isLoggedIn, isManager }) {
                   </Card.Body>
                 </Card>
 
-                <Card className="shadow-sm tournament-tables mt-3">
+                <Card className="shadow-sm tournament-tables mb-3">
                   <Card.Body>
                     <Tabs
                       defaultActiveKey="registered"
@@ -376,29 +382,42 @@ function TournamentDetail({ isLoggedIn, isManager }) {
                   </Card.Body>
                 </Card>
 
+                {isManager && tournament.status === "CONSOLIDATED" && (
+                  <Card className="mb-3">
+                    <Card.Body>
+                      {!showCreateGroupForm ? (
+                        <div className="d-grid">
+                          <Button
+                            variant="primary"
+                            onClick={() => setShowCreateGroupForm(true)}
+                          >
+                            + Create group
+                          </Button>
+                        </div>
+                      ) : (
+                        <CreateGroupForm
+                          tournament={tournament}
+                          groups={results}
+                          updateResults={updateResults}
+                          setShowCreateGroupForm={setShowCreateGroupForm}
+                        />
+                      )}
+                    </Card.Body>
+                  </Card>
+                )}
+
                 {results.length > 0 && (
                   <>
-                    <Card className="shadow-sm tournament-tables mt-3">
-                      <Card.Header>
-                        <h4 className="mb-0">Group results</h4>
-                      </Card.Header>
-                      <Card.Body>
-                        <div className="scrolling-wrapper">
-                          <GroupResults
-                            results={results}
-                            tournament={tournament}
-                          />
-                        </div>
-                      </Card.Body>
-                    </Card>
-                    <Card className="shadow-sm tournament-tables my-3">
+                    <GroupResults results={results} />
+                    <DrawResults forTournament={params.id} />
+                    {/* <Card className="shadow-sm tournament-tables my-3">
                       <Card.Header>
                         <h4 className="mb-0">Main draw</h4>
                       </Card.Header>
                       <Card.Body>
                         <DrawResults forTournament={params.id} />
                       </Card.Body>
-                    </Card>
+                    </Card> */}
                   </>
                 )}
               </Col>

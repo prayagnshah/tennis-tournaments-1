@@ -312,7 +312,8 @@ class GroupScoresSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GroupScores
-        fields = ("player", "sets_won", "games", "position")
+        fields = ("id", "player", "sets_won", "games", "position")
+        read_only_fields = ("id",)
 
 
 class TournamentGroupListSerializer(serializers.ModelSerializer):
@@ -322,7 +323,8 @@ class TournamentGroupListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TournamentGroup
-        fields = ("name", "players", "tournament", "set_stats", "scores")
+        fields = ("id", "name", "players", "tournament", "set_stats", "scores")
+        read_only_fields = ("id",)
 
 
 class TournamentGroupCreateSerializer(serializers.ModelSerializer):
@@ -338,10 +340,10 @@ class TournamentGroupCreateSerializer(serializers.ModelSerializer):
             )
 
         # Players number in group can be 3, 4 or 5
-        if not (3 <= len(data["players"]) <= 5):
-            raise serializers.ValidationError(
-                "There should be 3,4 or 5 players in the group"
-            )
+        # if not (3 <= len(data["players"]) <= 5):
+        #     raise serializers.ValidationError(
+        #         "There should be 3,4 or 5 players in the group"
+        #     )
 
         # Players in group should be from the registered tournament players
         for player in data["players"]:
@@ -353,6 +355,14 @@ class TournamentGroupCreateSerializer(serializers.ModelSerializer):
                 )
             print(player.id)
         return data
+
+    def validate_players(self, value):
+        # Players number in group can be 3, 4 or 5
+        if not (3 <= len(value) <= 5):
+            raise serializers.ValidationError(
+                "There should be 3,4 or 5 players in the group"
+            )
+        return value
 
 
 # class SetStatForEliminationDrawMatchField(serializers.PrimaryKeyRelatedField):

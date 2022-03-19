@@ -39,8 +39,8 @@ services:
       - tennis-server
     environment:
       - CHOKIDAR_USEPOLLING=TRUE
-      - REACT_APP_BASE_URL=http://192.168.0.156:8003
-      # - REACT_APP_BASE_URL=http://127.0.0.1:8003
+      # - REACT_APP_BASE_URL=http://192.168.0.156:8003
+      - REACT_APP_BASE_URL=http://127.0.0.1:8003
       - WDS_SOCKET_PORT=0
     ports:
       - 3001:3000

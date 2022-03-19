@@ -265,8 +265,10 @@ class EliminationDrawDetailView(APIView):
                     tournament=request.query_params.get("tournament_id")
                 )
             except EliminationDraw.DoesNotExist:
-                error = {"error": "Given 'tournament_id' does not exists"}
-                return Response(error, status=status.HTTP_400_BAD_REQUEST)
+                # error = {"error": "Given 'tournament_id' does not exists"}
+                # return Response(error, status=status.HTTP_400_BAD_REQUEST)
+                # if no draw exists for the torunament, return nothing
+                return Response(status=status.HTTP_200_OK)
         elif pk:
             draw = get_object_or_404(EliminationDraw, pk=pk)
         else:

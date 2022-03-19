@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, CloseButton } from "react-bootstrap";
 import * as Yup from "yup";
 
 // import { useState } from "react";
@@ -66,6 +66,11 @@ function CreateTournamentForm({
   };
   return (
     <>
+      <div className="d-flex justify-content-between">
+        <h4>Add tournament group </h4>
+        <CloseButton variant="white" onClick={() => formDisappear()} />
+      </div>
+      <hr />
       <Formik
         initialValues={{
           name: "",
@@ -306,14 +311,10 @@ function CreateTournamentForm({
                 <div>{JSON.stringify(values, null, 2)}</div>
               </div>
             )} */}
-            <div className="d-flex justify-content-between">
-              <Button type="submit" variant="primary">
-                Submit
-              </Button>
-              <Button variant="primary" onClick={() => formDisappear()}>
-                Cancel
-              </Button>
-            </div>
+
+            <Button type="submit" variant="primary">
+              Submit
+            </Button>
           </Form>
         )}
       </Formik>

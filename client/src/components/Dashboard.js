@@ -63,10 +63,12 @@ function Dasboard({ isManager }) {
                 <Col></Col>
                 <Col sm="10" md="8">
                   {showTournamentForm ? (
-                    <CreateTournamentForm
-                      setIsTournamentCreated={setIsTournamentCreated}
-                      setShowTournamentForm={setShowTournamentForm}
-                    />
+                    <>
+                      <CreateTournamentForm
+                        setIsTournamentCreated={setIsTournamentCreated}
+                        setShowTournamentForm={setShowTournamentForm}
+                      />
+                    </>
                   ) : (
                     <div className="d-grid">
                       <Button

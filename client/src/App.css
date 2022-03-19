@@ -57,3 +57,13 @@ body {
     padding: 1rem 1rem;
   }
 }
+
+.col-width {
+  width: 150px;
+}
+
+@media (max-width: 576px) {
+  .col-width {
+    width: 80px;
+  }
+}

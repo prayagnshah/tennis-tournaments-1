@@ -2,6 +2,7 @@
 import Reacket from "reacket";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Card } from "react-bootstrap";
 
 function DrawResults({ forTournament }) {
   const [draw, setDraw] = useState();
@@ -40,9 +41,16 @@ function DrawResults({ forTournament }) {
   }
 
   return (
-    <div className="scrolling-wrapper">
-      <Reacket matches={matches} />
-    </div>
+    <Card className="shadow-sm tournament-tables my-3">
+      <Card.Header>
+        <h4 className="mb-0">Main draw</h4>
+      </Card.Header>
+      <Card.Body>
+        <div className="scrolling-wrapper">
+          <Reacket matches={matches} />
+        </div>
+      </Card.Body>
+    </Card>
   );
 }
 
