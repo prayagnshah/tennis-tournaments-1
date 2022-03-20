@@ -196,6 +196,29 @@ def test_set_group_and_drawmatch_empty(
 
 
 @pytest.mark.django_db
+def test_set_drawmatch_missing(client, tournament_with_8_players_2_groups_1_draw):
+    # Given
+    setup = tournament_with_8_players_2_groups_1_draw
+    access = AccessToken.for_user(setup["user0"])
+    path = reverse("tennis:set_list")
+    # When
+    response = client.post(
+        path,
+        data={
+            "player_1": setup["user0"].id,
+            "player_2": setup["user1"].id,
+            "score_p1": 6,
+            "score_p2": 4,
+            "tournament": setup["tournament"].id,
+            "group": "",
+        },
+        HTTP_AUTHORIZATION=f"Bearer {access}",
+    )
+    # Then
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
 def test_set_unique_sets_in_group(
     client, tournament_with_8_players_2_groups_1_draw_sets_filled
 ):

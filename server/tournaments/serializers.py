@@ -190,7 +190,11 @@ class WriteSetStatSerializer(serializers.ModelSerializer):
         if data["player_1"] == data["player_2"]:
             raise serializers.ValidationError("Player 1 cant be same as player 2")
 
+        # Set default value if the given keys are not sent
+        data["group"] = data.get("group")
+        data["draw_match"] = data.get("draw_match")
         # Group or draw field has to be set
+        # if "group" not in data and "draw_match" not in data:
         if (not data["group"]) and (not data["draw_match"]):
             raise serializers.ValidationError(
                 "One of 'group' or 'draw_match' fileds needs to be set"

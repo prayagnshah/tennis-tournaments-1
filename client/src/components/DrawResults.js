@@ -1,29 +1,11 @@
 /* eslint react/prop-types: 0 */
 import Reacket from "reacket";
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { Card } from "react-bootstrap";
 
-function DrawResults({ forTournament }) {
-  const [draw, setDraw] = useState();
-  //   const [matches, setMatches] = useState([]);
-  //   const matches = require("./testData.json"); // manual data for tournamnet draw
+function DrawResults({ draw }) {
+  // const [draw, setDraw] = useState();
+
   let matches = [];
-
-  const getResults = async () => {
-    const url = `${process.env.REACT_APP_BASE_URL}/tennis/elimination-draw/?tournament_id=${forTournament}`;
-    try {
-      const response = await axios.get(url);
-      setDraw(response.data);
-    } catch (e) {
-      setDraw();
-      console.error(e);
-    }
-  };
-
-  useEffect(() => {
-    getResults();
-  }, []);
 
   //   Make sure the passed data for concersion has the right number of matches
   if (draw) {

@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { getAccessToken } from "../services/AuthService";
 
-function CreateGroupFormCard({ tournament, groups, updateResults, isManager }) {
+function CreateGroupFormCard({ tournament, groups, loadResults, isManager }) {
   const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
 
   const onSubmit = async (values, actions) => {
@@ -19,17 +19,17 @@ function CreateGroupFormCard({ tournament, groups, updateResults, isManager }) {
 
     try {
       await axios.post(url, values, { headers });
-      updateResults();
+
       setShowCreateGroupForm(false);
     } catch (response) {
       const data = response.response.data;
-
       if (data.players) {
         actions.setFieldError("players", data.players);
       } else {
         console.error(data);
       }
     }
+    await loadResults();
   };
 
   const isPlayerInGroup = (player) => {
@@ -50,7 +50,7 @@ function CreateGroupFormCard({ tournament, groups, updateResults, isManager }) {
   return (
     <>
       {isManager && tournament.status === "CONSOLIDATED" && (
-        <Card className="mb-3">
+        <Card className="mb-3 shadow-sm">
           <Card.Body>
             {!showCreateGroupForm ? (
               <div className="d-grid">
@@ -129,7 +129,10 @@ function CreateGroupFormCard({ tournament, groups, updateResults, isManager }) {
                           //   as="select"
                         >
                           {tournament.registrations.map((registration, i) => {
-                            if (!isPlayerInGroup(registration.user)) {
+                            if (
+                              !isPlayerInGroup(registration.user) &&
+                              registration.status === "REGISTERED"
+                            ) {
                               return (
                                 <option value={registration.user.id} key={i}>
                                   {`${registration.user.first_name} ${registration.user.last_name}`}

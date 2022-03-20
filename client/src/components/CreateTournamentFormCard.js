@@ -3,12 +3,11 @@ import { useState } from "react";
 import { Formik } from "formik";
 import { Form, Button, CloseButton, Card } from "react-bootstrap";
 import * as Yup from "yup";
-// import { useState } from "react";
 import axios from "axios";
 
 import { getAccessToken } from "../services/AuthService";
 
-function CreateTournamentForm({ setIsTournamentCreated, isManager }) {
+function CreateTournamentFormCard({ setIsTournamentCreated, isManager }) {
   const [showTournamentForm, setShowTournamentForm] = useState(false);
 
   const onSubmit = async (values, actions) => {
@@ -73,7 +72,7 @@ function CreateTournamentForm({ setIsTournamentCreated, isManager }) {
         <>
           {showTournamentForm ? (
             <>
-              <Card className="mb-4">
+              <Card className="mb-4 shadow-sm">
                 <Card.Body>
                   <div className="d-flex justify-content-between">
                     <h4>Add tournament group </h4>
@@ -373,4 +372,4 @@ function CreateTournamentForm({ setIsTournamentCreated, isManager }) {
   );
 }
 
-export default CreateTournamentForm;
+export default CreateTournamentFormCard;

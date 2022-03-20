@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { getTournaments } from "../services/TournamentService";
 import { Row, Col, Container } from "react-bootstrap";
 import TournamentsByCategoryCard from "./TournamentsByCategoryCard";
-import CreateTournamentForm from "./CreateTournamentForm";
+import CreateTournamentFormCard from "./CreateTournamentFormCard";
 // import { Link } from 'react-router-dom';
 
 function Dasboard({ isManager }) {
@@ -44,7 +44,7 @@ function Dasboard({ isManager }) {
               <Col></Col>
               {/* on md changes the main container width this is why we need to define different width for sm and md */}
               <Col sm="10" md="8" className="px-0">
-                <CreateTournamentForm
+                <CreateTournamentFormCard
                   setIsTournamentCreated={setIsTournamentCreated}
                   isManager={isManager}
                 />

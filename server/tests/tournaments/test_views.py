@@ -76,7 +76,7 @@ def test_create_tournament_success(client, create_manager_user):
 
 
 @pytest.mark.django_db
-def test_create_torunament_fail(client, create_user):
+def test_create_torunament_fail_not_manager(client, create_user):
     # Given
     user = create_user()
     access = AccessToken.for_user(user)
@@ -102,6 +102,32 @@ def test_create_torunament_fail(client, create_user):
     )
     # Then
     assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
+@pytest.mark.actualtest
+@pytest.mark.django_db
+def test_create_torunament_fail_no_user(client):
+    # Given
+    path = reverse(
+        "tennis:tournaments_list",
+    )
+    # When
+    response = client.post(
+        path,
+        data={
+            "category": "START",
+            "name": "Test1",
+            "event_date": "2022-02-12T06:00:00Z",
+            "place": "TestPlace",
+            "prestige": 100,
+            "surface": "CLAY",
+            "capacity": 16,
+            "status": "OPEN",
+            "price": 1000,
+        },
+    )
+    # Then
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
 @pytest.mark.django_db

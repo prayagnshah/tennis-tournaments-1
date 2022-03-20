@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { getTournamentDetail } from "../services/TournamentService";
+import axios from "axios";
+
 import {
   Card,
   Button,
@@ -14,11 +15,12 @@ import {
 } from "react-bootstrap";
 import PlayersTable from "./PlayersTable";
 import { getUser, getAccessToken } from "../services/AuthService";
+import { getTournamentDetail } from "../services/TournamentService";
 import { tournamentColor } from "../services/colors";
 import GroupResults from "./GroupResults";
 import DrawResults from "./DrawResults";
 import CreateGroupFormCard from "./CreateGroupFormCard";
-import axios from "axios";
+import CreateSetFormCard from "./CreateSetFormCard";
 
 import {
   BsFillCalendarMinusFill,
@@ -36,6 +38,7 @@ function TournamentDetail({ isLoggedIn, isManager }) {
     text: undefined,
   });
   const [results, setResults] = useState([]);
+  const [draw, setDraw] = useState();
 
   const params = useParams();
 
@@ -59,14 +62,26 @@ function TournamentDetail({ isLoggedIn, isManager }) {
     }
   };
 
+  const getResults = async () => {
+    const url = `${process.env.REACT_APP_BASE_URL}/tennis/elimination-draw/?tournament_id=${params.id}`;
+    try {
+      const response = await axios.get(url);
+      setDraw(response.data);
+    } catch (e) {
+      setDraw();
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     loadTournamentDetail();
     loadResults();
+    getResults();
   }, []);
 
-  const updateResults = () => {
-    loadResults();
-  };
+  // const updateResults = () => {
+  //   loadResults();
+  // };
 
   let headerColor = "";
   let date = "";
@@ -385,14 +400,22 @@ function TournamentDetail({ isLoggedIn, isManager }) {
                 <CreateGroupFormCard
                   tournament={tournament}
                   groups={results}
-                  updateResults={updateResults}
+                  loadResults={loadResults}
+                  isManager={isManager}
+                />
+
+                <CreateSetFormCard
+                  loadResults={loadResults}
+                  tournament={tournament}
+                  groups={results}
+                  draw={draw}
                   isManager={isManager}
                 />
 
                 {results.length > 0 && (
                   <>
                     <GroupResults results={results} />
-                    <DrawResults forTournament={params.id} />
+                    <DrawResults draw={draw} />
                     {/* <Card className="shadow-sm tournament-tables my-3">
                       <Card.Header>
                         <h4 className="mb-0">Main draw</h4>
