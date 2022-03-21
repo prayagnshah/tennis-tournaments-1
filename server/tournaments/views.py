@@ -260,22 +260,25 @@ class EliminationDrawDetailView(APIView):
 
     def get(self, request, pk=None, format=None):
         if request.query_params.get("tournament_id") and not pk:
-            try:
-                draw = EliminationDraw.objects.get(
-                    tournament=request.query_params.get("tournament_id")
-                )
-            except EliminationDraw.DoesNotExist:
-                # error = {"error": "Given 'tournament_id' does not exists"}
-                # return Response(error, status=status.HTTP_400_BAD_REQUEST)
-                # if no draw exists for the torunament, return nothing
-                return Response(status=status.HTTP_200_OK)
+            draw = EliminationDraw.objects.filter(
+                tournament=request.query_params.get("tournament_id")
+            )
+            # try:
+            #     draw = EliminationDraw.objects.filter(
+            #         tournament=request.query_params.get("tournament_id")
+            #     )
+            # except EliminationDraw.DoesNotExist:
+            #     # error = {"error": "Given 'tournament_id' does not exists"}
+            #     # return Response(error, status=status.HTTP_400_BAD_REQUEST)
+            #     # if no draw exists for the torunament, return nothing
+            #     return Response(status=status.HTTP_200_OK)
         elif pk:
             draw = get_object_or_404(EliminationDraw, pk=pk)
         else:
             error = {"error": "Missing 'tournament_id' parameter"}
             return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = EliminationDrawSerializer(draw)
+        serializer = EliminationDrawSerializer(draw, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
     def post(self, request, pk=None, format=None):

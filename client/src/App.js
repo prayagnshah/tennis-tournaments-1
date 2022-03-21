@@ -16,7 +16,7 @@ import Landing from "./components/Landing";
 import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
 import Profile from "./components/Profile";
-import { getUser } from "./services/AuthService";
+import { getUser, isTokenExpired } from "./services/AuthService";
 import TournamentDetail from "./components/TournamentDetail";
 import Dasboard from "./components/Dashboard";
 
@@ -25,6 +25,15 @@ function App() {
     return window.localStorage.getItem("tennis.auth") !== null;
   });
   let navigate = useNavigate();
+
+  useEffect(() => {
+    // if refresh token is expired on refresh, log out user
+    const auth = JSON.parse(window.localStorage.getItem("tennis.auth"));
+    if (auth && isTokenExpired(auth.refresh)) {
+      window.localStorage.removeItem("tennis.auth");
+      setLoggedIn(false);
+    }
+  }, []);
 
   const logIn = async (username, password) => {
     const url = `${process.env.REACT_APP_BASE_URL}/api/log_in/`;

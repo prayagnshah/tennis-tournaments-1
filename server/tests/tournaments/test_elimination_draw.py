@@ -181,7 +181,7 @@ def test_get_draw(client, tournament_with_8_players_2_groups_1_draw_sets_filled)
     response = client.get(f"{path}?tournament_id={setup['tournament'].id}")
     # Then
     assert response.status_code == status.HTTP_200_OK
-    assert response.data["size"] == 8
-    assert response.data["tournament"] == setup["tournament"].id
-    assert len(response.data["players"]) == 8
-    assert len(response.data["matches"]) == 7
+    assert response.data[0]["size"] == 8
+    assert response.data[0]["tournament"] == setup["tournament"].id
+    assert len(response.data[0]["players"]) == 8
+    assert len(response.data[0]["matches"]) == 7

@@ -18,7 +18,7 @@ function LogIn({ isLoggedIn, logIn }) {
   const onSubmit = async (values, actions) => {
     try {
       const { response, isError } = await logIn(values.email, values.password);
-      console.log("username" + values.email);
+      console.log("username: " + values.email);
       if (isError) {
         const data = response.response.data;
         console.log(data);

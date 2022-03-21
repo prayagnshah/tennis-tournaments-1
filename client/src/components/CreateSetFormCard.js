@@ -70,12 +70,20 @@ function CreateSetFormCard({
       });
     } catch (response) {
       const data = response.response.data;
-      console.error(data);
+      //   console.error(data);
       if ("non_field_errors" in data) {
         setAlertDetail({
           show: true,
           variant: "danger",
           text: data["non_field_errors"],
+        });
+      }
+
+      if ("draw_match" in data) {
+        setAlertDetail({
+          show: true,
+          variant: "danger",
+          text: "This match in the given draw already exists",
         });
       }
 
@@ -143,8 +151,8 @@ function CreateSetFormCard({
                   initialValues={{
                     player_1: "",
                     player_2: "",
-                    score_p1: "",
-                    score_p2: "",
+                    score_p1: "0",
+                    score_p2: "0",
                     group: "",
                     draw_match: "",
                   }}
@@ -213,12 +221,23 @@ function CreateSetFormCard({
                             >
                               <option value="">---</option>
                               {draw &&
-                                draw.matches.map((match) => {
+                                draw[0] &&
+                                draw[0].matches.map((match) => {
                                   return (
                                     <option
                                       value={match.id}
                                       key={match.id}
-                                    >{`Match No. ${match.match}, round: ${match.round_of}`}</option>
+                                    >{`${draw[0].type_of} - Match No. ${match.match}, round: ${match.round_of}`}</option>
+                                  );
+                                })}
+                              {draw &&
+                                draw[1] &&
+                                draw[1].matches.map((match) => {
+                                  return (
+                                    <option
+                                      value={match.id}
+                                      key={match.id}
+                                    >{`${draw[1].type_of} - Match No. ${match.match}, round: ${match.round_of}`}</option>
                                   );
                                 })}
                               {/* {groups.map((group) => (
@@ -290,7 +309,7 @@ function CreateSetFormCard({
                               onBlur={handleBlur}
                             >
                               {[...Array(8).keys()].map((x) => (
-                                <option value={x} key={x}>
+                                <option value={x.toString()} key={x}>
                                   {x}
                                 </option>
                               ))}
@@ -358,7 +377,7 @@ function CreateSetFormCard({
                               onBlur={handleBlur}
                             >
                               {[...Array(8).keys()].map((x) => (
-                                <option value={x} key={x}>
+                                <option value={x.toString()} key={x}>
                                   {x}
                                 </option>
                               ))}

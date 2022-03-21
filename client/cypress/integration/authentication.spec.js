@@ -16,7 +16,7 @@ describe("Authentication", function () {
   it("Can log in.", function () {
     logIn();
 
-    cy.hash().should("eq", "#/");
+    cy.hash().should("eq", "#/dashboard");
     cy.get("a").contains("Log out");
   });
 

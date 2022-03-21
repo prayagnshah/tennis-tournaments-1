@@ -19,6 +19,10 @@ function SignUp(props) {
     formData.append("last_name", values.lastName);
     formData.append("password1", values.password);
     formData.append("password2", values.password);
+    // console.log("password:");
+    // console.log(values.password);
+    // console.log(formData.password1);
+    // console.log(formData);
     try {
       await axios.post(url, formData);
       console.log("submitted");

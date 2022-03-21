@@ -21,6 +21,7 @@ import GroupResults from "./GroupResults";
 import DrawResults from "./DrawResults";
 import CreateGroupFormCard from "./CreateGroupFormCard";
 import CreateSetFormCard from "./CreateSetFormCard";
+import CreateDrawFromCard from "./CreateDrawFormCard";
 
 import {
   BsFillCalendarMinusFill,
@@ -37,7 +38,7 @@ function TournamentDetail({ isLoggedIn, isManager }) {
     variant: undefined,
     text: undefined,
   });
-  const [results, setResults] = useState([]);
+  const [groups, setGroups] = useState([]);
   const [draw, setDraw] = useState();
 
   const params = useParams();
@@ -51,18 +52,18 @@ function TournamentDetail({ isLoggedIn, isManager }) {
     }
   };
 
-  const loadResults = async () => {
+  const getGroups = async () => {
     const url = `${process.env.REACT_APP_BASE_URL}/tennis/groups-for-tournament/${params.id}/`;
     try {
       const response = await axios.get(url);
-      setResults(response.data);
+      setGroups(response.data);
     } catch (e) {
-      setResults();
+      setGroups();
       console.error(e);
     }
   };
 
-  const getResults = async () => {
+  const getEliminationDraw = async () => {
     const url = `${process.env.REACT_APP_BASE_URL}/tennis/elimination-draw/?tournament_id=${params.id}`;
     try {
       const response = await axios.get(url);
@@ -75,8 +76,8 @@ function TournamentDetail({ isLoggedIn, isManager }) {
 
   useEffect(() => {
     loadTournamentDetail();
-    loadResults();
-    getResults();
+    getGroups();
+    getEliminationDraw();
   }, []);
 
   // const updateResults = () => {
@@ -399,22 +400,29 @@ function TournamentDetail({ isLoggedIn, isManager }) {
 
                 <CreateGroupFormCard
                   tournament={tournament}
-                  groups={results}
-                  loadResults={loadResults}
+                  groups={groups}
+                  loadResults={getGroups}
                   isManager={isManager}
                 />
 
                 <CreateSetFormCard
-                  loadResults={loadResults}
+                  loadResults={getGroups}
                   tournament={tournament}
-                  groups={results}
+                  groups={groups}
                   draw={draw}
                   isManager={isManager}
                 />
 
-                {results.length > 0 && (
+                {groups.length > 0 && (
                   <>
-                    <GroupResults results={results} />
+                    <GroupResults results={groups} />
+                    <CreateDrawFromCard
+                      getGroups={getGroups}
+                      tournament={tournament}
+                      isManager={isManager}
+                      draw={draw}
+                      getEliminationDraw={getEliminationDraw}
+                    />
                     <DrawResults draw={draw} />
                     {/* <Card className="shadow-sm tournament-tables my-3">
                       <Card.Header>

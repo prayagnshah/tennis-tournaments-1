@@ -1,10 +1,12 @@
 const faker = require("faker");
 
 const randomEmail = faker.internet.exampleEmail();
+// eslint-disable-next-line no-unused-vars
+const { username, password } = Cypress.env("credentials");
 
 const logIn = () => {
   // eslint-disable-next-line no-unused-vars
-  const { username, password } = Cypress.env("credentials");
+  // const { username, password } = Cypress.env("credentials");
 
   // Capture HTTP requests.
   cy.intercept("POST", "log_in").as("logIn");
@@ -25,7 +27,7 @@ describe("Authentication with random user - API calls", function () {
     cy.get("input#username").type(randomEmail);
     cy.get("input#firstName").type("Maty");
     cy.get("input#lastName").type("Mty");
-    cy.get("input#password").type("pAssw0rd", { log: false });
+    cy.get("input#password").type(password, { log: false });
 
     cy.get("button").contains("Sign up").click();
     cy.wait("@signUp");
@@ -35,7 +37,7 @@ describe("Authentication with random user - API calls", function () {
   it("Can log in.", function () {
     logIn();
 
-    cy.hash().should("eq", "#/");
+    cy.hash().should("eq", "#/dashboard");
     cy.get("a").contains("Log out");
   });
 

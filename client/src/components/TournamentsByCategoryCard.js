@@ -12,6 +12,17 @@ function TournamnetsByCategoryCard({ tournaments, category }) {
   } else if (category === "CHALLENGER") {
     headerColor = tournamentColor.challenger;
   }
+
+  const activePlayersCount = (tournament) => {
+    // returns the number REGISTERED adn INTERESTED players
+    let count = 0;
+    tournament.registrations.map((registration) => {
+      if (registration.status !== "CANCELLED") {
+        count += 1;
+      }
+    });
+    return count;
+  };
   return (
     <Card className="tournament-tables shadow mb-4">
       <Card.Header style={headerColor}>
@@ -43,7 +54,9 @@ function TournamnetsByCategoryCard({ tournaments, category }) {
                     {tournament.name}
                   </Link>
                 </td>
-                <td style={{ width: "10%" }}>{`0/${tournament.capacity}`}</td>
+                <td style={{ width: "10%" }}>{`${activePlayersCount(
+                  tournament
+                )}/${tournament.capacity}`}</td>
                 <td className="d-none d-sm-table-cell" style={{ width: "10%" }}>
                   {tournament.prestige}
                 </td>

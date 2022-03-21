@@ -148,8 +148,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=60),  # was 1 hour
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),  # was 1 day
     "USER_ID_CLAIM": "id",  # token will include the users identifier
 }
 

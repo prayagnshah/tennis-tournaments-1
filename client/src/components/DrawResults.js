@@ -5,34 +5,64 @@ import { Card } from "react-bootstrap";
 function DrawResults({ draw }) {
   // const [draw, setDraw] = useState();
 
-  let matches = [];
+  let matches_main = [];
+  let matches_secondary = [];
 
   //   Make sure the passed data for concersion has the right number of matches
   if (draw) {
-    if (draw.matches.length !== draw.size - 1) {
-      console.error(
-        `Reacket: there should be ${draw.size - 1} matches but ${
-          draw.matches.length
-        } was provided`
-      );
-    } else {
-      matches = ConvertDrawResultsForReacket(draw);
+    if (draw[0]) {
+      if (draw[0].matches.length !== draw[0].size - 1) {
+        console.error(
+          `Reacket: there should be ${draw.size - 1} matches but ${
+            draw[0].matches.length
+          } was provided`
+        );
+      } else {
+        matches_main = ConvertDrawResultsForReacket(draw[0]);
+      }
+    }
+    if (draw[1]) {
+      if (draw[1].matches.length !== draw[1].size - 1) {
+        console.error(
+          `Reacket: there should be ${draw.size - 1} matches but ${
+            draw[1].matches.length
+          } was provided`
+        );
+      } else {
+        matches_secondary = ConvertDrawResultsForReacket(draw[1]);
+      }
     }
   } else {
     return null;
   }
 
   return (
-    <Card className="shadow-sm tournament-tables my-3">
-      <Card.Header>
-        <h4 className="mb-0">Main draw</h4>
-      </Card.Header>
-      <Card.Body>
-        <div className="scrolling-wrapper">
-          <Reacket matches={matches} />
-        </div>
-      </Card.Body>
-    </Card>
+    <>
+      {draw && draw[0] && (
+        <Card className="shadow-sm tournament-tables my-3">
+          <Card.Header>
+            <h4 className="mb-0">{draw[0].type_of} draw</h4>
+          </Card.Header>
+          <Card.Body>
+            <div className="scrolling-wrapper">
+              <Reacket matches={matches_main} />
+            </div>
+          </Card.Body>
+        </Card>
+      )}
+      {draw && draw[1] && (
+        <Card className="shadow-sm tournament-tables my-3">
+          <Card.Header>
+            <h4 className="mb-0">{draw[1].type_of} draw</h4>
+          </Card.Header>
+          <Card.Body>
+            <div className="scrolling-wrapper">
+              <Reacket matches={matches_secondary} />
+            </div>
+          </Card.Body>
+        </Card>
+      )}
+    </>
   );
 }
 

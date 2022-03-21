@@ -1,6 +1,6 @@
 describe("Landing page", function () {
   it("CAn see tournaments for categories", function () {
-    cy.visit("/#/");
+    cy.visit("/#/dashboard");
     cy.get("div.card-header").contains("START");
     cy.get("div.card-header").contains("SPORT");
     cy.get("div.card-header").contains("CHALLENGER");

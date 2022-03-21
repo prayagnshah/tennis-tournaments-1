@@ -75,6 +75,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             raise ValidationError(
                 "Registration can't be creted or modified for completed tournament"
             )
+
         # Forbid the editing of the initially set tournament
         if self.instance and self.instance.tournament.id != data["tournament"].id:
             raise ValidationError(
@@ -397,6 +398,12 @@ class EliminationDrawSerializer(serializers.ModelSerializer):
         model = EliminationDraw
         fields = ("id", "size", "type_of", "tournament", "players", "matches")
         read_only_fields = ("id", "matches")
+        validators = [
+            serializers.UniqueTogetherValidator(
+                queryset=model.objects.all(),
+                fields=("tournament", "type_of"),
+            )
+        ]
 
     def validate(self, data):
         # Draw can be created just for CONSOLIDATED tournament
