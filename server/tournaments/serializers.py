@@ -81,6 +81,16 @@ class RegistrationSerializer(serializers.ModelSerializer):
             raise ValidationError(
                 "You can't change the tournament of the registration "
             )
+
+        # Cant cancel registration when tournament is consoldiated
+        if (
+            self.context["request"].method == "PUT"
+            and data["tournament"].status == "CONSOLIDATED"
+        ):
+            raise serializers.ValidationError(
+                "Registration cant be cancelled on consolidated tournament"
+            )
+
         return data
 
     def create(self, validated_data):

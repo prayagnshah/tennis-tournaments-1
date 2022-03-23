@@ -195,11 +195,18 @@ function TournamentDetail({ isLoggedIn, isManager }) {
       loadTournamentDetail();
       setAlertDetail({
         show: true,
-        variant: "danger",
+        variant: "success",
         text: "Your registration was cancelled",
       });
       return { response, isError: false };
     } catch (error) {
+      if ("non_field_errors" in error.response.data) {
+        setAlertDetail({
+          show: true,
+          variant: "danger",
+          text: error.response.data["non_field_errors"],
+        });
+      }
       return { response: error, isError: true };
     }
   };
@@ -337,14 +344,18 @@ function TournamentDetail({ isLoggedIn, isManager }) {
                           ) : (
                             <>
                               {isLoggedInUserRegistered() ? (
-                                <Button
-                                  variant="danger"
-                                  onClick={() =>
-                                    cancelRegistration(tournament.id)
-                                  }
-                                >
-                                  Cancel registration
-                                </Button>
+                                <>
+                                  {tournament.status === "OPEN" && (
+                                    <Button
+                                      variant="danger"
+                                      onClick={() =>
+                                        cancelRegistration(tournament.id)
+                                      }
+                                    >
+                                      Cancel registration
+                                    </Button>
+                                  )}
+                                </>
                               ) : (
                                 <Button
                                   className="shadow-sm"

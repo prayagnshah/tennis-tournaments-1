@@ -81,7 +81,7 @@ class UserDetailView(APIView):
 
 
 class TournamentsListView(generics.ListCreateAPIView):
-    queryset = Tournaments.objects.all()
+    queryset = Tournaments.objects.all().order_by("event_date")
     serializer_class = Tournamentserializer
     permission_classes = [IsManagerOrReadOnly]
 
@@ -183,7 +183,9 @@ class RegistrationsForUserView(APIView):
     serializer_class = RegistrationSerializerForUser
 
     def get(self, request, pk, format=None):
-        registrations = Registration.objects.filter(user=pk)
+        registrations = Registration.objects.filter(user=pk).order_by(
+            "tournament__event_date"
+        )
         # print(registrations)
         serializer = RegistrationSerializerForUser(registrations, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
