@@ -82,9 +82,9 @@ The project contains more then 100 files, therefore system generated, self expla
 ## How to run the application
 
 1. Create a new folder and clone the
-`web50/projects/2020/x/capstone` branch of the actual repository:
+`master` branch of the actual repository:
 
-        git clone -b web50/projects/2020/x/capstone https://github.com/Odusseus55/tennis-tournaments.git .
+        git clone -b master https://github.com/Odusseus55/tennis-tournaments.git .
 
 2. To successfully start the development server of the front-end, first we need to install node_modules. Navigate to client directory, install node_modules with `yarn` then go back to the root directory
 
