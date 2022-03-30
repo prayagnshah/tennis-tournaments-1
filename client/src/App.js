@@ -41,7 +41,7 @@ function App() {
       const response = await axios.post(url, { username, password });
       window.localStorage.setItem("tennis.auth", JSON.stringify(response.data));
       setLoggedIn(true);
-      console.log(getUser());
+      // console.log(getUser());
       return { response, isError: false };
     } catch (error) {
       return { response: error, isError: true };
@@ -111,9 +111,9 @@ function Layout({ isLoggedIn, logOut }) {
     setActive(location);
   }, [location]);
 
-  console.log("Path: " + useLocation().pathname + " Active: " + active);
-  console.log("PATHNAME:");
-  console.log(active);
+  // console.log("Path: " + useLocation().pathname + " Active: " + active);
+  // console.log("PATHNAME:");
+  // console.log(active);
 
   if (active == "/") {
     mainClass = "main-container";

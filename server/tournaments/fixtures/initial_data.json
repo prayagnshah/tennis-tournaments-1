@@ -1,0 +1,2370 @@
+[
+{
+  "model": "tournaments.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$3OVd20VtpaR1DSrAdUPR5k$nlWgg5bv/3YQ9XQpclyXa2bjRTg+S1Jmqi3wAi6tmtU=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "federer@federer.com",
+    "first_name": "Roger",
+    "last_name": "Federer",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T10:38:53Z",
+    "email": "federer@federer.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$KO5vGx0PuxBEmHjbC5Ciza$6CAF9R3Ef7qBdzqrCy22Ub4+X8hYBk2QW6RKazI0bJU=",
+    "last_login": "2022-03-23T14:22:18.948Z",
+    "is_superuser": true,
+    "username": "manager@example.com",
+    "first_name": "Manager",
+    "last_name": "Mr.",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2022-03-23T12:47:52Z",
+    "email": "manager@example.com",
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$PZ6Drwlw7oIA0LAv6sjk7Z$VowTkN6Q0jz3yDA+j4LZ9FF/4JU7MgLH04RhdqkBHiE=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "medvedev@example.com",
+    "first_name": "Daniil",
+    "last_name": "Medvedev",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:25:47.343Z",
+    "email": "medvedev@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$vW4A5JKZcllrKn5lS9mubo$yXHqjGRthuC5FyI0+aRlJB0C+zJqfh6CqOC5kcCTxCo=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "murray@example.com",
+    "first_name": "Andy",
+    "last_name": "Murray",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:26:20.401Z",
+    "email": "murray@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$PEQ3TweKM7Epbr0Jo0pZ3c$j/jSYnmkIHO7RmRmmygthED5lsLhe99aTuChVuin7pg=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "shapovalov@example.com",
+    "first_name": "Denis",
+    "last_name": "Shapovalov",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:27:05.836Z",
+    "email": "shapovalov@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$DQlK7McZEIaeTIYRDn5Ywz$qVEORZXP0TFhHhGnh4WgGeru5tFdrVERwgeZ3cBOhjo=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "evans@example.com",
+    "first_name": "Daniel",
+    "last_name": "Evans",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:27:57.191Z",
+    "email": "evans@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$7f4IWcvRG9n3jbvWQErnyy$wp8LHvnq4aSosrc5gUPF0str8PzKhAnI8RLJYwJ/Rqc=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "karatsev@example.com",
+    "first_name": "Aslan",
+    "last_name": "Karatsev",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:28:20.781Z",
+    "email": "karatsev@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 8,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$vCxmaEOR4CsjsSloOInaVt$THIwFN3Kf450/fk1Q5KMiVy4eQ/G47mz6jdjPuWLzzM=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "hurkacz@example.com",
+    "first_name": "Hubert",
+    "last_name": "Hurkacz",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:28:54.557Z",
+    "email": "hurkacz@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 9,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$NzqQsKuTtTw0VBuRjlWda3$mpPmRZ49z2liJIbw/BVczlYu95WPx28f6zl91X1xtdw=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "tsitsipas@example.com",
+    "first_name": "Stefanos",
+    "last_name": "Tsitsipas",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:30:01.740Z",
+    "email": "tsitsipas@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 10,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$BJhRwsP6aquN3lYQfQ4l30$686B6RlFq3NfQKFhV0H+BZiL2/L7Ne7aPnHvQI7uE2Y=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "minaur@example.com",
+    "first_name": "Alex",
+    "last_name": "de Minaur",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:30:27.665Z",
+    "email": "minaur@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 11,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$Vu94rSngdwj8NgMmLrj20a$1qUUvS/yQEINegyUaznIznGGkqqgfD9o45lV56qXARE=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "cilic@example.com",
+    "first_name": "Marin",
+    "last_name": "Cilic",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:31:50.885Z",
+    "email": "cilic@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 12,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$09GaALlo8q7tP1Jz2S6ODF$K1mUN7hQI0PaTHn12NgjM4P4sn6+j+xy7pa56Die9g4=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "fucsovics@example.com",
+    "first_name": "Marton",
+    "last_name": "Fucsovics",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:32:11.968Z",
+    "email": "fucsovics@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 13,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$JlE9eI3pw2WWtzTugEhvP8$BrfIfFKQerae3QFZFQTF/kKyoOepOymsFIs0aSiHAoQ=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "alcaraz@example.com",
+    "first_name": "Carlos",
+    "last_name": "Alcaraz",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:32:37.492Z",
+    "email": "alcaraz@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 14,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$iowPZkxEOARX6h0qa7MLzi$CtrQ7l8ckZ87Sb6ZcgB8ePucAj5sGmUXiRqPSiLsDRQ=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "fritz@example.com",
+    "first_name": "Taylor",
+    "last_name": "Fritz",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:33:00.612Z",
+    "email": "fritz@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 15,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$5qlcTSeWoEs0us63ZA5qUT$IpE+MRAyMADRdUnMnO1OCnwPGyJI2d6jqPdlDtcRsns=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "korda@example.com",
+    "first_name": "Sebastian",
+    "last_name": "Korda",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:33:49.094Z",
+    "email": "korda@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 16,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$LH2476ruIbpIVHSGewmJnB$sZ6qbui+zkXzQKSDXXfoBWDtuLlbc+y9vfszh0Kx5Dk=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "sinner@example.com",
+    "first_name": "Jannik",
+    "last_name": "Sinner",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:34:26.068Z",
+    "email": "sinner@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 17,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$xzcqIYfmKsoLZwg0aKBBGS$9u6AKpDepU0GkBDYpq1/lY3b6r71lQaEqkRjGZsy+UM=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "opelka@example.com",
+    "first_name": "Reilly",
+    "last_name": "Opelka",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:49:40.950Z",
+    "email": "opelka@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 18,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$04BR9JlKcvT4AcyNNrSX2d$dzQQrSsxjus3HEluBvD8Lw/Mk/vDLcVlMCIVJj9wDaE=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "monfils@example.com",
+    "first_name": "Gael",
+    "last_name": "Monfils",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:50:11.780Z",
+    "email": "monfils@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.user",
+  "pk": 19,
+  "fields": {
+    "password": "pbkdf2_sha256$320000$rFLteSO4VMPPkz6fKTccbj$9ZhYS9TlSECl5c9oC36ZR9h7XhLhwXm+V/C3I6k1/yI=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "tiafoe@example.com",
+    "first_name": "Frances",
+    "last_name": "Tiafoe",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-03-23T14:50:42.232Z",
+    "email": "tiafoe@example.com",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "tournaments.tournaments",
+  "pk": 1,
+  "fields": {
+    "category": "START",
+    "name": "Prague Masters",
+    "created": "2022-03-23T13:03:59.872Z",
+    "updated": "2022-03-23T14:46:37.215Z",
+    "event_date": "2022-04-03T09:00:00Z",
+    "place": "Prague, Stvanice",
+    "prestige": 100,
+    "surface": "CLAY",
+    "capacity": 8,
+    "status": "OPEN",
+    "price": 500
+  }
+},
+{
+  "model": "tournaments.tournaments",
+  "pk": 2,
+  "fields": {
+    "category": "START",
+    "name": "Pilsen Cup",
+    "created": "2022-03-23T13:05:02.216Z",
+    "updated": "2022-03-23T13:05:02.216Z",
+    "event_date": "2022-04-02T09:00:00Z",
+    "place": "Pilsen",
+    "prestige": 50,
+    "surface": "HARD",
+    "capacity": 16,
+    "status": "OPEN",
+    "price": 500
+  }
+},
+{
+  "model": "tournaments.tournaments",
+  "pk": 3,
+  "fields": {
+    "category": "CHALLENGER",
+    "name": "Ostrava Challenger",
+    "created": "2022-03-23T13:06:50.326Z",
+    "updated": "2022-03-23T13:06:50.326Z",
+    "event_date": "2022-04-10T09:00:00Z",
+    "place": "Ostrava",
+    "prestige": 200,
+    "surface": "GRASS",
+    "capacity": 16,
+    "status": "OPEN",
+    "price": 500
+  }
+},
+{
+  "model": "tournaments.tournaments",
+  "pk": 4,
+  "fields": {
+    "category": "SPORT",
+    "name": "Brno Open",
+    "created": "2022-03-23T13:07:31.464Z",
+    "updated": "2022-03-23T13:07:31.465Z",
+    "event_date": "2022-04-09T09:00:00Z",
+    "place": "Brno",
+    "prestige": 100,
+    "surface": "ARTIFICAL_TURF",
+    "capacity": 32,
+    "status": "OPEN",
+    "price": 1000
+  }
+},
+{
+  "model": "tournaments.tournaments",
+  "pk": 5,
+  "fields": {
+    "category": "START",
+    "name": "Boleslav Cup",
+    "created": "2022-03-23T13:08:49.351Z",
+    "updated": "2022-03-23T13:08:49.351Z",
+    "event_date": "2022-04-03T09:00:00Z",
+    "place": "Mlada Boleslav",
+    "prestige": 50,
+    "surface": "CLAY",
+    "capacity": 16,
+    "status": "OPEN",
+    "price": 500
+  }
+},
+{
+  "model": "tournaments.tournaments",
+  "pk": 6,
+  "fields": {
+    "category": "CHALLENGER",
+    "name": "Budejice Open",
+    "created": "2022-03-23T13:11:01.479Z",
+    "updated": "2022-03-23T13:11:01.479Z",
+    "event_date": "2022-04-17T09:00:00Z",
+    "place": "Ceske Budejovice",
+    "prestige": 200,
+    "surface": "CLAY",
+    "capacity": 32,
+    "status": "OPEN",
+    "price": 500
+  }
+},
+{
+  "model": "tournaments.tournaments",
+  "pk": 7,
+  "fields": {
+    "category": "SPORT",
+    "name": "Jihlava Cup",
+    "created": "2022-03-23T13:11:44.337Z",
+    "updated": "2022-03-23T15:58:27.289Z",
+    "event_date": "2022-04-16T09:00:00Z",
+    "place": "Jihlava",
+    "prestige": 100,
+    "surface": "CLAY",
+    "capacity": 8,
+    "status": "CONSOLIDATED",
+    "price": 500
+  }
+},
+{
+  "model": "tournaments.tournaments",
+  "pk": 8,
+  "fields": {
+    "category": "START",
+    "name": "Pardubice Cup",
+    "created": "2022-03-23T14:48:04.357Z",
+    "updated": "2022-03-23T15:48:46.504Z",
+    "event_date": "2022-03-26T09:00:00Z",
+    "place": "Pardubice",
+    "prestige": 100,
+    "surface": "CLAY",
+    "capacity": 8,
+    "status": "CONSOLIDATED",
+    "price": 500
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "tournament": 1,
+    "registered_on": "2022-03-23T14:40:59.427Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 2,
+  "fields": {
+    "user": 13,
+    "tournament": 1,
+    "registered_on": "2022-03-23T14:41:08.675Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 3,
+  "fields": {
+    "user": 11,
+    "tournament": 1,
+    "registered_on": "2022-03-23T14:41:19.225Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 4,
+  "fields": {
+    "user": 6,
+    "tournament": 1,
+    "registered_on": "2022-03-23T14:41:27.502Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 5,
+  "fields": {
+    "user": 14,
+    "tournament": 1,
+    "registered_on": "2022-03-23T14:41:36.138Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 6,
+  "fields": {
+    "user": 12,
+    "tournament": 1,
+    "registered_on": "2022-03-23T14:41:50.450Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 7,
+  "fields": {
+    "user": 8,
+    "tournament": 1,
+    "registered_on": "2022-03-23T14:42:52.332Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 8,
+  "fields": {
+    "user": 7,
+    "tournament": 1,
+    "registered_on": "2022-03-23T14:43:02.298Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 9,
+  "fields": {
+    "user": 15,
+    "tournament": 1,
+    "registered_on": "2022-03-23T14:43:26.647Z",
+    "cancelled_on": null,
+    "status": "INTERESTED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 10,
+  "fields": {
+    "user": 3,
+    "tournament": 1,
+    "registered_on": "2022-03-23T14:43:44.076Z",
+    "cancelled_on": null,
+    "status": "INTERESTED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 11,
+  "fields": {
+    "user": 10,
+    "tournament": 1,
+    "registered_on": "2022-03-23T14:44:04.564Z",
+    "cancelled_on": null,
+    "status": "INTERESTED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 12,
+  "fields": {
+    "user": 4,
+    "tournament": 1,
+    "registered_on": "2022-03-23T14:44:17.256Z",
+    "cancelled_on": "2022-03-23T14:44:17.256Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 21,
+  "fields": {
+    "user": 13,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:36:46.546Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 22,
+  "fields": {
+    "user": 4,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:36:46.562Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 23,
+  "fields": {
+    "user": 10,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:36:46.569Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 24,
+  "fields": {
+    "user": 7,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:36:46.578Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 25,
+  "fields": {
+    "user": 5,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:36:46.586Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 27,
+  "fields": {
+    "user": 9,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:36:46.606Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 28,
+  "fields": {
+    "user": 12,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:36:46.613Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 29,
+  "fields": {
+    "user": 18,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:36:46.618Z",
+    "cancelled_on": null,
+    "status": "INTERESTED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 30,
+  "fields": {
+    "user": 14,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:36:46.623Z",
+    "cancelled_on": null,
+    "status": "INTERESTED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 31,
+  "fields": {
+    "user": 1,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:36:46.628Z",
+    "cancelled_on": null,
+    "status": "INTERESTED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 32,
+  "fields": {
+    "user": 3,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:36:46.633Z",
+    "cancelled_on": null,
+    "status": "INTERESTED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 33,
+  "fields": {
+    "user": 6,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:36:46.638Z",
+    "cancelled_on": "2022-03-23T15:36:46.638Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 34,
+  "fields": {
+    "user": 19,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:36:46.664Z",
+    "cancelled_on": "2022-03-23T15:36:46.664Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 35,
+  "fields": {
+    "user": 8,
+    "tournament": 8,
+    "registered_on": "2022-03-23T15:39:54.633Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 36,
+  "fields": {
+    "user": 4,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.279Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 37,
+  "fields": {
+    "user": 12,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.294Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 38,
+  "fields": {
+    "user": 15,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.304Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 39,
+  "fields": {
+    "user": 7,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.312Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 40,
+  "fields": {
+    "user": 13,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.322Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 41,
+  "fields": {
+    "user": 1,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.330Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 42,
+  "fields": {
+    "user": 9,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.339Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 43,
+  "fields": {
+    "user": 3,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.347Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 44,
+  "fields": {
+    "user": 17,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.353Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 45,
+  "fields": {
+    "user": 16,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.362Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 46,
+  "fields": {
+    "user": 5,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.371Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 47,
+  "fields": {
+    "user": 18,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.378Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 48,
+  "fields": {
+    "user": 19,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.388Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 49,
+  "fields": {
+    "user": 6,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.395Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 50,
+  "fields": {
+    "user": 14,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.401Z",
+    "cancelled_on": "2022-03-23T15:41:12.401Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 51,
+  "fields": {
+    "user": 11,
+    "tournament": 2,
+    "registered_on": "2022-03-23T15:41:12.406Z",
+    "cancelled_on": "2022-03-23T15:41:12.406Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 52,
+  "fields": {
+    "user": 11,
+    "tournament": 5,
+    "registered_on": "2022-03-23T15:42:10.575Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 53,
+  "fields": {
+    "user": 6,
+    "tournament": 5,
+    "registered_on": "2022-03-23T15:42:10.584Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 54,
+  "fields": {
+    "user": 9,
+    "tournament": 5,
+    "registered_on": "2022-03-23T15:42:10.590Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 55,
+  "fields": {
+    "user": 4,
+    "tournament": 5,
+    "registered_on": "2022-03-23T15:42:10.599Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 56,
+  "fields": {
+    "user": 3,
+    "tournament": 5,
+    "registered_on": "2022-03-23T15:42:10.605Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 57,
+  "fields": {
+    "user": 8,
+    "tournament": 5,
+    "registered_on": "2022-03-23T15:42:10.611Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 58,
+  "fields": {
+    "user": 15,
+    "tournament": 5,
+    "registered_on": "2022-03-23T15:42:10.619Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 59,
+  "fields": {
+    "user": 19,
+    "tournament": 5,
+    "registered_on": "2022-03-23T15:42:10.628Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 60,
+  "fields": {
+    "user": 17,
+    "tournament": 5,
+    "registered_on": "2022-03-23T15:42:10.635Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 61,
+  "fields": {
+    "user": 1,
+    "tournament": 5,
+    "registered_on": "2022-03-23T15:42:10.641Z",
+    "cancelled_on": "2022-03-23T15:42:10.640Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 62,
+  "fields": {
+    "user": 18,
+    "tournament": 5,
+    "registered_on": "2022-03-23T15:42:10.646Z",
+    "cancelled_on": "2022-03-23T15:42:10.645Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 63,
+  "fields": {
+    "user": 10,
+    "tournament": 5,
+    "registered_on": "2022-03-23T15:42:10.651Z",
+    "cancelled_on": "2022-03-23T15:42:10.651Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 64,
+  "fields": {
+    "user": 7,
+    "tournament": 5,
+    "registered_on": "2022-03-23T15:42:10.656Z",
+    "cancelled_on": "2022-03-23T15:42:10.656Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 65,
+  "fields": {
+    "user": 15,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.777Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 66,
+  "fields": {
+    "user": 10,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.794Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 67,
+  "fields": {
+    "user": 18,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.804Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 68,
+  "fields": {
+    "user": 7,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.816Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 69,
+  "fields": {
+    "user": 6,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.836Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 70,
+  "fields": {
+    "user": 8,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.846Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 71,
+  "fields": {
+    "user": 14,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.861Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 72,
+  "fields": {
+    "user": 19,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.873Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 73,
+  "fields": {
+    "user": 4,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.885Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 74,
+  "fields": {
+    "user": 9,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.897Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 75,
+  "fields": {
+    "user": 3,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.912Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 76,
+  "fields": {
+    "user": 13,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.923Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 77,
+  "fields": {
+    "user": 17,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.934Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 78,
+  "fields": {
+    "user": 11,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.946Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 79,
+  "fields": {
+    "user": 1,
+    "tournament": 4,
+    "registered_on": "2022-03-23T15:43:18.954Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 80,
+  "fields": {
+    "user": 16,
+    "tournament": 7,
+    "registered_on": "2022-03-23T15:43:58.364Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 81,
+  "fields": {
+    "user": 3,
+    "tournament": 7,
+    "registered_on": "2022-03-23T15:43:58.375Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 82,
+  "fields": {
+    "user": 18,
+    "tournament": 7,
+    "registered_on": "2022-03-23T15:43:58.383Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 83,
+  "fields": {
+    "user": 14,
+    "tournament": 7,
+    "registered_on": "2022-03-23T15:43:58.391Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 84,
+  "fields": {
+    "user": 7,
+    "tournament": 7,
+    "registered_on": "2022-03-23T15:43:58.400Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 85,
+  "fields": {
+    "user": 13,
+    "tournament": 7,
+    "registered_on": "2022-03-23T15:43:58.411Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 86,
+  "fields": {
+    "user": 19,
+    "tournament": 7,
+    "registered_on": "2022-03-23T15:43:58.420Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 87,
+  "fields": {
+    "user": 10,
+    "tournament": 7,
+    "registered_on": "2022-03-23T15:43:58.431Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 88,
+  "fields": {
+    "user": 7,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.172Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 89,
+  "fields": {
+    "user": 4,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.182Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 90,
+  "fields": {
+    "user": 18,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.190Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 91,
+  "fields": {
+    "user": 12,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.198Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 92,
+  "fields": {
+    "user": 11,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.205Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 93,
+  "fields": {
+    "user": 3,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.213Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 94,
+  "fields": {
+    "user": 6,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.221Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 95,
+  "fields": {
+    "user": 8,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.231Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 96,
+  "fields": {
+    "user": 13,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.240Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 97,
+  "fields": {
+    "user": 16,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.247Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 98,
+  "fields": {
+    "user": 14,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.254Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 99,
+  "fields": {
+    "user": 9,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.261Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 100,
+  "fields": {
+    "user": 5,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.270Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 101,
+  "fields": {
+    "user": 1,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.277Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 102,
+  "fields": {
+    "user": 19,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.283Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 103,
+  "fields": {
+    "user": 10,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.293Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 104,
+  "fields": {
+    "user": 17,
+    "tournament": 3,
+    "registered_on": "2022-03-23T15:44:47.300Z",
+    "cancelled_on": null,
+    "status": "INTERESTED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 105,
+  "fields": {
+    "user": 1,
+    "tournament": 6,
+    "registered_on": "2022-03-23T15:45:48.917Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 106,
+  "fields": {
+    "user": 11,
+    "tournament": 6,
+    "registered_on": "2022-03-23T15:45:48.924Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 107,
+  "fields": {
+    "user": 10,
+    "tournament": 6,
+    "registered_on": "2022-03-23T15:45:48.932Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 108,
+  "fields": {
+    "user": 9,
+    "tournament": 6,
+    "registered_on": "2022-03-23T15:45:48.940Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 109,
+  "fields": {
+    "user": 8,
+    "tournament": 6,
+    "registered_on": "2022-03-23T15:45:48.947Z",
+    "cancelled_on": null,
+    "status": "REGISTERED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 110,
+  "fields": {
+    "user": 4,
+    "tournament": 6,
+    "registered_on": "2022-03-23T15:45:48.954Z",
+    "cancelled_on": "2022-03-23T15:45:48.954Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 111,
+  "fields": {
+    "user": 15,
+    "tournament": 6,
+    "registered_on": "2022-03-23T15:45:48.961Z",
+    "cancelled_on": "2022-03-23T15:45:48.960Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 112,
+  "fields": {
+    "user": 18,
+    "tournament": 6,
+    "registered_on": "2022-03-23T15:45:48.967Z",
+    "cancelled_on": "2022-03-23T15:45:48.967Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 113,
+  "fields": {
+    "user": 19,
+    "tournament": 6,
+    "registered_on": "2022-03-23T15:45:48.972Z",
+    "cancelled_on": "2022-03-23T15:45:48.972Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.registration",
+  "pk": 114,
+  "fields": {
+    "user": 3,
+    "tournament": 6,
+    "registered_on": "2022-03-23T15:45:48.977Z",
+    "cancelled_on": "2022-03-23T15:45:48.977Z",
+    "status": "CANCELLED"
+  }
+},
+{
+  "model": "tournaments.tournamentgroup",
+  "pk": 1,
+  "fields": {
+    "name": "Group 1",
+    "tournament": 8,
+    "players": [
+      10,
+      4,
+      13,
+      7
+    ]
+  }
+},
+{
+  "model": "tournaments.tournamentgroup",
+  "pk": 2,
+  "fields": {
+    "name": "Group 2",
+    "tournament": 8,
+    "players": [
+      8,
+      9,
+      12,
+      5
+    ]
+  }
+},
+{
+  "model": "tournaments.tournamentgroup",
+  "pk": 3,
+  "fields": {
+    "name": "Group 1",
+    "tournament": 7,
+    "players": [
+      16,
+      18,
+      3,
+      14
+    ]
+  }
+},
+{
+  "model": "tournaments.tournamentgroup",
+  "pk": 4,
+  "fields": {
+    "name": "Group 2",
+    "tournament": 7,
+    "players": [
+      10,
+      19,
+      13,
+      7
+    ]
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 1,
+  "fields": {
+    "player_1": 4,
+    "player_2": 7,
+    "score_p1": 6,
+    "score_p2": 4,
+    "tournament": 8,
+    "group": 1,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 2,
+  "fields": {
+    "player_1": 4,
+    "player_2": 10,
+    "score_p1": 7,
+    "score_p2": 6,
+    "tournament": 8,
+    "group": 1,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 3,
+  "fields": {
+    "player_1": 4,
+    "player_2": 13,
+    "score_p1": 3,
+    "score_p2": 6,
+    "tournament": 8,
+    "group": 1,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 4,
+  "fields": {
+    "player_1": 7,
+    "player_2": 10,
+    "score_p1": 3,
+    "score_p2": 6,
+    "tournament": 8,
+    "group": 1,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 5,
+  "fields": {
+    "player_1": 7,
+    "player_2": 13,
+    "score_p1": 2,
+    "score_p2": 6,
+    "tournament": 8,
+    "group": 1,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 6,
+  "fields": {
+    "player_1": 13,
+    "player_2": 10,
+    "score_p1": 6,
+    "score_p2": 2,
+    "tournament": 8,
+    "group": 1,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 7,
+  "fields": {
+    "player_1": 5,
+    "player_2": 8,
+    "score_p1": 6,
+    "score_p2": 4,
+    "tournament": 8,
+    "group": 2,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 8,
+  "fields": {
+    "player_1": 5,
+    "player_2": 9,
+    "score_p1": 7,
+    "score_p2": 5,
+    "tournament": 8,
+    "group": 2,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 9,
+  "fields": {
+    "player_1": 5,
+    "player_2": 12,
+    "score_p1": 6,
+    "score_p2": 4,
+    "tournament": 8,
+    "group": 2,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 10,
+  "fields": {
+    "player_1": 8,
+    "player_2": 9,
+    "score_p1": 3,
+    "score_p2": 6,
+    "tournament": 8,
+    "group": 2,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 11,
+  "fields": {
+    "player_1": 8,
+    "player_2": 12,
+    "score_p1": 1,
+    "score_p2": 6,
+    "tournament": 8,
+    "group": 2,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 12,
+  "fields": {
+    "player_1": 3,
+    "player_2": 14,
+    "score_p1": 6,
+    "score_p2": 4,
+    "tournament": 7,
+    "group": 3,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 13,
+  "fields": {
+    "player_1": 3,
+    "player_2": 16,
+    "score_p1": 7,
+    "score_p2": 5,
+    "tournament": 7,
+    "group": 3,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 14,
+  "fields": {
+    "player_1": 3,
+    "player_2": 18,
+    "score_p1": 6,
+    "score_p2": 4,
+    "tournament": 7,
+    "group": 3,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 15,
+  "fields": {
+    "player_1": 14,
+    "player_2": 16,
+    "score_p1": 6,
+    "score_p2": 4,
+    "tournament": 7,
+    "group": 3,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 16,
+  "fields": {
+    "player_1": 14,
+    "player_2": 18,
+    "score_p1": 7,
+    "score_p2": 5,
+    "tournament": 7,
+    "group": 3,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 17,
+  "fields": {
+    "player_1": 18,
+    "player_2": 16,
+    "score_p1": 6,
+    "score_p2": 2,
+    "tournament": 7,
+    "group": 3,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 18,
+  "fields": {
+    "player_1": 7,
+    "player_2": 10,
+    "score_p1": 4,
+    "score_p2": 6,
+    "tournament": 7,
+    "group": 4,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 19,
+  "fields": {
+    "player_1": 7,
+    "player_2": 13,
+    "score_p1": 1,
+    "score_p2": 6,
+    "tournament": 7,
+    "group": 4,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 20,
+  "fields": {
+    "player_1": 7,
+    "player_2": 19,
+    "score_p1": 7,
+    "score_p2": 6,
+    "tournament": 7,
+    "group": 4,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 21,
+  "fields": {
+    "player_1": 10,
+    "player_2": 19,
+    "score_p1": 4,
+    "score_p2": 6,
+    "tournament": 7,
+    "group": 4,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 22,
+  "fields": {
+    "player_1": 10,
+    "player_2": 13,
+    "score_p1": 1,
+    "score_p2": 6,
+    "tournament": 7,
+    "group": 4,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 23,
+  "fields": {
+    "player_1": 12,
+    "player_2": 9,
+    "score_p1": 4,
+    "score_p2": 6,
+    "tournament": 8,
+    "group": 2,
+    "draw_match": null
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 24,
+  "fields": {
+    "player_1": 13,
+    "player_2": 9,
+    "score_p1": 6,
+    "score_p2": 4,
+    "tournament": 8,
+    "group": null,
+    "draw_match": 1
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 25,
+  "fields": {
+    "player_1": 5,
+    "player_2": 4,
+    "score_p1": 6,
+    "score_p2": 2,
+    "tournament": 8,
+    "group": null,
+    "draw_match": 2
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 26,
+  "fields": {
+    "player_1": 13,
+    "player_2": 5,
+    "score_p1": 6,
+    "score_p2": 4,
+    "tournament": 8,
+    "group": null,
+    "draw_match": 3
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 27,
+  "fields": {
+    "player_1": 10,
+    "player_2": 8,
+    "score_p1": 5,
+    "score_p2": 7,
+    "tournament": 8,
+    "group": null,
+    "draw_match": 4
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 28,
+  "fields": {
+    "player_1": 7,
+    "player_2": 12,
+    "score_p1": 3,
+    "score_p2": 6,
+    "tournament": 8,
+    "group": null,
+    "draw_match": 5
+  }
+},
+{
+  "model": "tournaments.setstat",
+  "pk": 29,
+  "fields": {
+    "player_1": 8,
+    "player_2": 12,
+    "score_p1": 3,
+    "score_p2": 6,
+    "tournament": 8,
+    "group": null,
+    "draw_match": 6
+  }
+},
+{
+  "model": "tournaments.eliminationdraw",
+  "pk": 1,
+  "fields": {
+    "size": 4,
+    "tournament": 8,
+    "type_of": "MAIN",
+    "players": [
+      9,
+      5,
+      4,
+      13
+    ]
+  }
+},
+{
+  "model": "tournaments.eliminationdraw",
+  "pk": 2,
+  "fields": {
+    "size": 4,
+    "tournament": 8,
+    "type_of": "SECONDARY",
+    "players": [
+      8,
+      10,
+      12,
+      7
+    ]
+  }
+},
+{
+  "model": "tournaments.eliminationdrawmatch",
+  "pk": 1,
+  "fields": {
+    "round_of": 1,
+    "match": 1,
+    "draw": 1,
+    "players": [
+      13,
+      9
+    ]
+  }
+},
+{
+  "model": "tournaments.eliminationdrawmatch",
+  "pk": 2,
+  "fields": {
+    "round_of": 1,
+    "match": 2,
+    "draw": 1,
+    "players": [
+      5,
+      4
+    ]
+  }
+},
+{
+  "model": "tournaments.eliminationdrawmatch",
+  "pk": 3,
+  "fields": {
+    "round_of": 2,
+    "match": 3,
+    "draw": 1,
+    "players": [
+      13,
+      5
+    ]
+  }
+},
+{
+  "model": "tournaments.eliminationdrawmatch",
+  "pk": 4,
+  "fields": {
+    "round_of": 1,
+    "match": 1,
+    "draw": 2,
+    "players": [
+      10,
+      8
+    ]
+  }
+},
+{
+  "model": "tournaments.eliminationdrawmatch",
+  "pk": 5,
+  "fields": {
+    "round_of": 1,
+    "match": 2,
+    "draw": 2,
+    "players": [
+      7,
+      12
+    ]
+  }
+},
+{
+  "model": "tournaments.eliminationdrawmatch",
+  "pk": 6,
+  "fields": {
+    "round_of": 2,
+    "match": 3,
+    "draw": 2,
+    "players": [
+      8,
+      12
+    ]
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 1,
+  "fields": {
+    "player": 4,
+    "group": 1,
+    "tournament": 8,
+    "sets_won": 2,
+    "games": 0,
+    "position": 2
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 2,
+  "fields": {
+    "player": 7,
+    "group": 1,
+    "tournament": 8,
+    "sets_won": 0,
+    "games": -9,
+    "position": 4
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 3,
+  "fields": {
+    "player": 10,
+    "group": 1,
+    "tournament": 8,
+    "sets_won": 1,
+    "games": -2,
+    "position": 3
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 4,
+  "fields": {
+    "player": 13,
+    "group": 1,
+    "tournament": 8,
+    "sets_won": 3,
+    "games": 11,
+    "position": 1
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 5,
+  "fields": {
+    "player": 5,
+    "group": 2,
+    "tournament": 8,
+    "sets_won": 3,
+    "games": 6,
+    "position": 1
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 6,
+  "fields": {
+    "player": 8,
+    "group": 2,
+    "tournament": 8,
+    "sets_won": 0,
+    "games": -10,
+    "position": 4
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 7,
+  "fields": {
+    "player": 9,
+    "group": 2,
+    "tournament": 8,
+    "sets_won": 2,
+    "games": 3,
+    "position": 2
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 8,
+  "fields": {
+    "player": 12,
+    "group": 2,
+    "tournament": 8,
+    "sets_won": 1,
+    "games": 1,
+    "position": 3
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 9,
+  "fields": {
+    "player": 3,
+    "group": 3,
+    "tournament": 7,
+    "sets_won": 3,
+    "games": 6,
+    "position": 1
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 10,
+  "fields": {
+    "player": 14,
+    "group": 3,
+    "tournament": 7,
+    "sets_won": 2,
+    "games": 2,
+    "position": 2
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 11,
+  "fields": {
+    "player": 16,
+    "group": 3,
+    "tournament": 7,
+    "sets_won": 0,
+    "games": -8,
+    "position": 4
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 12,
+  "fields": {
+    "player": 18,
+    "group": 3,
+    "tournament": 7,
+    "sets_won": 1,
+    "games": 0,
+    "position": 3
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 13,
+  "fields": {
+    "player": 7,
+    "group": 4,
+    "tournament": 7,
+    "sets_won": 1,
+    "games": -6,
+    "position": 0
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 14,
+  "fields": {
+    "player": 10,
+    "group": 4,
+    "tournament": 7,
+    "sets_won": 1,
+    "games": -5,
+    "position": 0
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 15,
+  "fields": {
+    "player": 13,
+    "group": 4,
+    "tournament": 7,
+    "sets_won": 2,
+    "games": 10,
+    "position": 0
+  }
+},
+{
+  "model": "tournaments.groupscores",
+  "pk": 16,
+  "fields": {
+    "player": 19,
+    "group": 4,
+    "tournament": 7,
+    "sets_won": 1,
+    "games": 1,
+    "position": 0
+  }
+}
+]

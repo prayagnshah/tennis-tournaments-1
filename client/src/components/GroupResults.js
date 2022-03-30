@@ -56,7 +56,7 @@ function GroupResults({ results }) {
                           <th
                             scope="col"
                             key={i}
-                            style={{ width: "45px" }}
+                            style={{ width: "90px" }}
                             className="text-center"
                           >
                             {windowWidth > 576

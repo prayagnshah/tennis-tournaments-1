@@ -21,6 +21,7 @@ function CreateSetFormCard({
   groups,
   draw,
   isManager,
+  getEliminationDraw,
 }) {
   const [showSetForm, setShowSetForm] = useState(false);
   const [alertDetail, setAlertDetail] = useState({
@@ -94,6 +95,7 @@ function CreateSetFormCard({
       //   }
     }
     await loadResults();
+    await getEliminationDraw();
   };
 
   const PlayerOptions = ({ values }) => {

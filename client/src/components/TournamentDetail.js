@@ -422,6 +422,7 @@ function TournamentDetail({ isLoggedIn, isManager }) {
                   groups={groups}
                   draw={draw}
                   isManager={isManager}
+                  getEliminationDraw={getEliminationDraw}
                 />
 
                 {groups.length > 0 && (
