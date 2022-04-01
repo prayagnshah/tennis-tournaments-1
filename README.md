@@ -24,7 +24,8 @@ The application was designed with up-to-date technologies used for web developme
 
 ## Main Features
 
-1. User can sign up for a new account, then log in with the credentials. Once logged in, the navbar contains user profile link and log out button.
+1. User can sign up for a new account, then log in with the credentials. Once logged in, the navbar contains user profile link and log out button.  
+![Sign up, Log In](client/public/img/Sign-up-Log-in.gif)
 2. Dashboard where all the available tournaments are listed divided by categories and sorted by date.
 3. Tournament detail page which contains:
    - Basic tournament information
@@ -80,6 +81,8 @@ The project contains more then 100 files, therefore system generated, self expla
 `Dockerfile` - instructions to build the Docker container  
 
 ## How to run the application
+
+To run this application, you will need to have installed Docker on your device. The following step by step guide is written for linux based OP (Mac).
 
 1. Create a new folder and clone the
 `master` branch of the actual repository:
