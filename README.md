@@ -7,7 +7,7 @@ Tennis-Tournaments is a web application which gives a tool to local communities 
 The application was designed with up-to-date technologies used for web development. The front-end and back-end are two separate independent services where the back-end is using the REST architectural style. Furthermore the back-end is connected to a Postgres database. The application contains the following:
 
 - Docker containers for back-end, front-end and database
-- Docker-Compose to bundle together the services in development
+- Docker-compose to bundle together the services in development
 - Back-end:
   - Written in Python
   - Django and Django-rest framework
@@ -18,33 +18,33 @@ The application was designed with up-to-date technologies used for web developme
   - Written with React
   - React hash router used for navigation
   - React bootstrap used for component styling
-  - No specific state management system was used, as the state management was transparent enough with useState
+  - No specific state management system was used as the state management was transparent enough with useState
   - Cypress used for testing
 - Database: Postgres DB, out of box solution from Docker
 
 ## Main Features
 
-1. User can sign up for a new account, then log in with the credentials. Once logged in, the navbar contains user profile link and log out button.  
+1. **User authentication:** User can sign up for a new account, then log in with the credentials. Once logged in, the navbar contains user profile link and log out button.  
   ![Sign up, Log IN](client/public/img/Sign-up-Log-in.gif)
-2. Dashboard, where all the available tournaments are listed, divided by categories and sorted by date.
+2. **Dashboard:** List of all the available tournaments, divided by categories and sorted by date.
   ![Dashboard](client/public/img/Dashboard.png)
-3. Tournament detail page which contains:
+3. **Tournament detail page** contains:
    - Basic tournament information
-   - Register/cancel registration button
+   - Buttons for registration and canceling registration
    - List of players involved in the tournament
-   - Once tournament is consolidated, group stage and elimination stage is visible, where the results can be filled by a manager flexibly as the tournament proceeds.
-   - On completed tournaments no user and manager action is allowed  
+   - Once a tournament is consolidated, group stage and elimination stage is visible, where the results can be added by a manager flexibly as the tournament proceeds
+   - When a tournament is completed no user or manager actions are allowed  
 
     ![Tournament detail](client/public/img/TournamentDetail.gif)
-4. On tournament detail page user can register for the tournament. If the capacity is full, the user will be added to the waiting list. Once someone cancels their registration, the free capacity will be automatically filled with the next in line registration from the waiting list.
+4. **Registrations for tournaments:** At the tournament detail page a user can register for the tournament. If the capacity is full, the user will be added to the waiting list. Once someone cancels their registration, the free capacity will be automatically filled with the next in line user from the waiting list.
   ![Competitor registers for a tournament](client/public/img/TournamentRegistration.gif)
-5. User profile page were all the tournaments are listed for which the user is registered.
+5. **User profile page:** Displays all the tournaments for which the user is registered.
   ![User profile page](client/public/img/UserProfile.png)
-6. A regular user can be promoted to manager role in the Django admin page which gives special permissions. A manager can additionally:
+6. **Manager role:** A regular user can be promoted to manager role in the Django admin page which gives special permissions. A manager can additionally:
     - Create tournaments on the dashboard
     - Consolidate and complete tournaments
-    - Create groups for competitor in the given tournament
-    - Create elimination draws to determine the champion
+    - Create groups for competitors in the given tournament
+    - Create elimination draws for the final stage of the tournament
     - Add results for both group stage and elimination draws  
 
     Manager creates tournament:
@@ -52,7 +52,7 @@ The application was designed with up-to-date technologies used for web developme
     Manager consolidates tournament, creates group stage and elimination draw:
     ![Tournament management](client/public/img/ManageTournament.gif)
 
-7. The whole page was design to be mobile-responsive
+7. **Mobile responsiveness:** The whole page was designed to be mobile-responsive.
 
   <p float="left">
     <img src="client/public/img/MobDashboard.png" width="32%" />
