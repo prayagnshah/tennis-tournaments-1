@@ -25,23 +25,39 @@ The application was designed with up-to-date technologies used for web developme
 ## Main Features
 
 1. User can sign up for a new account, then log in with the credentials. Once logged in, the navbar contains user profile link and log out button.  
-![Sign up, Log IN](client/public/img/Sign-up-Log-in.gif)
+  ![Sign up, Log IN](client/public/img/Sign-up-Log-in.gif)
 2. Dashboard where all the available tournaments are listed divided by categories and sorted by date.
+  ![Dashboard](client/public/img/Dashboard.png)
 3. Tournament detail page which contains:
    - Basic tournament information
    - Register/cancel registration button
    - List of players involved in the tournament
    - Once tournament is consolidated, group stage and elimination stage is visible, where the results can be filled by a manager flexibly as the tournament proceeds.
-   - On completed tournaments no user and manager action is allowed
+   - On completed tournaments no user and manager action is allowed  
+
+    ![Tournament detail](client/public/img/TournamentDetail.gif)
 4. On tournament detail page user can register for the tournament. If the capacity is full, the user will be added to the waiting list. Once someone cancels their registration, the free capacity will be automatically filled with the next in line registration from the waiting list.
+  ![Competitor registers for a tournament](client/public/img/TournamentRegistration.gif)
 5. User profile page were all the tournaments are listed for which the user is registered.
+  ![User profile page](client/public/img/UserProfile.png)
 6. A regular user can be promoted to manager role in the Django admin page which gives special permissions. A manager can additionally:
     - Create tournaments on the dashboard
     - Consolidate and complete tournaments
     - Create groups for competitor in the given tournament
     - Create elimination draws to determine the champion
-    - Add results for both group stage and elimination draws
+    - Add results for both group stage and elimination draws  
+
+    Manager creates tournament:
+    ![Manager creates tournament](client/public/img/CreateTournament.gif)
+    Manager consolidates tournament, creates group stage and elimination draw:
+    ![Tournament management](client/public/img/ManageTournament.gif)
 7. The whole page was design to be mobile-responsive
+
+  <p float="left">
+    <img src="client/public/img/MobDashboard.png" width="32%" />
+    <img src="client/public/img/MobTournamentDetail.png" width="32%" />
+    <img src="client/public/img/MobProfile.png" width="32%" />
+  </p>
 
 ## Folder structure and file content
 

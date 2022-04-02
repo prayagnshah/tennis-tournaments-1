@@ -357,15 +357,19 @@ function TournamentDetail({ isLoggedIn, isManager }) {
                                   )}
                                 </>
                               ) : (
-                                <Button
-                                  className="shadow-sm"
-                                  variant="success"
-                                  onClick={() =>
-                                    registerForTournament(tournament.id)
-                                  }
-                                >
-                                  Register for the tournament
-                                </Button>
+                                <>
+                                  {tournament.status !== "COMPLETED" && (
+                                    <Button
+                                      className="shadow-sm"
+                                      variant="success"
+                                      onClick={() =>
+                                        registerForTournament(tournament.id)
+                                      }
+                                    >
+                                      Register for the tournament
+                                    </Button>
+                                  )}
+                                </>
                               )}
                             </>
                           )}
