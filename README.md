@@ -51,6 +51,7 @@ The application was designed with up-to-date technologies used for web developme
     ![Manager creates tournament](client/public/img/CreateTournament.gif)
     Manager consolidates tournament, creates group stage and elimination draw:
     ![Tournament management](client/public/img/ManageTournament.gif)
+
 7. The whole page was design to be mobile-responsive
 
   <p float="left">
