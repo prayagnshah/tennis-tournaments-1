@@ -47,9 +47,9 @@ The application was designed with up-to-date technologies used for web developme
     - Create elimination draws for the final stage of the tournament
     - Add results for both group stage and elimination draws  
 
-    Manager creates tournament:
+    *Manager creates tournament:*
     ![Manager creates tournament](client/public/img/CreateTournament.gif)
-    Manager consolidates tournament, creates group stage and elimination draw:
+    *Manager consolidates tournament, creates group stage and elimination draw:*
     ![Tournament management](client/public/img/ManageTournament.gif)
 
 7. **Mobile responsiveness:** The whole page was designed to be mobile-responsive.
@@ -99,14 +99,14 @@ The project contains more then 100 files, therefore system generated, self expla
 
 ## How to run the application
 
-To run this application, you will need to have installed Docker on your device. The following step by step guide is written for linux based OP (Mac).
+To run this application, you will need to have installed Docker on your device. The following step-by-step guide is written for linux based OS (Mac).
 
 1. Create a new folder and clone the
 `master` branch of the actual repository:
 
         git clone -b master https://github.com/Odusseus55/tennis-tournaments.git .
 
-2. To successfully start the development server of the front-end, first we need to install node_modules. Navigate to client directory, install node_modules with `yarn` then go back to the root directory
+2. To successfully start the development server of the front-end, first we need to install node_modules. Navigate to client directory, install node_modules with `yarn` then go back to the root directory.
 
         cd client
 
@@ -114,7 +114,7 @@ To run this application, you will need to have installed Docker on your device. 
 
         cd ..
 
-3. The services are designed to be independent entities with the help of Docker containers. These containers are bundled together with `docker-compose`. First we need to build the containers. This command is optional, but it ensures the images will be always rebuilt and the Docker chase will not be used.
+3. The services are designed to be independent entities with the help of Docker containers. These containers are bundled together with `docker-compose`. First we need to build the containers. This command is optional but it ensures the images will be always rebuilt and the Docker cache will not be used.
 
         docker-compose build --no-cache
 
@@ -122,21 +122,21 @@ To run this application, you will need to have installed Docker on your device. 
 
         docker-compose up -d --build
 
-    Optionally you can check the logs of the containers.  The final message should be from the client container, something like "webpack compiled successfully”
+    Optionally you can check the logs of the containers.  The final message should be from the client container, something like "webpack compiled successfully”.
 
         docker-compose logs -f
 
-5. Once the services are running we need to run the Django migrations on the server side
+5. Once the services are running we need to run the Django migrations on the server side.
 
         docker-compose exec tennis-server python manage.py migrate
 
-6. Now open the website on your localhost <http://127.0.0.1:3001/#/>. You should see the welcome page.
+6. Now open the website on your localhost <http://127.0.0.1:3001/#/>, and you should see the welcome page.
 
-7. The application without data is not presentation worthy. As a last step lets populate the database with initial data
+7. The application without data is not presentation worthy. As the last step, lets populate the database with initial data.
 
         docker-compose exec tennis-server python manage.py loaddata tournaments/fixtures/group.json tournaments/fixtures/initial_data.json
 
-8. Now load the dashboard - <http://127.0.0.1:3001/#/dashboard>, you should see the upcoming tournaments divided to three categories.
+8. Now load the dashboard - <http://127.0.0.1:3001/#/dashboard>, you should see the upcoming tournaments divided into three categories.
 
 9. The site should be running as designed. Feel free to sign up for a new user account or log in with an already created one:
     - email: murray@example.com
