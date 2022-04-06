@@ -37,7 +37,7 @@ function Dasboard({ isManager }) {
         ) : (
           <>
             <h3 className="mt-3 mb-3 text-center">
-              Join our upcoming tournamnets
+              Join our upcoming tournaments:
             </h3>
 
             <Row className="mx-0">
