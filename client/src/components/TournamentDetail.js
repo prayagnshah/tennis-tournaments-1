@@ -143,6 +143,10 @@ function TournamentDetail({ isLoggedIn, isManager }) {
     const token = await getAccessToken();
     const headers = { Authorization: `Bearer ${token}` };
     try {
+      console.log("Inputs for register:");
+      console.log(url);
+      console.log(token);
+      console.log(headers);
       const response = await axios.post(
         url,
         {
