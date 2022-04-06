@@ -2,6 +2,8 @@ import axios from "axios";
 
 export const getTournaments = async () => {
   const url = `${process.env.REACT_APP_BASE_URL}/tennis/tournaments/`;
+  console.log("URL for getting the tournaments:");
+  console.log(url);
   try {
     const response = await axios.get(url);
     return { response, isError: false };
