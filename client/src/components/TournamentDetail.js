@@ -172,6 +172,8 @@ function TournamentDetail({ isLoggedIn, isManager }) {
       return { response, isError: false };
     } catch (error) {
       console.log(error);
+      console.log(error.response);
+      console.log(error.response.data);
       return { response: error, isError: true };
     }
   };
