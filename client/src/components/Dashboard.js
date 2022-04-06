@@ -39,6 +39,7 @@ function Dasboard({ isManager }) {
             <h3 className="mt-3 mb-3 text-center">
               Join our upcoming tournaments:
             </h3>
+            <p>Backend URL from ENV: {process.env.REACT_APP_BASE_URL}</p>
 
             <Row className="mx-0">
               <Col></Col>
