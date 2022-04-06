@@ -55,6 +55,8 @@ export const getAccessToken = async () => {
   };
 
   const auth = JSON.parse(window.localStorage.getItem("tennis.auth"));
+  console.log("Access token:");
+  console.log(auth.access);
 
   if (auth) {
     if (isTokenExpired(auth.access)) {
