@@ -1,5 +1,6 @@
 __pycache__
 env
+staticfiles
 *.sqlite3
 .coverage
 .coveragerc

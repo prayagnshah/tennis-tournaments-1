@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 import datetime
+import dj_database_url
 
 load_dotenv()
 
@@ -25,12 +26,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-5+r%uw+_l-5t2ttt2ur$&v*cwejdxku2xrjw-2klk@$@-gjcoy"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+DEBUG = int(os.getenv("DEBUG", default=0))
 
-ALLOWED_HOSTS = ["192.168.0.156", "127.0.0.1"]
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -46,11 +48,13 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "tournaments",
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -96,6 +100,11 @@ DATABASES = {
     }
 }
 
+# for production
+DATABASE_URL = os.environ.get("DATABASE_URL")
+db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500)
+DATABASES["default"].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -132,6 +141,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -144,8 +155,13 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
-    )
+    ),
 }
+
+if not DEBUG:
+    REST_FRAMEWORK = {
+        "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
+    }
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=60),  # was 1 hour
@@ -153,9 +169,24 @@ SIMPLE_JWT = {
     "USER_ID_CLAIM": "id",  # token will include the users identifier
 }
 
-CORS_ORIGIN_WHITELIST = [
+# CORS_ORIGIN_WHITELIST = [
+#     "http://localhost:3001",
+#     "http://127.0.0.1:3001",
+#     "http://192.168.0.156:3001",
+#     "http://192.168.0.156:8003",
+#     "https://deployment-v1--fancy-buttercream-9102fe.netlify.app",
+# ]
+
+CORS_ALLOWED_ORIGINS = [
     "http://localhost:3001",
     "http://127.0.0.1:3001",
     "http://192.168.0.156:3001",
     "http://192.168.0.156:8003",
+    # "https://deployment-v1--fancy-buttercream-9102fe.netlify.app",
 ]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://[\w-]+fancy-buttercream-9102fe\.netlify\.app$",
+]
+
+CSRF_TRUSTED_ORIGINS = ["https://*.herokuapp.com"]

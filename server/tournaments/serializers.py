@@ -102,7 +102,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
         # yes -> then delete the existing one and create a new one
         # From UniqueTogethetValidator the CANCELLED statuses needs to be excluded
         cancelled_reg = Registration.objects.filter(
-            tournament=validated_data["tournament"].id, status="CANCELLED"
+            tournament=validated_data["tournament"].id,
+            status="CANCELLED",
+            user=validated_data["user"].id,
         )
         # print(cancelled_reg)
         if cancelled_reg.exists():
