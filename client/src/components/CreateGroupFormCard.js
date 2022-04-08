@@ -15,7 +15,7 @@ function CreateGroupFormCard({ tournament, groups, loadResults, isManager }) {
     const headers = { Authorization: `Bearer ${token}` };
 
     values.tournament = tournament.id;
-    console.log(values);
+    // console.log(values);
 
     try {
       await axios.post(url, values, { headers });

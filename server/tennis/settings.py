@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "tournaments",
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
@@ -154,7 +155,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
-    )
+    ),
 }
 
 if not DEBUG:
@@ -168,11 +169,24 @@ SIMPLE_JWT = {
     "USER_ID_CLAIM": "id",  # token will include the users identifier
 }
 
-CORS_ORIGIN_WHITELIST = [
+# CORS_ORIGIN_WHITELIST = [
+#     "http://localhost:3001",
+#     "http://127.0.0.1:3001",
+#     "http://192.168.0.156:3001",
+#     "http://192.168.0.156:8003",
+#     "https://deployment-v1--fancy-buttercream-9102fe.netlify.app",
+# ]
+
+CORS_ALLOWED_ORIGINS = [
     "http://localhost:3001",
     "http://127.0.0.1:3001",
     "http://192.168.0.156:3001",
     "http://192.168.0.156:8003",
+    # "https://deployment-v1--fancy-buttercream-9102fe.netlify.app",
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://[\w-]+fancy-buttercream-9102fe\.netlify\.app$",
 ]
 
 CSRF_TRUSTED_ORIGINS = ["https://*.herokuapp.com"]

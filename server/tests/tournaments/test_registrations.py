@@ -367,7 +367,6 @@ def test_cant_update_registration_status(
     assert response.data["tournament"] == tournament.id
 
 
-@pytest.mark.actualtest
 @pytest.mark.django_db
 def test_cant_cancel_when_not_open(
     client, create_user, create_registration, add_tournament
@@ -387,4 +386,23 @@ def test_cant_cancel_when_not_open(
         content_type="application/json",
     )
     # Then
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.actualtest
+@pytest.mark.django_db
+def test_cant_register_twice(client, create_user, create_registration, add_tournament):
+    # Given
+    user = create_user()
+    tournament = add_tournament(status="CONSOLIDATED")
+    registration = create_registration(
+        user=user, tournament=tournament, status="REGISTERED"
+    )
+    access = AccessToken.for_user(user)
+    # When
+    response = client.post(
+        reg_list_path,
+        data={"tournament": tournament.id},
+        HTTP_AUTHORIZATION=f"Bearer {access}",
+    )
     assert response.status_code == status.HTTP_400_BAD_REQUEST

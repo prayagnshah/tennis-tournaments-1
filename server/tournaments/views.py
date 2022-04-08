@@ -1,5 +1,6 @@
 from audioop import reverse
 from functools import partial
+import re
 from django.forms import ValidationError
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
@@ -36,6 +37,10 @@ from .models import (
     GroupScores,
 )
 
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
+# JWT_authenticator = JWTAuthentication()
+
 ### PERMISSIONS ###
 # permissions for Set Stat - Admin can create and destroy instance, anyone can read
 class ReadOnly(BasePermission):
@@ -52,6 +57,35 @@ class IsManagerOrReadOnly(BasePermission):
             return request.user.group == group.name
 
         return False
+
+
+# class AuthOrReadOnly(BasePermission):
+#     def has_permission(self, request, view):
+#         print(request)
+#         print(request.headers)
+#         if "Authorization" in request.headers:
+#             print(f"Auth is there: {True}")
+#             print(request.headers["Authorization"])
+#         print("User is authenticated:")
+#         print(request.user.is_authenticated)
+#         print(request.user)
+#         # response = JWT_authenticator.authenticate(request)
+#         # if response is not None:
+#         #     # unpacking
+#         #     user, token = response
+#         #     print("this is decoded token claims", token.payload)
+#         # else:
+#         #     print("no token is provided in the header or the header is missing")
+
+#         auth = request.META.get("HTTP_AUTHORIZATION", b"")
+#         print(auth)
+
+#         if request.method in permissions.SAFE_METHODS:
+#             return True
+#         if request.user.is_authenticated:
+#             return True
+
+#         return False
 
 
 ### VIEWS ###
@@ -84,6 +118,7 @@ class TournamentsListView(generics.ListCreateAPIView):
     queryset = Tournaments.objects.all().order_by("event_date")
     serializer_class = Tournamentserializer
     permission_classes = [IsManagerOrReadOnly]
+    authentication_classes = (JWTAuthentication,)
 
 
 class TournamnetDetailView(APIView):
@@ -93,6 +128,7 @@ class TournamnetDetailView(APIView):
 
     serializer_class = Tournamentserializer
     permission_classes = [IsManagerOrReadOnly]
+    authentication_classes = (JWTAuthentication,)
 
     def get_object(self, pk):
         try:
@@ -121,9 +157,13 @@ class RegistrationListView(APIView):
     """
 
     serializer_class = RegistrationSerializer
+    # permission_classes = [AuthOrReadOnly]
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
     ]
+    # Very important to add the next line, in production the lack of this line caused that the users
+    # were not authenticated and response with 403 - Authentication credentials were not provided. - was received.
+    authentication_classes = (JWTAuthentication,)
 
     def get(self, request, format=None):
         if request.query_params.get("tournament_id"):
@@ -158,6 +198,7 @@ class RegistrationDetailView(APIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
     ]
+    authentication_classes = (JWTAuthentication,)
     serializer_class = RegistrationSerializer
 
     def get(self, request, pk, format=None):
@@ -180,6 +221,7 @@ class RegistrationsForUserView(APIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
     ]
+    authentication_classes = (JWTAuthentication,)
     serializer_class = RegistrationSerializerForUser
 
     def get(self, request, pk, format=None):
@@ -193,6 +235,7 @@ class RegistrationsForUserView(APIView):
 
 class SetStatListView(generics.CreateAPIView):
     permission_classes = [IsManagerOrReadOnly]
+    authentication_classes = (JWTAuthentication,)
     queryset = SetStat.objects.all()
     serializer_class = WriteSetStatSerializer
 
@@ -206,6 +249,7 @@ class SetStatDetailView(generics.RetrieveDestroyAPIView):
     """Retrive, delete the given set"""
 
     permission_classes = [IsManagerOrReadOnly]
+    authentication_classes = (JWTAuthentication,)
     queryset = SetStat.objects.all()
     serializer_class = ReadSetStatSerializer
 
@@ -214,6 +258,7 @@ class TournamentGroupView(APIView):
     """Returns all  the groups for the given tournament - pk is for tournament ID"""
 
     serializer_class = TournamentGroupCreateSerializer
+    authentication_classes = (JWTAuthentication,)
     permission_classes = [IsManagerOrReadOnly]
 
     def get(self, request, pk, format=None):
@@ -235,6 +280,7 @@ class EliminationDrawMatchDetailView(APIView):
     """Returns the given match detail"""
 
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    authentication_classes = (JWTAuthentication,)
     serializer_class = EliminationDrawMatchSerializer
 
     def get(self, request, pk, fomat=None):
@@ -259,6 +305,7 @@ class EliminationDrawDetailView(APIView):
 
     serializer_class = EliminationDrawSerializer
     permission_classes = [IsManagerOrReadOnly]
+    authentication_classes = (JWTAuthentication,)
 
     def get(self, request, pk=None, format=None):
         if request.query_params.get("tournament_id") and not pk:

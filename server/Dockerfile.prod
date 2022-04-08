@@ -9,7 +9,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV DEBUG 0
 ENV SECRET_KEY something
-ENV DJANGO_ALLOWED_HOSTS localhost 127.0.0.1 [::1] .herokuapp.com
+ENV DJANGO_ALLOWED_HOSTS localhost 127.0.0.1 [::1] .herokuapp.com .netlify.app
 
 # install system dependencies
 # install psycopg2 dependencies
