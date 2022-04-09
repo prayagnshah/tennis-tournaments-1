@@ -2,6 +2,12 @@
 
 Tennis-Tournaments is a web application which gives a tool to local communities to organize, participate and manage tennis tournaments. The application contains two user groups - regular users and managers. Regular users can manage their registrations of the listed tournaments. Managers can create tournaments in three different categories. Once the tournament is consolidated (started) the competitors can be divided to groups. The manager then can add the match results for each group. After the group stage is completed an elimination draw can be created to determine the champion.
 
+## Deployment
+
+The front-end is deployed to Netlify and the back-end is deployed to Heroku.
+Try the application on [Tennis-Tournaments](https://fancy-buttercream-9102fe.netlify.app/).
+Feel free to sign up for new account or you can use the credentials provided in the steps 9., 10. of the [installation section](#how-to-run-the-application).
+
 ## Application architecture and technologies
 
 The application was designed with up-to-date technologies used for web development. The front-end and back-end are two separate independent services where the back-end is using the REST architectural style. Furthermore the back-end is connected to a Postgres database. The application contains the following:
